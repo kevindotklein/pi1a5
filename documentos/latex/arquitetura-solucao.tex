@@ -1,0 +1,178 @@
+\chapter{DESENVOLVIMENTO DO PROJETO}
+\newpage
+\section{Arquitetura da solução}
+O projeto web é dividido em duas camadas principais, sendo elas o front-end, responsável pela estilização da plataforma e interação com o usuário, e o back-end, responsável pela aplicação das regras de negócio, gestão das informações em um banco de dados, e pela lógica de execução em si da plataforma.
+
+ \begin{figure}[!htb]
+ 	    \centering
+ 	    \caption{\label{logo}Arquitetura}
+ 	    \includegraphics[width=15cm]{img/infra-model.png}
+ 	    \fonte{Os autores.}
+\end{figure}
+
+\subsection{Front-end}
+O Front-end é a interface da aplicação, construída com Next.js, um framework React que oferece otimizações de desempenho e server-side rendering para uma experiência de usuário mais rápida e fluida. No desenvolvimento da interface, são empregadas as seguintes tecnologias:
+
+\begin{itemize}
+    \item \textbf{Tailwind CSS} \newline
+Tailwind CSS é uma ferramenta utilizada para a estilização da aplicação. Ele adota uma abordagem de "utility-first", o que significa que as classes CSS são utilizadas diretamente no HTML para estilizar os elementos. Isso proporciona uma experiência de desenvolvimento mais rápida e consistente, além de facilitar a manutenção do código.
+
+    \item \textbf{ShadCN} \newline
+ShadCN é uma coleção de componentes prontos que podem ser importados e customizados dentro do código. Esses componentes são escritos em Typescript e Tailwind CSS. Ele não é considerado uma biblioteca, já que é uma extensão do Radix, outra biblioteca de estilização para Javascript.
+
+    \item \textbf{Moment} \newline
+Moment.js é uma biblioteca popular para manipulação de datas e horas em JavaScript. Ela oferece uma ampla gama de funcionalidades para formatação, análise e manipulação de datas, tornando mais fácil trabalhar com informações temporais na aplicação.
+
+    \item \textbf{Nodemailer} \newline
+Nodemailer é uma biblioteca utilizada para enviar e-mails através de Node.js. Ela oferece uma interface simples e flexível para o envio de e-mails, permitindo configurar facilmente o servidor de e-mail, criar templates personalizados e enviar mensagens de forma assíncrona.
+
+    \item \textbf{Framer Motion} \newline
+Framer Motion é uma biblioteca de animações para React que facilita a criação de animações fluidas e responsivas em componentes da interface. Ela oferece uma API declarativa e intuitiva para definir animações de entrada, saída e transição, além de suportar gestos e interações do usuário.
+
+    \item \textbf{PDF Viewer} \newline
+PDF Viewer é uma biblioteca Javascript projetada especificamente para a leitura de arquivos em formato PDF enviados pelos usuários, dentro do NodeJS. Com uma série de ferramentas avançadas, oferece uma experiência de visualização personalizada e intuitiva desses documentos.
+
+    \item \textbf{Google Generative AI} \newline
+A biblioteca Google AI JavaScript SDK permite que os desenvolvedores usem os modelos de IA generativos de última geração do Google (como o Gemini) para criar recursos e aplicativos com tecnologia de IA.
+
+    \item \textbf{Bibliotecas do Firebase} \newline
+Dentro do Front-end, são utilizadas diversas bibliotecas do Firebase para interação com o Back-end e execução de funcionalidades como autenticação, armazenamento de dados e comunicação em tempo real. Algumas das bibliotecas comumente utilizadas incluem:
+\begin{itemize}
+    \item \textbf{firebase}
+    \item \textbf{firebase-admin}
+    \item \textbf{firebase-functions}
+    \item \textbf{firebase-tools}
+\end{itemize}
+
+Essas bibliotecas fornecem uma integração simplificada entre o Front-end e o Back-end, permitindo o desenvolvimento de uma aplicação robusta e interativa.
+
+\end{itemize}
+
+\subsection{Back-end}
+Para o Back-end, é utilizado Firebase, que fornece serviços de banco de dados, armazenamento, autenticação e hospedagem, entre outros, de forma simplificada. O Firebase permite uma configuração rápida e fácil, facilitando o desenvolvimento e a viabilização do projeto.
+Dentro da plataforma do Firebase, são utilizadas as seguintes funcionalidades:
+
+\begin{itemize}
+\item \textbf{Firebase Auth} \newline
+Para autenticação de usuários, permitindo login com e-mail, redes sociais, entre outros métodos.
+\item \textbf{Firebase Firestore} \newline
+Para armazenamento e gerenciamento de dados em tempo real, oferecendo um banco de dados NoSQL escalável e altamente disponível.
+\item \textbf{Firebase Storage} \newline
+Para armazenamento de arquivos, como imagens e vídeos, diretamente na infraestrutura do Firebase.
+\end{itemize}
+
+\subsection{Banco de dados}
+O banco de dados da aplicação está contido nos serviços oferecidos pelo Firebase Realtime Database e Firestore, que são bancos de dados NoSQL escaláveis e altamente disponíveis. A comunicação entre as camadas, API externas e com o cliente são realizadas através do Protocolo HTTP e chamadas REST.
+O banco de dados é estruturado da seguinte maneira, a fim de suportar a gestão das informações dentro da plataforma:
+
+\begin{itemize}
+    \item \textbf{Tabela users}
+    
+    \begin{itemize}
+    \item \textbf{fullname:} Armazena o nome completo do usuário.
+    \item \textbf{email:} Guarda o endereço de e-mail do usuário.
+    \item \textbf{document:} Pode armazenar o documento de identificação do usuário, como CPF. 
+    \item \textbf{noticeid:} Chave estrangeira que faz referência ao edital (notice) associado ao usuário.
+    \end{itemize}
+    
+    \item \textbf{Tabela tasks}
+    
+    \begin{itemize}
+    \item \textbf{title:} Título da tarefa.
+    \item \textbf{description:} Descrição detalhada da tarefa.
+    \item \textbf{contentid:} Chave estrangeira que referencia o conteúdo (content) associado à tarefa. 
+    \item \textbf{difficultyid:} Chave estrangeira que referencia o nível de dificuldade da tarefa. 
+    \item \textbf{hasfinished:} Indica se a tarefa foi concluída ou não.
+    \item \textbf{userid:} Chave estrangeira que faz referência ao usuário que criou a tarefa. 
+    \item \textbf{dayofweek:} Dia da semana em que a tarefa deve ser realizada.
+    \item \textbf{startat:} Horário de início da tarefa.
+    \item \textbf{finishat:} Horário de término da tarefa.
+    \end{itemize}
+    
+    \item \textbf{Tabela difficulties}
+    
+    \begin{itemize}
+    \item \textbf{name:} Nome do nível de dificuldade.
+    \item \textbf{displayname:} Nome de exibição do nível de dificuldade.
+    \end{itemize}
+    
+    \item \textbf{Tabela subjects (matérias)}
+    \begin{itemize}
+    \item \textbf{name:} Nome da matéria.
+    \item \textbf{noticeid:} Chave estrangeira que faz referência ao edital (notice) associado à matéria.
+    \end{itemize}
+    
+    \item \textbf{Tabela contents}
+    \begin{itemize}
+    \item \textbf{subjectid:} Chave estrangeira que referencia a matéria (subject) associada ao conteúdo. 
+    \item \textbf{text:} Texto do conteúdo, que pode conter informações relevantes para estudo.
+    \end{itemize}
+    
+    \item \textbf{Tabela notices (editais)}
+    \begin{itemize}
+    \item \textbf{name:} Nome do cargo ou edital.
+    \item \textbf{filesrc:} Caminho para o arquivo do edital. 
+    \item \textbf{userid:} Usuário que fez o upload do edita.
+    \end{itemize}
+    
+\end{itemize}
+
+Este modelo de banco de dados é projetado para permitir a associação de usuários a tarefas específicas, associadas a conteúdos de estudo e matérias específicas relacionadas aos editais. A inclusão de um nível de dificuldade (na tabela difficulties) proporciona uma maneira de classificar a complexidade das tarefas, enquanto a tabela notices permite o armazenamento e acesso aos editais relacionados aos estudos.
+
+ \begin{figure}[!htb]
+ 	    \centering
+ 	    \caption{\label{logo}Modelo de classes do banco de dados}
+ 	    \includegraphics[width=15cm]{img/db-model.png}
+ 	    \fonte{Os autores.}
+\end{figure}
+\FloatBarrier
+
+\subsection{Integrações}
+Para a interpretação dos conteúdos pragmáticos dentro dos editais, faremos uso e customização dos modelos de inteligência artificial fornecidos pelo Google Gemini. O Gemini, anteriormente conhecido como Bard, é um chatbot desenvolvido pelo Google, baseado na família de modelos de linguagem LaMDA.
+No contexto específico de nossa plataforma, contamos com dois modelos treinados para desempenhar funções cruciais:
+
+\begin{itemize}
+\item \textbf{Interpretação de Conteúdo de Edital e Geração de Matérias} \newline
+Este modelo é encarregado de interpretar o conteúdo pragmático após a filtragem do edital fornecido pelo usuário. Ele irá identificar e extrair as matérias que serão cobradas no concurso, populando assim o banco de dados.
+
+\item \textbf{Interpretação de Matérias e Geração de Tarefas e Rotinas de Estudo} \newline
+ Com o banco de dados já contendo as matérias identificadas, este modelo entra em ação para gerar tarefas e rotinas de estudo personalizadas. Recebendo como entrada as matérias e conteúdos que o usuário ainda precisa estudar, ele irá gerar um cronograma de estudo detalhado, distribuindo as tarefas ao longo da semana de acordo com as necessidades e preferências do usuário.
+\end{itemize}
+
+Essas integrações permitem uma abordagem mais eficiente e personalizada no processo de estudo para concursos, aproveitando o poder dos modelos de linguagem avançados fornecidos pelo Google Gemini.
+
+\subsection{Versionamento de Código}
+O versionamento de código é uma prática fundamental no desenvolvimento de software, permitindo o controle e gerenciamento das alterações feitas ao longo do tempo em um projeto. Para isso, utilizaremos o GitHub como plataforma de versionamento, que oferece uma série de recursos poderosos para colaboração e controle de versões. No nosso ambiente de desenvolvimento, teremos um repositório principal hospedado no GitHub:
+
+\textbf{Repositório do Front-end e Functions do Firebase:} \newline
+Este repositório conterá o código-fonte do Front-end desenvolvido com Next.js, bem como as functions do Firebase utilizadas no Back-end. Será organizado de forma a separar claramente os diretórios relacionados ao Front-end e às functions do Firebase, mantendo uma estrutura de pastas intuitiva e coesa.
+
+\textbf{Estratégia de Versionamento: Gitflow} \newline
+Para gerenciar as diferentes etapas de desenvolvimento e garantir uma colaboração eficiente entre os membros da equipe, adotaremos a estratégia de versionamento Gitflow. Essa abordagem define um modelo de fluxo de trabalho baseado em branches, que facilita a organização das funcionalidades em desenvolvimento, testes e produção.
+Principais Branches:
+
+\begin{itemize}
+\item \textbf{Main (ou Master):} Esta branch representa a versão estável e de produção do código. Todo o código que está pronto para ser implantado em ambiente de produção é mesclado nesta branch.
+
+\item \textbf{Develop:} Esta branch é onde o desenvolvimento ativo ocorre. É a branch de integração para novas funcionalidades e correções de bugs. Todo o desenvolvimento é feito a partir desta branch.
+
+\item \textbf{Feature Branches:} Para cada nova funcionalidade ou tarefa, uma nova branch de feature é criada a partir da branch develop. Esta branch é utilizada para implementar a funcionalidade de forma isolada, antes de ser integrada de volta à branch develop.
+\end{itemize}
+ 
+Adotando essa estratégia de versionamento com o Gitflow, garantimos um desenvolvimento organizado, facilitando a colaboração entre os membros da equipe e mantendo um histórico claro e estruturado das alterações feitas no código-fonte ao longo do tempo.
+
+\subsection{Infraestrutura}
+Para hospedagem, optaremos por utilizar os serviços especializados de hospedagem da Vercel para o Front-end e do Firebase para o Back-end customizado.
+
+\textbf{Hospedagem do Front-end} \newline
+A Vercel oferece um serviço de hospedagem altamente escalável e otimizado para aplicações Front-end, como o nosso desenvolvido com Next.js. Utilizando a plataforma da Vercel, podemos implantar e hospedar facilmente nosso Front-end, garantindo uma experiência de usuário rápida e confiável.
+
+\textbf{Hospedagem do Back-end no Firebase} \newline
+O Firebase oferece por padrão a hospedagem de seus serviços diretamente em sua plataforma, eliminando a necessidade de recorrer a soluções terceirizadas para essa finalidade. Essa integração nativa proporciona uma infraestrutura completa e integrada, capaz de suportar todas as necessidades de nossa aplicação de forma eficiente e escalável.
+
+\subsection{Escalabilidade}
+Tanto a Vercel quanto o Firebase oferecem opções de escalabilidade conforme as necessidades do projeto. No caso da Vercel, podemos facilmente escalar nossa aplicação Front-end de acordo com o aumento da demanda de tráfego. Já o Firebase, além de oferecer hospedagem escalável, também permite dimensionar automaticamente o banco de dados e outros serviços conforme necessário.
+
+\subsection{Plano de Upgrade}
+Inicialmente, faremos uso dos planos gratuitos oferecidos pela Vercel. Já no Firebase, iremos utilizar o plano “pay-as-you-go”, ou seja, o faturamento da conta será de acordo com o uso da plataforma. Optamos por esse plano pois ele nos disponibiliza o uso das Functions, que será essencial para a funcionalidade da nossa plataforma.
+Conforme a aplicação crescer e a demanda aumentar, poderemos considerar a migração para planos pagos que oferecem recursos adicionais e maior capacidade de processamento. Essa decisão será tomada conforme a evolução do projeto e as necessidades específicas que surgirem ao longo do tempo.

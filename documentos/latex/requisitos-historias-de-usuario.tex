@@ -1,0 +1,196 @@
+\section{Análise de Requisitos}
+
+Neste tópico é analisado e definido fatores de negócio do projeto, como requisitos funcionais, requisitos não funcionais, regras de negócios e histórias de usuários. Todos esses fatores foram levados em conta para o desenvolvimento do projeto e devem ser seguidos de forma objetiva e concreta.
+
+\subsection{Regras de Negócio}
+
+\begin{center}
+    \begin{tabular}{|c|c|}
+        \hline
+        \makecell{ID} & \makecell{Descrição}\\
+        
+        \hline
+        \makecell{RN1} & \makecell{Ao acessar o site, para ter acesso aos conteúdos e funcionalidades,\\ usuário precisa estar logado}\\
+        
+        \hline
+        \makecell{RN2} & \makecell{Apenas usuários autenticados podem executar as funcionalidades do sistema}\\
+
+        \hline
+        \makecell{RN3} & \makecell{Após o login bem-sucedido, o sistema deve redirecionar o usuário \\para a página principal da plataforma, onde ele terá acesso\\ às funcionalidades disponíveis, tais quais, upload do edital}\\
+
+        \hline
+        \makecell{RN4} & \makecell{O sistema terá upload de arquivos para envio do edital\\ ou um campo para digitar os conteúdos exigidos no edital}\\
+
+        \hline
+        \makecell{RN5} & \makecell{O sistema deve processar o arquivo enviado pelo usuário\\ e extrair os dados relevantes, como disciplinas, conteúdos e datas de provas}\\
+
+        \hline
+        \makecell{RN6} & \makecell{Caso o formato do arquivo do edital enviado não seja suportado\\ ou o conteúdo não seja identificado corretamente,\\ o sistema deve fornecer feedback ao usuário sobre o problema}\\
+
+        \hline
+        \makecell{RN7} & \makecell{O sistema terá um calendário semanal onde os cards serão organizados}\\
+
+        \hline
+        \makecell{RN8} & \makecell{A rotina de estudos gerada deve ser baseada nas informações \\extraídas do edital do concurso e nas preferências de estudo do usuário,\\ como disponibilidade de tempo e prioridades de aprendizado}\\
+
+        \hline
+        \makecell{RN9} & \makecell{Os cards semanais devem exibir informações detalhadas\\ sobre os temas de estudo, incluindo descrição da matéria e\\ tempo estimado de estudo}\\
+
+        \hline
+        \makecell{RN10} & \makecell{O usuário deve ser capaz de acessar a interface de edição dos \\cards semanais de tarefas a qualquer momento}\\
+
+        \hline
+        \makecell{RN11} & \makecell{As modificações feitas nos cards, como mover para outro dia da semana\\ ou alterar a descrição da tarefa, devem ser refletidas\\ instantaneamente na visualização da rotina de estudos}\\
+
+        \hline
+        \makecell{RN12} & \makecell{O sistema terá um plano pago onde as rotinas serão\\ geradas sem limite e o número de editais será maior}\\
+
+        \hline
+
+        
+    \end{tabular}
+\end{center}
+
+
+\subsection{Requisitos Funcionais}
+
+\begin{center}
+    \begin{tabular}{|c|c|}
+        \hline
+        \makecell{ID} & \makecell{Descrição}\\
+    
+        \hline
+        \makecell{RF1} & \makecell{Sistema de cadastro e login}\\
+
+        \hline
+        \makecell{RF2} & \makecell{O sistema deve permitir que o usuário faça upload de\\ um arquivo contendo o edital do concurso desejado}\\
+
+        \hline
+        \makecell{RF3} & \makecell{O sistema deve permitir que o usuário digite o conteúdo\\ a ser estudado exigido pelo edital}\\
+
+        \hline
+        \makecell{RF4} & \makecell{O sistema deve processar o arquivo enviado\\ e extrair automaticamente as informações relevantes}\\
+
+        \hline
+        \makecell{RF5} & \makecell{O sistema deve fornecer uma interface para que\\ o usuário visualize sua rotina de estudos semanalmente}\\
+
+        \hline
+        \makecell{RF6} & \makecell{A visualização da rotina de estudos deve incluir\\ cards organizados por dia da semana, exibindo os temas de \\estudo, descrições das tarefas e tempos estimados de estudo}\\
+
+        \hline
+        \makecell{RF7} & \makecell{O sistema deve permitir que o usuário edite \\os cards de tarefas em sua rotina de estudos}\\
+
+        \hline
+        \makecell{RF8} & \makecell{A movimentação dos cards deve ser intuitiva e \\feita através de arrastar e soltar na interface da plataforma}\\
+
+        \hline
+        \makecell{RF9} & \makecell{O sistema deve solicitar feedback semanal ao \\usuário sobre os conteúdos estudados}\\
+
+        \hline
+        \makecell{RF10} & \makecell{O sistema deve ser capaz de gerar automaticamente uma\\ rotina de estudos com base nas informações extraídas \\do edital do concurso e nas preferências do usuário}\\
+
+        \hline
+        \makecell{RF11} & \makecell{O sistema deve permitir que o usuário personalize\\ suas preferências de estudo, como horários disponíveis\\ e prioridades de aprendizado}\\
+
+        \hline
+        \makecell{RF12} & \makecell{As preferências de estudo personalizadas devem ser\\ levadas em consideração na geração da rotina de estudos}\\
+        
+        \hline
+        
+    \end{tabular}
+\end{center}
+
+    
+\subsection{Requisitos Não Funcionais}
+
+\begin{center}
+    \begin{tabular}{|c|c|}
+        \hline
+        \makecell{ID} & \makecell{Descrição}\\
+
+        \hline
+        \makecell{RNF1} & \makecell{O sistema deve garantir a segurança dos dados do usuário,\\ implementando medidas de criptografia para proteger\\ informações sensíveis, como senhas e dados pessoais}\\
+
+        \hline
+        \makecell{RNF2} & \makecell{O acesso aos dados do usuário deve ser restrito apenas a\\ usuários autorizados e ser protegido contra acessos não\\ autorizados ou ataques maliciosos}\\
+
+        \hline
+        \makecell{RNF3} & \makecell{O sistema deve ser capaz de lidar com um grande volume de\\ usuários simultâneos sem degradar significativamente o desempenho}\\
+
+        \hline
+        \makecell{RNF4} & \makecell{O tempo de resposta do sistema para as solicitações do\\usuário deve ser no máximo 3 segundos, garantindo uma\\ experiência de uso fluida e sem atrasos perceptíveis}\\
+
+        \hline
+        \makecell{RNF5} & \makecell{A plataforma deve ser compatível com os principais navegadores\\ web, como Google Chrome, Mozilla Firefox, Safari e Microsoft Edge,\\ garantindo uma experiência consistente para todos os usuários}\\
+
+        \hline
+        \makecell{RNF6} & \makecell{A interface do usuário da plataforma deve ser responsiva e\\ adaptável a diferentes dispositivos e tamanhos de tela,\\ incluindo desktops, laptops, tablets e smartphones}\\
+
+        \hline
+        \makecell{RNF7} & \makecell{O sistema deve oferecer suporte para inglês e português}\\
+
+        \hline
+        
+    \end{tabular}
+\end{center}
+
+\section{Histórias de Usuário} 
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    
+    \item \textbf{Realizar Cadastro} \newline
+    
+    Caso: Como usuário interessado em utilizar a plataforma de estudos, desejo me cadastrar no sistema para ter acesso aos recursos disponíveis.
+
+    Critérios de Aceitação:
+    \begin{itemize}
+        \item O usuário deve conseguir preencher o formulário de cadastro.
+        \item O e-mail fornecido pelo usuário deve ser único no sistema.
+        \item A senha deve atender aos padrões de segurança estabelecidos pelo site.
+    \end{itemize} 
+
+    \newpage
+    \item \textbf{Realizar Login} \newline
+
+    Caso: Como usuário registrado, desejo fazer login na plataforma para acessar os recursos disponíveis.
+
+    Critérios de Aceitação:
+    \begin{itemize}
+        \item O usuário deve conseguir fazer login com sucesso utilizando e-mail e senha corretos.
+        \item O acesso aos recursos da plataforma só deve ser permitido para usuários logados.
+    \end{itemize}
+    
+    \item \textbf{Upload de Edital para Concurso} \newline
+    
+    Caso: Como usuário da plataforma de estudos, desejo poder fazer o upload de um edital de concurso para que a plataforma possa gerar uma rotina de estudos personalizada.
+
+    Critérios de Aceitação:
+    \begin{itemize}
+        \item O usuário deve conseguir fazer o upload de um arquivo contendo o edital do concurso desejado.
+        \item A plataforma deve ser capaz de processar o edital e extrair os conteúdos relevantes para a preparação.
+        \item Os conteúdos extraídos devem ser organizados de forma a criar uma rotina de estudos semanal.
+    \end{itemize}
+
+    \item \textbf{Gerar Rotina Semanal de Estudos} \newline
+
+    Caso: Como usuário da plataforma, desejo que a plataforma gere uma rotina semanal de estudos com base nos conteúdos do edital do concurso que fiz o upload.
+
+   Critérios de Aceitação:
+   \begin{itemize}
+       \item A plataforma deve analisar o edital e propor uma rotina de estudos que cubra todos os temas e disciplinas exigidos.
+       \item A rotina deve ser organizada em cards em um calendário semanal, indicando os temas a serem estudados a cada dia.
+       \item Os cards devem ser movíveis para permitir ao usuário ajustar a rotina de acordo com sua disponibilidade e preferências.
+   \end{itemize}
+
+   \item \textbf{Coleta de Feedback Semanal} \newline
+
+   Caso: Como usuário da plataforma de estudos, desejo fornecer feedback semanal sobre os conteúdos estudados para que a plataforma possa ajustar a rotina de estudos.
+
+   Critérios de Aceitação:
+   \begin{itemize}
+       \item Ao final de cada semana, o usuário deve ser solicitado a fornecer feedback sobre os conteúdos estudados.
+       \item O feedback deve incluir informações sobre as matérias estudadas e a dificuldade encontrada em cada uma.
+       \item A plataforma deve usar o feedback fornecido pelo usuário para ajustar a rotina de estudos para a próxima semana, priorizando as matérias com maior dificuldade.
+   \end{itemize}
+    
+\end{enumerate}

@@ -1,0 +1,328 @@
+\chapter{Requisitos das aplicações}
+\label{requisitos-aplicacoes}
+
+Os requisitos das aplicações estabelecem partes dos critérios de avaliação do componente curricular \ac{pds} e também servem como uma lista de verificação (\emph{checklist}), facilitando a escolha de diferentes soluções e desenvolvimento do projeto.
+
+
+\section{A aplicação deve resolver problemas dos usuários e tratar processos}
+
+Apesar da possibilidade de resolver alguns problemas reais somente com armazenamento e busca de dados, para as disciplinas de desenvolvimento de projetos é importante o desenvolvimento de atividades / processos dentro da aplicação.
+
+Não é possível determinar um número exato de processos que devem existir dentro de cada aplicação pois existem contextos diferentes, uma determinada aplicação pode ter um processo grande dividido em fases e outra aplicação pode ter um conjunto de pequenos processos sem dependência direta.
+
+Desenvolvimento do \enquote{zero} de funcionalidades que já existem em outras aplicações / bibliotecas não significam o tratamento de um processo na aplicação (ex \emph{chat}, controle de pagamentos, chamadas de \ac{api}) mas a forma que essas funcionalidades são integradas dentro do sistema podem fazer parte de um processo.
+
+Alguns exemplos de itens que são considerados processos :
+
+\todo[inline]{Coisas que o sistema faz para o usuário }
+\todo[inline]{\enquote{inteligencia} do sistema }
+
+\begin{itemize}
+    \item Gerenciamento de dados entre \enquote{atores} do sistema, com tratamento de permissões responsabilidades;
+    
+\todo[inline]{talvez colocar exemplos ? }
+    
+    \item Determinação automática de dados para o usuário (ex utilizar geolocalização para vinculação de dados a locais a partir de histórico de definições do usuário).
+\end{itemize}
+
+
+Alguns exemplos de itens que não são considerados processos (mas que podem fazer parte de processos) :
+
+\begin{itemize}
+
+    \item chamadas simples de \ac{api} ou redirecionamento para outros sistemas (ex chamada de sistema de pagamento externo, envio de mensagem via \ac{api} \gls{rest});
+
+    \item apresentação de dados simples em formato de gráficos, relatórios, \emph{dashboard} sem tratamentos e controles pela aplicação.
+\end{itemize}
+
+\todo[inline]{Viabilidade de obtenção de dados, não adianta depender de dados que não podem ser obtidos (ex dados de doenças obtidos por envio pelos hospitais)}
+
+\section{Requisitos aplicáveis a todos os projetos}
+
+Todos projetos devem seguir requisitos gerais que são aplicáveis independente da plataforma utilizada. 
+
+O desenvolvimento deve ser feito utilizando pelo menos uma linguagem orientada a objetos utilizando os conceitos de orientação a objetos.
+
+Encorajamos a utilização de soluções prontas para problemas comuns (autenticação, validação, CRUD etc), lembrem que vocês devem manter o foco na resolução do problema que é o objetivo da aplicação e a tecnologia deve auxiliar vocês nesse objetivo.
+
+
+
+
+\todo[inline]{Seria interessante ter alguma parte onde podemos deixar sugestões que podem ser seguidas ou não dependendo do tipo de aplicação, login social (OAuth  via Facebook, Google, Linkedin etc), login web via Telegram entre outros são bem interessantes e reduzem parte da questão de validação de contas e gerenciamento de senhas de maneira segura}
+
+
+%\subsection{Legislação, Privacidade e Segurança}
+
+A aplicação deve ser aderente a legislação aplicável (ex LGPD), além de cuidados com critérios de Privacidade, Segurança e Acessibilidade e Performance.
+
+%\subsection{Performance}
+
+
+
+\todo[inline]{dados como senhas não devem ser armazenados em texto aberto, mas de forma que possam ser validados sem que os administradores ou qualquer outra pessoa possa obter facilmente}
+\todo[inline]{\url{https://owasp.org/www-project-top-ten/}}
+\todo[inline]{\url{https://cheatsheetseries.owasp.org/}}
+
+
+%\todo[inline]{detalhar}
+%\dicasIvan{lgpd}
+
+%\subsection{Privacidade}
+
+%\todo[inline]{detalhar}
+
+%\dicasIvan{lgpd}
+
+
+%\subsection{Segurança}
+%\todo[inline]{detalhar}
+
+
+
+%\subsection{Acessibilidade}
+
+%\todo[inline]{detalhar}
+
+\subsection{Internacionalização}
+
+Com a globalização e disponibilidade de internet uma aplicação pode ter um alcance mundial, para isso as aplicações devem ser pensadas de forma que possam ser utilizadas em mais de um país, a maioria das linguagens já possuem suporte para isso, seguir os padrões de internacionalização desde o inicio do desenvolvimento permite que facilmente uma aplacação seja adaptada para utilização em diferentes países e linguagens.
+
+A aplicação a ser desenvolvida deve ser acessível na língua portuguesa e mais uma outra língua.
+
+\begin{itemize}
+    \item  \url{https://www.w3.org/International/quicktips/index.pt};
+    
+    \item \url{https://developer.android.com/training/basics/supporting-devices/languages.html}.
+\end{itemize}
+
+\todo[inline]{detalhar}
+
+
+\subsection{Disponibilidade na internet}
+
+A aplicação deve ser disponibilizada para acesso via internet (exceto no caso de aplicação Desktop, para a qual deverá ser disponibilizada a versão distribuível). Existem diversos provedores que oferecem contas gratuitas (AWS, Azure, Google, Oracle Cloud, Heroku etc) e também existe o convenio AWS Educate onde os professores podem disponibilizar uma sala com créditos adicionais para uso dos alunos que solicitarem.
+
+As contas AWS Educate devem ser criadas com o e-mail institucional @aluno.ifsp.edu.br a partir do link disponível em \dicasIvan{ifsp}. Essas contas permitem a criação de maquinas em um Data Center localizado nos Estados Unidos.
+
+Soluções que ficam disponíveis na internet devem ser acessíveis a partir de um nome (via serviço de \ac{dns}) e não somente pelo endereço \ac{ip}. Não existe necessidade de registro de um domínio para isso, pode ser utilizado um serviço de \ac{dns} dinâmico ou mesmo um nome oferecido pelo provedor de hospedagem.
+
+O serviço deve ficar disponível na internet para que o desenvolvimento e testes possam acontecer da melhor maneira possível.
+
+
+\subsection{Desenvolvimento}
+
+Durante todo o desenvolvimento os requisitos devem ser seguidos:
+
+\begin{itemize}
+\item Execução continua de \Gls{analise-estatica} \atividade{analise-estatica};
+
+\item Seguir o \emph{Coding Convention} da linguagem ou definido (e documentado) pela equipe \atividade{coding-convention};
+
+\item Código limpo - \citeonline{clean-code};
+
+\item \Gls{vc} \gls{svn}, seguindo as regras indicadas no repositório\footnote{\url{https://svn.spo.ifsp.edu.br/viewvc/A6PGP/0-LEIA_ME.txt?view=markup}};
+
+\item Preferencialmente utilizar um processo de \Gls{integracao-continua}; 
+
+\item Sistema de log \atividade{log};
+
+\item \Gls{testes} \atividade{testes};
+
+\item \Gls{testes-automatizados} \atividade{testes-automatizados}.
+
+\end{itemize}
+
+
+
+\todo[inline]{As aplicações devem ser modeladas de forma compatível com seu objetivo, se uma aplicação tem previsão de crescimento grande os modelos de dados, índices devem ser compatíveis para garantir isso, além da questão de escalabilidade da arquitetura}
+
+
+
+\subsection{Volume de dados para demonstração das funcionalidades}
+As aplicações devem ser testadas e demonstradas com um volume de dados compatível com seus objetivos e também para demonstrar de forma clara o funcionamento correto. Colocar somente um registro em cada tabela não permite demonstrar funcionamentos básicos de paginação, ordenação, filtros e tempo de acesso.
+
+
+
+\section{Requisitos por plataforma}
+Uma plataforma é o ambiente específico no qual a aplicação é executada, podendo ser Desktop, Web, Móvel, Embarcado. 
+
+
+
+\subsection{Desktop}
+Aplicações desktop são softwares utilizados para executar tarefas específicas e podem ser instalados em um único computador. Exemplos de aplicações desktop: Processadores de texto como o Apache OpenOffice Writer e Microsoft Word; Editores de imagem como o Gimp e Adobe Photoshop.
+
+A plataforma desktop deve ser considerada caso a solução tenha elevado nível de interação com hardware e sistema operacional e requisitos altos de segurança e proteção da informação. 
+
+O desenvolvimento para esta plataforma deve ser avaliado com cuidado, pois carrega um conjunto de desafios que já foram resolvidos com as aplicações web e móvel. Dentre os desafios estão: a distribuição e atualização do software; suporte e problemas relacionados ao ambiente; compatibilidade com diferentes sistemas operacionais; e requisitos mínimos de hardware.
+
+Requisitos para a plataforma desktop: 
+
+\begin{itemize}
+  \item Definir como será realizada a distribuição do software;
+  
+  \item Definir licenciamento do software;
+  
+  \item Garantir compatibilidade com os plataformas e sistemas operacionais definidos nos requisitos não funcionais do projeto;
+  
+  \item Definir os requisitos mínimos de hardware;
+  
+  \item Testar os requisitos mínimos de hardware.
+\end{itemize}
+
+\subsection{Web}
+Aplicações web são softwares utilizados através de um navegador podendo ser disponibilizados por um servidor \ac{http} de forma remota ou localmente no dispositivo do usuário. Exemplos de aplicações web: Sistemas acadêmicos como o SUAP; E-commerce como a Amazon; Redes sociais como Facebook e Instagram.
+
+Em geral, as aplicações web são construídas usando o modelo de solicitação e resposta do protocolo \ac{http}. Neste modelo, o cliente (navegador ou outro software) realiza uma requisição a um servidor que processa e devolve uma resposta. Em seguida, a resposta é tratada e utilizada pelo cliente. 
+
+Para garantir a privacidade neste tipo de aplicação deve ser utilizado o protocolo \ac{https} que é a versão criptografada do \ac{http}.
+
+Dentre os tipos de soluções para a plataforma web estão:  Serviços Web, \ac{mpa}, \ac{spa} e \ac{pwa}.
+
+Os Serviços Web, em geral, não entregam conteúdo de apresentação (\ac{html}, \ac{css}, entre outros formatos). O foco desse tipo de solução é a exposição de funcionalidades e dados para integração entre diferentes partes do sistema ou entre sistemas diversos. Dessa forma, os requisitos gerais para plataforma web a seguir não incluem os requisitos para os serviços web, apenas para as soluções \ac{mpa}, \ac{spa} e \ac{pwa}:
+
+\begin{itemize}
+  \item Aplicar as técnicas de layout e conteúdo responsivo\footnote{\url{https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Responsive/responsive_design_building_blocks}};
+  
+  \item Atender no mínimo os requisitos de nível A das diretrizes de acessibilidade \ac{wcag} disponível em \url{https://www.a11yproject.com/checklist/};
+  
+  \item Validar código-fonte de apresentação utilizando os serviços indicados a seguir:
+  \begin{itemize}
+    \item Validador \ac{html} disponível em \url{https://validator.w3.org/};
+    
+    \item Validador \ac{css} disponível em \url{https://jigsaw.w3.org/css-validator//}.
+  \end{itemize}
+  
+  \item Realizar testes de usabilidade dos principais pontos de interação do software utilizando ferramentas gratuitas; 
+  \todo[inline]{Detalhar um pouco mais depois, existem serviços gratuitos que podem ser utilizados.}
+  
+  \item Bibliotecas javascript, \ac{css} e similares de terceiros que são disponibilizadas via \ac{cdn} não devem ser incluídas diretamente no projeto.  
+
+\end{itemize}
+
+\subsection{Móvel}
+O desenvolvimento para plataforma móvel não se limita apenas a smartphones, mas a um conjunto de dispositivos como tablets, relógios inteligentes entre outros. Na plataforma móvel um software é chamado de aplicativo ou \emph{app}. O desenvolvimento de aplicativos pode adotar o modelo nativo, multi-plataforma (\emph{cross-platform}) ou hibrido.
+
+Um aplicativo nativo é aquele desenvolvido de forma exclusiva para um determinado sistema operacional, como o Android ou iOS. Neste modelo, o aplicativo é capaz de consumir diretamente as funcionalidades e recursos do dispositivo e do sistema operacional, tais como câmeras, bluetooth e \ac{gps}. Linguagens de programação como Kotlin ou Java podem ser utilizadas no desenvolvimento Android. Para o sistema operacional iOS são adotadas as linguagens Swift ou Objective-C.
+
+Os aplicativos multi-plataforma (\emph{cross-platform}) permitem gerar executáveis para diferentes plataformas ou sistemas operacionais a partir de uma única base de código. Neste modelo, apenas um aplicativo é desenvolvido e executado em diferentes sistemas como Android e iOS. Isso ajuda as empresas a alcançar um número maior de usuários e também a diminuir o custo com o desenvolvimento e manutenção de versões do aplicativo para diferentes plataformas. Dentre as ferramentas disponíveis para esse modelo de desenvolvimento estão o Flutter\footnote{\url{https://flutter.dev/}} e o React Native\footnote{\url{https://reactnative.dev/}}.
+
+O modelo hibrido consiste um uma mistura de uma solução nativa com uma solução web, escrita com as linguagens \ac{html}, \ac{css} e Javascript dentro de um aplicativo nativo usando um mecanismo de \emph{plugin} como Apache Cordova\footnote{\url{https://cordova.apache.org/}} ou Ionic Capacitor\footnote{\url{https://capacitorjs.com/}}. Esse mecanismo de \emph{plugin} permite o acesso aos recursos nativos das plataformas. No entanto, o grande desafio é conseguir a mesma experiência de interação do usuário que é possível nos modelos nativo ou multi-plataforma.
+
+Requisitos para a plataforma móvel: 
+
+\begin{itemize}
+  \item Definir como será realizada a distribuição do software;
+  
+  \item Definir licenciamento do software;
+  
+  \item Garantir compatibilidade com as plataformas e versões dos sistemas operacionais definidos nos requisitos não funcionais do projeto;
+  
+  \item Definir e testar os requisitos mínimos de hardware;
+  
+  \item Atender os padrões de interação e uso de componentes definidos em recomendações de cada sistema operacional:
+  
+  \begin{itemize}
+      \item Material Design para Android disponível em \url{https://material.io/};
+      
+      \item Human Interface Guidelines para IOS disponível em \url{https://developer.apple.com/design/human-interface-guidelines/}.
+  \end{itemize}
+  
+\end{itemize}
+
+
+\subsection{Embarcado}
+
+Aplicações embarcadas são aquelas que são executadas em um hardware dedicado e interagem com recursos do meio ambiente ou sensores. Essas aplicações normalmente são executadas em equipamentos dedicados como Arduino, ESP8266, Raspberry Pi etc.
+
+Essas aplicações normalmente são conectadas a um servidor Web que gerencia os dados e combina características de Desktop, Web e Móvel.
+
+\todo[inline]{O \ac{ifsp} possui alguns kit Arduino que podem ser emprestados para os alunos que tenham projetos de desenvolvimento  nessa plataforma
+\newline com ensino remoto isso não esta valendo}
+
+
+\section{Requisitos por tipo de solução}
+
+Tipos de solução são definidos por plataforma (Desktop, Web, Móvel e Embarcado). Esses tipos herdam as características e requisitos da plataforma e também podem conter requisitos específicos.
+
+Dependendo da solução ou tipo de projeto a ser desenvolvido, podem ser necessários um ou mais tipos de aplicação, cada qual com sua responsabilidade. Por exemplo, uma \acs{spa} normalmente possui uma aplicação front-end (a aplicação com a qual o usuário irá interagir) e um serviço web, com a qual o front-end se comunica. Dessa forma é importante que as técnicas adequadas sejam usadas no desenvolvimento de cada uma dessas aplicações assim como os requisitos necessários sejam obedecidos.
+
+
+
+
+\subsection{Serviços web}
+Um Serviço Web é um software desenvolvido para oferecer interação entre sistemas. Eles podem ser criados para utilização por aplicações terceiras ou para divisão de uma mesma aplicação, tornando o sistema mais organizado e isolando todo o processamento da interface com o usuário. 
+
+Uma aplicação desenvolvida com base em serviços pode ter uma interface Desktop, Web ou em dispositivo móvel sem necessitar de grandes mudanças, além de permitir o consumo desses serviços por outras aplicações facilitando a integração.
+
+São considerados requisitos para os serviços web desenvolvidos no decorrer do projeto: 
+
+\begin{itemize}
+
+    \item Documentação de acordo com as práticas relacionadas ao tipo de serviço desenvolvido, devidamente hospedados para consulta online: utilizando o padrão \gls{openapi} 3 em \ac{json} ou \ac{yaml} para serviços web REST, WSDL para serviços SOAP, ou ainda observando as boas práticas e recomendações do formato / modelo utilizado;
+    \todo[inline]{ajustar essas siglas}
+    
+%   \item Documentar o serviço utilizando o padrão \gls{openapi} 3 em \ac{json} ou \ac{yaml}
+    \item Validação pelo serviço de todos os dados de entrada, tratando erros e assumindo a possibilidade de requisições inválidas;
+    
+    \item Controle de acesso por meio de autenticação e se necessário autorização;
+    
+    \item Deve estar disponível para utilização através da internet até o final da disciplina na semana de IFA;
+    
+    \item Deve possuir acesso criptografado utilizando \ac{https} \atividade{https};
+    
+    \item Deve ser acessível utilizando um nome e não por endereço \ac{ip} \atividade{hostname}.
+  
+\end{itemize}
+
+
+
+\subsection{Multi-page application (MPA)}
+
+Aplicações de múltiplas páginas (em inglês "multi-page application", ou \acs{mpa}) são software desenvolvidos para utilização através de um navegador. Em geral, são aplicações desenvolvidas utilizando tecnologias web como \ac{html}, \ac{css} e Javascript, linguagens de programação, \ac{sgbd} e distribuídas por um servidor de \ac{http}.
+
+As \ac{mpa} adotam um projeto de software clássico no qual todo ou a maior parte do conteúdo é construído pelo servidor e devolvido ao navegador. Em geral, para cada interação dos usuários com a aplicação é gerada uma nova requisição ao servidor e recarregamento de página no cliente.
+
+As desvantagens das \ac{mpa} são o acoplamento entre responsabilidades de front-end e back-end. Além disso, a aplicação deste modelo dificulta a estratégia de lançamento de um produto para plataforma web e após validação do mesmo, o lançamento como um app mobile. Neste caso, um serviço web teria que ser construído a partir de uma \ac{mpa}, disponibilizando dessa forma acesso as funcionalidades e dados para o app mobile. 
+
+Requisitos para projetos que possuem soluções de múltiplas páginas são os mesmos definidos para plataforma web.
+
+
+\subsection{Single-page application (SPA)}
+
+Assim como as \ac{mpa}, as aplicações de página única (em inglês "single-page application", ou \acs{spa}) são softwares desenvolvidos para utilização através de um navegador. No entanto, elas possuem como objetivo principal fornecer uma experiência de interação similar a uma aplicação desktop. Este objetivo é alcançado por meio do carregamento de todo o código necessário na primeira interação do usuário e em seguida o conteúdo é carregado dinamicamente, sem a necessidade de recarregamento da página. 
+
+Em geral, as requisições de conteúdo são realizadas pelo Javascript utilizando variações da técnica conhecida por \ac{ajax}.
+
+Aplicações de página única devem ser consideradas caso a solução necessite de uma experiência de interação de usuário dinâmica, similar a aplicações Desktop e Mobile. Outro requisito que pode direcionar a escolha de uma \acs{spa} é a necessidade de separação das bases de código ou projetos, entre back-end/serviços e front-end, devido a questões de organização da equipe, separação de responsabilidades, tamanho do projeto, segurança ou limitação de acesso.
+
+A escolha de \acs{spa} para aplicações web que usam os buscadores como fonte primária de tráfego, tais como lojas virtuais, blogs e redes sociais com conteúdo público, deve ser feita com cautela. O conteúdo nas \acs{spa} é carregado de forma dinâmica, desta forma, os robôs que fazem a indexação das páginas nos buscadores podem ter acesso somente ao conteúdo inicial e estático, não encontrando páginas internas. Este cenário pode ser resolvido utilizando uma \ac{mpa} pura, ou com uma solução híbrida \ac{mpa} e \ac{spa} (exemplo de loja virtual na qual o catálogo de produtos é uma \ac{mpa} e o carrinho de compras e checkout é uma \ac{spa}).  
+
+Requisitos para projetos que possuem soluções de página única:
+\begin{itemize}
+  \item Requisitos definidos para plataforma web;
+  
+  \item Requisitos de cada uma das aplicações envolvidas na construção da solução de acordo com seus respectivos tipos (serviços web, aplicação back-end, aplicação front-end, por exemplo).
+  
+\end{itemize}
+
+
+\subsection{Progressive web app (PWA)}
+
+Aplicativos Web Progressivos (em inglês "progressive web app", ou \acs{pwa}) são aplicativos web que usam APIs e recursos dos navegadores, em conjunto com a estratégia de aprimoramento progressivo (em inglês "progressive enhancement") de forma a oferecer uma experiência de usuário semelhante a um aplicativo móvel nativo.
+
+Para considerar uma aplicação web como \acs{pwa} a aplicação deve atender os seguintes requisitos: 
+
+\begin{itemize}
+\item Distribuição por meio de rede segura (contextos seguros (\ac{https}));
+
+\item Utilização de \emph{service workers} para interceptação de requisições e implementação de funcionamento \emph{offline}, \emph{cache} e \emph{push notification};
+
+\item Arquivo de manifesto que define informações como nome, ícone e detalhes para que a aplicação web se pareça com um app mobile nativo;
+
+\item Cumprimento dos requisitos de cada uma das aplicações envolvidas na construção da solução de acordo com seus respectivos tipos (serviços web, aplicação back-end, aplicação front-end, por exemplo).
+
+\end{itemize}
+ 
+\subsection{Jogos}
+
+O desenvolvimento de jogos também é permitido desde que realmente seja feito um desenvolvimento e não somente a utilização de uma ferramenta de criação de jogos por meio de um criador e de \emph{scripts}. Nesse caso em cada turma o número de projetos de jogos deve ser inferior a 50\% do total de projetos da turma.
