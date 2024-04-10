@@ -1,5 +1,4 @@
 \chapter{DESENVOLVIMENTO DO PROJETO}
-\newpage
 \section{Arquitetura da solução}
 O projeto web é dividido em duas camadas principais, sendo elas o front-end, responsável pela estilização da plataforma e interação com o usuário, e o back-end, responsável pela aplicação das regras de negócio, gestão das informações em um banco de dados, e pela lógica de execução em si da plataforma.
 
@@ -173,6 +172,69 @@ O Firebase oferece por padrão a hospedagem de seus serviços diretamente em sua
 \subsection{Escalabilidade}
 Tanto a Vercel quanto o Firebase oferecem opções de escalabilidade conforme as necessidades do projeto. No caso da Vercel, podemos facilmente escalar nossa aplicação Front-end de acordo com o aumento da demanda de tráfego. Já o Firebase, além de oferecer hospedagem escalável, também permite dimensionar automaticamente o banco de dados e outros serviços conforme necessário.
 
-\subsection{Plano de Upgrade}
-Inicialmente, faremos uso dos planos gratuitos oferecidos pela Vercel. Já no Firebase, iremos utilizar o plano “pay-as-you-go”, ou seja, o faturamento da conta será de acordo com o uso da plataforma. Optamos por esse plano pois ele nos disponibiliza o uso das Functions, que será essencial para a funcionalidade da nossa plataforma.
-Conforme a aplicação crescer e a demanda aumentar, poderemos considerar a migração para planos pagos que oferecem recursos adicionais e maior capacidade de processamento. Essa decisão será tomada conforme a evolução do projeto e as necessidades específicas que surgirem ao longo do tempo.
+\subsection{Convenções e Padronização de Código}
+
+Convenções são acordos ou regras estabelecidas para padronizar a forma como realizamos determinadas atividades ou interações. No contexto do desenvolvimento de software, as convenções de codificação são diretrizes estabelecidas para padronizar a escrita e a organização do código-fonte de uma aplicação. Elas definem como devemos nomear variáveis, formatar o código, documentar funcionalidades e adotar certas práticas de desenvolvimento.
+
+Para esse projeto, iremos seguir com as seguintes convenções e padrões de código:
+
+\begin{itemize}
+    \item Nomenclatura de Variáveis e Funções:
+
+Utilize nomes descritivos e significativos para variáveis e funções.
+Prefira camelCase para nomes de variáveis e funções em JavaScript/TypeScript.
+
+    \item Comentários:
+Inclua comentários claros e concisos para explicar trechos de código complexos ou de difícil compreensão.
+Evite comentários óbvios que apenas repetem o que o código faz.
+
+    \item Indentação e Formatação:
+
+Utilize uma tabulação consistente para indentação, preferencialmente com 2 ou 4 espaços.
+Mantenha linhas de código com até 80-100 caracteres para facilitar a leitura em telas menores.
+Organize o código de forma clara e coesa, utilizando espaços em branco para separar blocos lógicos.
+
+    \item Tratamento de Erros:
+
+Sempre inclua tratamento de erros adequado em pontos críticos do código.
+Utilize try-catch para capturar e lidar com exceções de forma apropriada.
+
+    \item Gerenciamento de Dependências:
+
+Mantenha uma lista atualizada de todas as dependências e suas versões no arquivo de manifesto (como package.json).
+Utilize um gerenciador de dependências confiável, como npm ou yarn, e evite adicionar dependências desnecessárias.
+
+    \item Revisões de Código:
+
+Realize revisões de código regulares entre os membros da equipe para identificar e corrigir problemas de qualidade, estilo e desempenho.
+Mantenha um ambiente colaborativo e aberto para sugestões e melhorias no código.
+
+\end{itemize}
+
+\newpage
+
+\subsection{Viabilidade Financeira e Planos de Upgrade}
+
+Inicialmente, para a fase de desenvolvimento e testes, vamos utilizar os planos gratuitos oferecidos pela Vercel para hospedar nosso Front-end. Essa escolha nos permitirá iniciar o projeto de maneira ágil e econômica, facilitando a implantação e os testes iniciais da aplicação.
+
+No entanto, para a fase de produção e lançamento oficial da plataforma, planejamos migrar para soluções pagas. Na Vercel, iremos adotar, inicialmente, o plano Pro, que oferece recursos adicionais, como escalabilidade aprimorada, limites maiores de "bandwidth" e de cachê de dados, além de suporte especializado. Isso garantirá um desempenho consistente e confiável da nossa aplicação em ambiente de produção, além de proporcionar um nível mais alto de serviço e suporte.
+
+Já no Firebase, desde a fase de desenvolvimento iremos optar pelo plano pago Blaze. Isso se dá pois esse plano nos da acesso a serviços específicos da plataforma, como as Functions, funcionalidade que será essencial para o funcionamento da plataforma. Apesar de ser um plano pago, nossos custos iniciais serão baixos, pois o plano segue o formato "pay-as-you-go", ou seja, o faturamento da conta será conforme o uso da plataforma. A flexibilidade desse modelo de pagamento nos permitirá começar com custos mínimos e aumentar conforme o crescimento e a demanda da aplicação.
+
+Os custos do Gemini AI ainda estão sendo levantados. Por se tratar de uma plataforma recente, o Gemini conta apenas com um plano gratuito, que possui limites de uso que se encaixam com o nosso uso durante o desenvolvimento, mas não para o cenário de produção. Apesar disso, o Gemini pretende lançar um plano pay-as-you-go, assim como o Firebase, que possui limites mais adequados para o lançamento da plataforma, mas que conta com um preço de entrada. 
+
+Essas abordagens nos possibilitam começar com investimentos mínimos durante a fase de desenvolvimento, ajustando nossos gastos de acordo com o crescimento e a maturidade do projeto. Dessa forma, garantimos uma transição suave para o ambiente de produção, maximizando o valor entregue aos usuários finais e garantindo o sucesso contínuo da nossa aplicação.
+
+\subsection{Planos de Assinatura e Expectativa Financeira}
+
+Após a análise dos custos envolvidos na operação da plataforma, reconhecemos a necessidade de implementar um modelo de assinatura para garantir o acesso completo às ferramentas oferecidas pela nossa aplicação. Este modelo de assinatura será oferecido em formatos mensal e anual, proporcionando flexibilidade aos usuários de acordo com suas preferências e necessidades. Abaixo, detalhamos os planos disponíveis:
+
+\textbf{Plano Gratuito}
+
+Com o plano gratuito, o usuário terá acesso a todas as funcionalidades da plataforma. Porém, ele está limitado a fazer o upload de apenas um edital, e de utilizar a geração de tarefas por até 3 semanas. Dessa forma, o usuário pode ter uma experiência dentro da plataforma, e decidir se faz sentido ou não começar a pagar pelos serviços completos.
+
+\textbf{Plano Pago}
+
+Nosso Plano Pago oferece aos usuários acesso ilimitado a todas as funcionalidades e recursos avançados da plataforma. Com este plano, os usuários podem fazer o upload de múltiplos editais e aproveitar a geração ilimitada de tarefas.
+
+Para cobrir os custos operacionais e garantir a sustentabilidade da plataforma, estimamos o preço mensal da assinatura em R\$24,99 e o preço anual em R\$249,90. Essa estrutura de preços proporciona aos usuários flexibilidade e economia, incentivando-os a aderir ao plano anual para obter um desconto significativo.
