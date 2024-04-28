@@ -20,7 +20,7 @@ import { Social } from "@/components/auth/social";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/firebase/config";
 import { useToast } from "@/components/ui/use-toast";
-import { useAction } from "@/app/hooks/useAction";
+import { useAction } from "@/hooks/useAction";
 
 export default function Login() {
   const { toast } = useToast();
@@ -51,8 +51,12 @@ export default function Login() {
     <div className="h-full flex flex-col gap-4">
       <div className="h-full flex flex-col gap-4">
         <div className="flex flex-col gap-1">
-          <h3 className="text-3xl font-bold flex gap-2 items-center text-neutral-50">studyflow</h3>
-          <h2 className="text-sm text-secondary-200 text-neutral-200">login to your account</h2>
+          <h3 className="text-3xl font-bold flex gap-2 items-center text-neutral-50">
+            studyflow
+          </h3>
+          <h2 className="text-sm text-secondary-200 text-neutral-200">
+            login to your account
+          </h2>
         </div>
         <Form {...form}>
           <div className="h-full">

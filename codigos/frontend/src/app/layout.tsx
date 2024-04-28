@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Mulish } from "next/font/google";
 import "@/styles/globals.css";
-import { Toaster } from "@/components/ui/toaster"
+import { Toaster } from "@/components/ui/toaster";
+import { AuthProvider } from "@/contexts/user";
 
 const mulish = Mulish({ subsets: ["latin"] });
 
@@ -18,7 +19,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${mulish.className} bg-neutral-900 overflow-hidden`}>
-        {children}
+        <AuthProvider>{children}</AuthProvider>
 
         <Toaster />
       </body>

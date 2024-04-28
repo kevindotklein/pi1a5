@@ -18,15 +18,17 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/firebase/config";
+import { auth, firestore } from "@/firebase/config";
 import { useToast } from "@/components/ui/use-toast";
-import { useAction } from "@/app/hooks/useAction";
+import { useAction } from "@/hooks/useAction";
+import { collection, doc, setDoc } from "firebase/firestore";
 
 export default function Register() {
   const { toast } = useToast();
   const action = useAction();
 
   const formSchema = z.object({
+    full_name: z.string().min(3),
     email: z.string().email(),
     password: z.string(),
   });
@@ -38,10 +40,18 @@ export default function Register() {
   const router = useRouter();
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    const { email, password } = values;
+    const { full_name, email, password } = values;
 
     await action(async () => {
       await createUserWithEmailAndPassword(auth, email, password);
+
+      const userId = auth.currentUser?.uid;
+
+      await setDoc(doc(firestore, "users", userId as string), {
+        full_name,
+        email,
+        has_notice: false,
+      });
 
       router.push("/common/dashboard");
     });
@@ -52,7 +62,7 @@ export default function Register() {
       <div className="h-full flex flex-col gap-4">
         <div className="flex flex-col gap-1">
           <h3 className="text-3xl font-bold flex gap-2 items-center text-neutral-50">
-          studyflow
+            studyflow
           </h3>
           <h2 className="text-sm text-neutral-200">
             create your account, really fast
@@ -65,6 +75,19 @@ export default function Register() {
               className="w-full h-full flex flex-col justify-between gap-4"
             >
               <div className="flex flex-col gap-5">
+                <FormField
+                  control={form.control}
+                  name="full_name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>name</FormLabel>
+                      <FormControl>
+                        <Input placeholder="insert your name" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
                 <FormField
                   control={form.control}
                   name="email"
