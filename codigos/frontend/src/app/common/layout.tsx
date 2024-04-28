@@ -1,6 +1,7 @@
 "use client";
 
 import Loading from "@/components/common/loading";
+import NoticeUpload from "@/components/common/noticeUpload";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/user";
 import { auth } from "@/firebase/config";
@@ -72,6 +73,10 @@ export default function CommonLayout({
           logout
         </Button>
       </div>
+
+      {!hasNotice && (
+        <NoticeUpload hasNotice={hasNotice} setHasNotice={setHasNotice} />
+      )}
       {children}
     </main>
   );

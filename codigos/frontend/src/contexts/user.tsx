@@ -6,6 +6,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 export const AuthContext = createContext({
+  refresh: () => {},
   userData: null,
 });
 
@@ -41,6 +42,7 @@ export function AuthProvider({
   };
 
   const contextValue = {
+    refresh: getUserData,
     userData: { ...userData, auth_info: user },
   };
 
