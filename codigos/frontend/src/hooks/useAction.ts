@@ -4,7 +4,7 @@ import { displayErrorHandler } from "../app/errors/displayErrorHandler";
 export const useAction = () => {
   const { toast } = useToast();
 
-  return async (action: () => Promise<void>, onError: () => Promise<void>) => {
+  return async (action: () => Promise<void>, onError?: () => Promise<void>) => {
     try {
       await action();
     } catch (err: any) {
