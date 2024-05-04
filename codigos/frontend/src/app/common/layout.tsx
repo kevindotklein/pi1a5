@@ -4,6 +4,7 @@ import Loading from "@/components/common/loading";
 import NoticeList from "@/components/common/noticeList";
 import NoticeUpload from "@/components/common/noticeUpload";
 import { Button } from "@/components/ui/button";
+import { useLoading } from "@/contexts/loading";
 import { useAuth } from "@/contexts/user";
 import { auth } from "@/firebase/config";
 import { signOut } from "firebase/auth";
@@ -18,8 +19,8 @@ export default function CommonLayout({
   children: React.ReactNode;
 }>) {
   const router = useRouter();
-
-  const { userData } = useAuth() as any;
+  
+  const { userData, logout } = useAuth() as any;
 
   const [user, loading] = useAuthState(auth) as any;
 
@@ -66,9 +67,7 @@ export default function CommonLayout({
 
         <Button
           onClick={async () => {
-            await signOut(auth);
-
-            router.push("/auth/login");
+            logout();
           }}
         >
           logout

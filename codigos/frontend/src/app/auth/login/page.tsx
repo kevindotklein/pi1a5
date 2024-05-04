@@ -21,9 +21,11 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/firebase/config";
 import { useToast } from "@/components/ui/use-toast";
 import { useAction } from "@/hooks/useAction";
+import { useLoading } from "@/contexts/loading";
 
 export default function Login() {
   const { toast } = useToast();
+  const { setLoading } = useLoading();
   const action = useAction();
 
   const formSchema = z.object({
@@ -38,12 +40,17 @@ export default function Login() {
   const router = useRouter();
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    setLoading(true);
+
     const { email, password } = values;
 
     await action(async () => {
       await signInWithEmailAndPassword(auth, email, password);
 
+      setLoading(false);
       router.push("/common/dashboard");
+    }, async () => {
+      setLoading(false);
     });
   };
 

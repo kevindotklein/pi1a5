@@ -1,6 +1,7 @@
 "use client";
 
 import { auth, firestore } from "@/firebase/config";
+import { signOut } from "firebase/auth";
 import {
   collection,
   doc,
@@ -11,9 +12,12 @@ import {
 } from "firebase/firestore";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useRouter } from "next/navigation";
+import { useLoading } from "./loading";
 
 export const AuthContext = createContext({
   refresh: () => {},
+  logout: () => {},
   userData: null,
 });
 
@@ -26,6 +30,9 @@ export function AuthProvider({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const router = useRouter();
+  
+  const { setLoading } = useLoading();
   const [user, loading] = useAuthState(auth) as any;
 
   const [userData, setUserData] = useState(null) as any;
@@ -75,9 +82,21 @@ export function AuthProvider({
     }
   };
 
+  const logout = async () => {
+    setLoading(true);
+    await signOut(auth);
+
+    setUserData(null);
+
+    router.push("/auth/login");
+
+    setLoading(false);
+  };
+
   const contextValue = {
     refresh: getUserData,
     userData: { ...userData, auth_info: user },
+    logout,
   };
 
   return (

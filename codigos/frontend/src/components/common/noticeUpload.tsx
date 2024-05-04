@@ -48,6 +48,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuth } from "@/contexts/user";
 import { useFunctions } from "@/hooks/useFunctions";
 import { Textarea } from "../ui/textarea";
+import { useLoading } from "@/contexts/loading";
 
 export default function NoticeUpload({
   setHasNotice,
@@ -59,6 +60,7 @@ export default function NoticeUpload({
 
   const { refresh } = useAuth();
   const { processNotice } = useFunctions();
+  const {loading, setLoading} = useLoading();
 
   const [user] = useAuthState(auth);
 
@@ -69,8 +71,6 @@ export default function NoticeUpload({
   const [progresspercent, setProgresspercent] = useState(0);
   const [shouldInputContent, setShouldInputContent] = useState(false);
   const [manualNoticeContent, setManualNoticeContent] = useState("");
-
-  const [loading, setLoading] = useState(false);
 
   const formSchema = z.object({
     name: z.string().min(5),
@@ -140,7 +140,7 @@ export default function NoticeUpload({
 
     await action(
       async () => {
-        setLoading(true);
+        setLoading('please wait, uploading file...');
 
         const file_name = (Math.random() + 1).toString(36).substring(7);
 
@@ -192,17 +192,20 @@ export default function NoticeUpload({
     name?: string;
     downloadURL: string;
   }) => {
+    setLoading('please wait, processing notice...');
+
     const { notice_content, error } = await processNotice({
       url: downloadURL,
       notice_content: manualNoticeContent || "",
     });
 
-    if (error === "No knowledge found") {
+    if (error) {
+      setLoading(false);
       setShouldInputContent(true);
       return;
     }
 
-    console.log({ notice_content, error });
+    setLoading('finishing up...');
 
     const notice = addDoc(collection(firestore, "notices"), {
       name,
@@ -308,7 +311,15 @@ export default function NoticeUpload({
                             className="min-w-[300px] flex items-center justify-between gap-5 p-3 border-solid border-2 border-neutral-600 rounded-sm "
                             key={fileToUpload.name}
                           >
-                            {fileToUpload.name}
+                            {fileToUpload.name.length > 30 ? (
+                              <div className="text-neutral-500">
+                                {fileToUpload.name.substring(0, 30)}...
+                              </div>
+                            ) : (
+                              <div className="text-neutral-500">
+                                {fileToUpload.name}
+                              </div>
+                            )}
 
                             <div className="flex gap-2 items-center justify-center">
                               <Trash
@@ -356,7 +367,7 @@ export default function NoticeUpload({
                               <FormControl>
                                 <Textarea
                                   placeholder="manually insert the notice content"
-                                  className="resize-none"
+                                  className="resize-none min-h-[200px]"
                                   value={manualNoticeContent}
                                   onChange={(e) =>
                                     setManualNoticeContent(e.target.value)

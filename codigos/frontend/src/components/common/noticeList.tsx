@@ -10,6 +10,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import moment from "moment";
 
 export default function NoticeList() {
   const router = useRouter();
@@ -36,7 +37,8 @@ export default function NoticeList() {
                   {notice.name}
                 </p>
                 <span className="text-sm text-neutral-400">
-                  {notice.file_name} - uploaded at {notice.created_at}
+                  {notice.file_name} - uploaded at{" "}
+                  {moment(notice.created_at).format("DD/MM/YYYY HH:mm")}
                 </span>
               </div>
 
@@ -55,9 +57,7 @@ export default function NoticeList() {
                         key={content}
                         className="flex flex-col gap-1 p-2 border border-neutral-600 rounded-sm"
                       >
-                        <p className="text-sm text-neutral-200">
-                          {content}
-                        </p>
+                        <p className="text-sm text-neutral-200">{content}</p>
                       </div>
                     ))}
                   </div>

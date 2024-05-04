@@ -10,7 +10,18 @@ const runModel = async (knowledge) => {
   log(`Starting model with knowledge: ${knowledge}`);
 
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const generationConfig = {
+      temperature: 0.9,
+      topK: 1,
+      topP: 1,
+      maxOutputTokens: 8192,
+    };
+  
+    const safetySettings = [
+      
+    ];
+
+    const model = genAI.getGenerativeModel({ model: "gemini-pro", generationConfig, safetySettings });
 
     const prompt = `
       Quais são as matérias e os conteudos desse texto? Responda em JSON (materias como subjects, e conteudo das materias como contents) Exemplo: { "subjects": [{"name": "Português", "contents": ["Gramática", "Interpretação de texto"]}, {"name": "Matemática", "contents": ["Álgebra", "Geometria"]}] }

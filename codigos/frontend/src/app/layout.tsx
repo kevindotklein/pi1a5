@@ -3,6 +3,7 @@ import { Mulish } from "next/font/google";
 import "@/styles/globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { AuthProvider } from "@/contexts/user";
+import { LoadingProvider } from "@/contexts/loading";
 
 const mulish = Mulish({ subsets: ["latin"] });
 
@@ -19,7 +20,9 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${mulish.className} bg-neutral-900`}>
-        <AuthProvider>{children}</AuthProvider>
+        <LoadingProvider>
+          <AuthProvider>{children}</AuthProvider>
+        </LoadingProvider>
 
         <Toaster />
       </body>

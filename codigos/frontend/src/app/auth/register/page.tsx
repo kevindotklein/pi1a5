@@ -22,10 +22,12 @@ import { auth, firestore } from "@/firebase/config";
 import { useToast } from "@/components/ui/use-toast";
 import { useAction } from "@/hooks/useAction";
 import { collection, doc, setDoc } from "firebase/firestore";
+import { useLoading } from "@/contexts/loading";
 
 export default function Register() {
   const { toast } = useToast();
   const action = useAction();
+  const { setLoading } = useLoading();
 
   const formSchema = z.object({
     full_name: z.string().min(3),
@@ -42,19 +44,27 @@ export default function Register() {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     const { full_name, email, password } = values;
 
-    await action(async () => {
-      await createUserWithEmailAndPassword(auth, email, password);
+    setLoading(true);
+    await action(
+      async () => {
+        await createUserWithEmailAndPassword(auth, email, password);
 
-      const userId = auth.currentUser?.uid;
+        const userId = auth.currentUser?.uid;
 
-      await setDoc(doc(firestore, "users", userId as string), {
-        full_name,
-        email,
-        has_notice: false,
-      });
+        await setDoc(doc(firestore, "users", userId as string), {
+          full_name,
+          email,
+          has_notice: false,
+        });
 
-      router.push("/common/dashboard");
-    });
+        setLoading(false);
+
+        router.push("/common/dashboard");
+      },
+      async () => {
+        setLoading(false);
+      }
+    );
   };
 
   return (
