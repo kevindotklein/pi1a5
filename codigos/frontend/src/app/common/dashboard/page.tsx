@@ -1,16 +1,45 @@
 "use client";
 
-import { Code, File, Notebook } from "lucide-react";
+import NoticeList from "@/components/common/noticeList";
+import NoticeUpload from "@/components/common/noticeUpload";
+import { useAuth } from "@/contexts/user";
+import { auth } from "@/firebase/config";
+import { Link2 } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 export default function Home() {
   const router = useRouter();
 
+  const { userData, logout } = useAuth() as any;
+
+  const [user, loading] = useAuthState(auth) as any;
+
+  const [hasNotice, setHasNotice] = useState(null) as any;
+
+  useEffect(() => {
+    if (!userData) return;
+
+    setHasNotice(userData.has_notice);
+  }, [userData]);
+
   return (
-    <main className="flex flex-col items-center gap-5 justify-between p-24 text-neutral-50">
+    <div className="flex flex-col items-center gap-5 justify-between text-neutral-50 w-full">
       <h1></h1>
 
-      <div className="grid-cols-3 gap-4 grid"></div>
-    </main>
+      {!hasNotice && hasNotice !== null ? (
+        <NoticeUpload setHasNotice={setHasNotice} />
+      ) : (
+        <NoticeList />
+      )}
+
+      <Link href="/common/payments">
+        <span className="text-neutral-50 underline flex gap-2">
+          payments <Link2 />
+        </span>
+      </Link>
+    </div>
   );
 }
