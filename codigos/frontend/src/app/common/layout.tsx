@@ -1,6 +1,7 @@
 "use client";
 
 import Loading from "@/components/common/loading";
+import NoticeList from "@/components/common/noticeList";
 import NoticeUpload from "@/components/common/noticeUpload";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/user";
@@ -22,7 +23,7 @@ export default function CommonLayout({
 
   const [user, loading] = useAuthState(auth) as any;
 
-  const [hasNotice, setHasNotice] = useState(false);
+  const [hasNotice, setHasNotice] = useState(null) as any;
 
   useEffect(() => {
     if (loading) return;
@@ -74,8 +75,10 @@ export default function CommonLayout({
         </Button>
       </div>
 
-      {!hasNotice && (
-        <NoticeUpload hasNotice={hasNotice} setHasNotice={setHasNotice} />
+      {!hasNotice && hasNotice !== null ? (
+        <NoticeUpload setHasNotice={setHasNotice} />
+      ) : (
+        <NoticeList />
       )}
       {children}
     </main>

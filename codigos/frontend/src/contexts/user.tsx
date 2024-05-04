@@ -1,7 +1,14 @@
 "use client";
 
 import { auth, firestore } from "@/firebase/config";
-import { doc, getDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 
@@ -37,7 +44,34 @@ export function AuthProvider({
     const docRef = doc(firestore, "users", user.uid as string);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-      setUserData(docSnap.data());
+      let data = docSnap.data();
+
+      if (data.has_notice) {
+        const noticesRef = collection(firestore, "notices");
+        const noticesQuery = query(
+          noticesRef,
+          where("user_uid", "==", user.uid)
+        );
+        const noticesSnap = await getDocs(noticesQuery);
+
+        const notices = [] as any;
+
+        for (const notice of noticesSnap.docs) {
+          const id = notice.id;
+
+          const subjectRef = collection(firestore, "subjects");
+          const subjectQuery = query(subjectRef, where("notice_id", "==", id));
+          const subjectSnap = await getDocs(subjectQuery);
+
+          const subjects = subjectSnap.docs.map((doc: any) => doc.data());
+
+          notices.push({ id, ...notice.data(), subjects });
+        }
+
+        data = { ...data, notices };
+      }
+
+      setUserData(data);
     }
   };
 

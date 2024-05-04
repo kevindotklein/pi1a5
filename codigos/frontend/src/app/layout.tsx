@@ -18,7 +18,7 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${mulish.className} bg-neutral-900 overflow-hidden`}>
+      <body className={`${mulish.className} bg-neutral-900`}>
         <AuthProvider>{children}</AuthProvider>
 
         <Toaster />

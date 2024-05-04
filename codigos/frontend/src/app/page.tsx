@@ -12,7 +12,7 @@ export default function Home() {
   const [note, setNote] = useState("note/");
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-4">
+    <main className="flex min-h-screen flex-col items-center justify-center gap-4 transition-all">
       <h1 className="text-neutral-50 font-bold">studyflow</h1>
       <h3 className="text-teal-400">
         your way of studying

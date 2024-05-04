@@ -47,12 +47,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuth } from "@/contexts/user";
 import { useFunctions } from "@/hooks/useFunctions";
+import { Textarea } from "../ui/textarea";
 
 export default function NoticeUpload({
-  hasNotice,
   setHasNotice,
 }: {
-  hasNotice: boolean;
   setHasNotice: (hasNotice: boolean) => void;
 }) {
   const action = useAction();
@@ -68,6 +67,9 @@ export default function NoticeUpload({
 
   const [fileToUpload, setFileToUpload] = useState<File>(null as any);
   const [progresspercent, setProgresspercent] = useState(0);
+  const [shouldInputContent, setShouldInputContent] = useState(false);
+  const [manualNoticeContent, setManualNoticeContent] = useState("");
+
   const [loading, setLoading] = useState(false);
 
   const formSchema = z.object({
@@ -128,6 +130,14 @@ export default function NoticeUpload({
       });
     }
 
+    if (manualNoticeContent && shouldInputContent) {
+      await proccessNotice({
+        downloadURL: "no_url",
+        name,
+      });
+      return;
+    }
+
     await action(
       async () => {
         setLoading(true);
@@ -155,46 +165,87 @@ export default function NoticeUpload({
           async () => {
             const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
 
-            await processNotice(downloadURL);
-
-            addDoc(collection(firestore, "notices"), {
+            await proccessNotice({
               name,
-              file_name: fileToUpload.name,
-              url: downloadURL,
-              user_uid: user ? user?.uid : "anonymous",
-              processed: true,
+              downloadURL,
             });
-
-            const userDocRef = doc(firestore, "users", user?.uid as string);
-
-            setDoc(
-              userDocRef,
-              {
-                has_notice: true,
-                notice_name: name,
-              },
-              { merge: true }
-            );
-
-            refresh();
-
-            setFileToUpload(null as any);
-
-            toast({
-              title: "file uploaded!",
-              description: "your notice has been uploaded successfully!",
-            });
-
-            setProgresspercent(0);
-            setLoading(false);
           }
         );
       },
       async () => {
         setLoading(false);
         setProgresspercent(0);
+
+        toast({
+          title: "error!",
+          description:
+            "an error occurred while uploading the file! please try again later.",
+        });
       }
     );
+  };
+
+  const proccessNotice = async ({
+    name,
+    downloadURL,
+  }: {
+    name?: string;
+    downloadURL: string;
+  }) => {
+    const { notice_content, error } = await processNotice({
+      url: downloadURL,
+      notice_content: manualNoticeContent || "",
+    });
+
+    if (error === "No knowledge found") {
+      setShouldInputContent(true);
+      return;
+    }
+
+    console.log({ notice_content, error });
+
+    const notice = addDoc(collection(firestore, "notices"), {
+      name,
+      file_name: fileToUpload.name,
+      url: downloadURL,
+      user_uid: user ? user?.uid : "anonymous",
+      processed: true,
+      created_at: new Date().toISOString(),
+    });
+
+    const notice_id = (await notice).id;
+
+    for (const subject of notice_content?.subjects) {
+      await addDoc(collection(firestore, "subjects"), {
+        ...subject,
+        notice_id,
+      });
+    }
+
+    const userDocRef = doc(firestore, "users", user?.uid as string);
+
+    setDoc(
+      userDocRef,
+      {
+        has_notice: true,
+        notice_name: name,
+      },
+      { merge: true }
+    );
+
+    refresh();
+
+    setFileToUpload(null as any);
+
+    toast({
+      title: "file uploaded!",
+      description: "your notice has been uploaded successfully!",
+    });
+
+    setProgresspercent(0);
+    setLoading(false);
+
+    setHasNotice(true);
   };
 
   return (
@@ -292,6 +343,30 @@ export default function NoticeUpload({
                             </FormItem>
                           )}
                         />
+
+                        {shouldInputContent && (
+                          <div className="flex flex-col gap-5">
+                            <h3>
+                              we couldn't automatically extract the notice
+                              content, please insert it manually
+                            </h3>
+
+                            <FormItem>
+                              <FormLabel>notice content</FormLabel>
+                              <FormControl>
+                                <Textarea
+                                  placeholder="manually insert the notice content"
+                                  className="resize-none"
+                                  value={manualNoticeContent}
+                                  onChange={(e) =>
+                                    setManualNoticeContent(e.target.value)
+                                  }
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          </div>
+                        )}
                       </div>
 
                       <div className="flex items-center justify-between w-full">
@@ -299,9 +374,10 @@ export default function NoticeUpload({
                           <Button variant="secondary">cancel</Button>
                         </DialogClose>
 
-                        <Button 
-                        // disabled={loading} 
-                        type="submit">
+                        <Button
+                          // disabled={loading}
+                          type="submit"
+                        >
                           upload
                         </Button>
                       </div>
