@@ -1,6 +1,13 @@
 /* eslint-disable require-jsdoc */
 import { PdfReader } from "pdfreader";
 
+const contentFilters = [
+  "CONHECIMENTOS BÁSICOS",
+  "CONHECIMENTOS GERAIS",
+  "CONHECIMENTOS ESPECÍFICOS",
+  "CONTEÚDOS PROGRAMÁTICOS",
+];
+
 function groupRows(rows) {
   let text = "";
   const list = Object.keys(rows) // => array of y-positions (type: float)
@@ -46,7 +53,7 @@ const readPDF = (buffer) => {
         if (
           !foundContent &&
           pageText &&
-          pageText.includes("CONHECIMENTOS BÁSICOS")
+          contentFilters.some((filter) => pageText.includes(filter))
         ) {
           knowledge += pageText;
           foundContent = true;
