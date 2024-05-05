@@ -17,11 +17,16 @@ export default function PaymentForm() {
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    const url =
+        process.env.environment === "prod"
+        ? "https://studyflow-three.vercel.app"
+        : "http://localhost:3000";
+
     stripe?.redirectToCheckout({
       lineItems: [{ price: "price_1PCpPdDt62iTpm5zepnVBJbg", quantity: 1 }],
       mode: "payment",
-      successUrl: "http://localhost:3000", // Defina uma página para apresentar sucesso no pagamento
-      cancelUrl: "http://localhost:3000", // Defina uma página para apresentar erro no pagamento
+      successUrl: `${url}/common/payments/success`,
+      cancelUrl: `${url}/common/payments/cancel`,
     });
   };
 
