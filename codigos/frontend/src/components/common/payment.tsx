@@ -24,7 +24,7 @@ export default function PaymentForm() {
 
     stripe?.redirectToCheckout({
       lineItems: [{ price: "price_1PCpPdDt62iTpm5zepnVBJbg", quantity: 1 }],
-      mode: "payment",
+      mode: "subscription",
       successUrl: `${url}/common/payments/success`,
       cancelUrl: `${url}/common/payments/cancel`,
     });
