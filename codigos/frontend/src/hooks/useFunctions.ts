@@ -7,7 +7,7 @@ export const useFunctions = () => {
   const { toast } = useToast();
 
   const url =
-    process.env.environment === "production"
+    process.env.environment === "prod"
       ? "https://us-central1-noz-ifsp.cloudfunctions.net"
       : "http://127.0.0.1:5001/noz-ifsp/us-central1";
 
