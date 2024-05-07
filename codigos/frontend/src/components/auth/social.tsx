@@ -6,7 +6,11 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
-import { GithubAuthProvider, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import {
+  GithubAuthProvider,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
 import { auth } from "@/firebase/config";
 
 export const Social = () => {
@@ -19,7 +23,6 @@ export const Social = () => {
       if (provider === "google") {
         const googleProvider = new GoogleAuthProvider();
         await signInWithPopup(auth, googleProvider);
-
       }
 
       if (provider === "github") {
@@ -38,7 +41,7 @@ export const Social = () => {
       <Button
         type="button"
         size="lg"
-        className="w-full bg-neutral-600"
+        className="w-full bg-neutral-800"
         onClick={() => onClick("google")}
       >
         <FcGoogle className="h-5 w-5" />
@@ -46,7 +49,7 @@ export const Social = () => {
       <Button
         type="button"
         size="lg"
-        className="w-full bg-neutral-600"
+        className="w-full bg-neutral-800"
         onClick={() => onClick("github")}
       >
         <FaGithub className="h-5 w-5" />

@@ -255,12 +255,19 @@ export default function NoticeUpload({
   };
 
   return (
-    <main className="flex flex-col items-center gap-5 justify-between p-24 text-neutral-50">
+    <main className="flex flex-col items-center gap-5 justify-between p-24 text-black">
       <h1>{t("notice-upload.no-upload-message")}</h1>
 
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="secondary">
+          <Button
+            variant="secondary"
+            style={{
+              backgroundColor: "#292929",
+              color: "white",
+              borderRadius: "10px",
+            }}
+          >
             {t("notice-upload.upload-button")}
           </Button>
         </DialogTrigger>
@@ -333,7 +340,7 @@ export default function NoticeUpload({
                             </div>
                           </div>
                         ) : (
-                          <div className="text-neutral-500">
+                          <div className="text-neutral-700">
                             {t("notice-upload.modal.no-file-message")}
                           </div>
                         )}
@@ -391,7 +398,12 @@ export default function NoticeUpload({
 
                       <div className="flex items-center justify-between w-full">
                         <DialogClose asChild>
-                          <Button variant="secondary">
+                          <Button
+                            variant="secondary"
+                            style={{
+                              borderRadius: "10px",
+                            }}
+                          >
                             {t("notice-upload.modal.cancel-button")}
                           </Button>
                         </DialogClose>
@@ -399,6 +411,11 @@ export default function NoticeUpload({
                         <Button
                           // disabled={loading}
                           type="submit"
+                          style={{
+                            backgroundColor: "#0D4290",
+                            color: "white",
+                            borderRadius: "10px",
+                          }}
                         >
                           {t("notice-upload.modal.submit-button")}
                         </Button>

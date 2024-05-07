@@ -64,10 +64,10 @@ export default function Login() {
     <div className="h-full flex flex-col gap-4">
       <div className="h-full flex flex-col gap-4">
         <div className="flex flex-col gap-1">
-          <h3 className="text-3xl font-bold flex gap-2 items-center text-neutral-50">
+          <h3 className="text-3xl font-bold flex gap-2 items-center text-neutral-100">
             studyflow
           </h3>
-          <h2 className="text-sm text-secondary-200 text-neutral-200">
+          <h2 className="text-sm text-secondary-200 text-neutral-300">
             {t("login.subtitle")}
           </h2>
         </div>
@@ -119,7 +119,7 @@ export default function Login() {
                 <Button variant="link" asChild>
                   <Link
                     href="/auth/register"
-                    className="text-sm hover:underline tablet:!text-xs text-neutral-200"
+                    className="text-sm hover:underline tablet:!text-xs text-white"
                   >
                     {t("login.register-question")}
                   </Link>

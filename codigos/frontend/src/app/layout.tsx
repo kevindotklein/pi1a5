@@ -19,7 +19,7 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${mulish.className} bg-neutral-900`}>
+      <body className={`${mulish.className} bg-neutral-100`}>
         <LoadingProvider>
           <AuthProvider>{children}</AuthProvider>
         </LoadingProvider>

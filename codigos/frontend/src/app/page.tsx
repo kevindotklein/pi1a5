@@ -16,24 +16,33 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center gap-4 transition-all">
-      <h1 className="text-neutral-50 font-bold">studyflow</h1>
-      <h3 className="text-teal-400">{t("home.slogan")}</h3>
+      <h1 className="text-black font-bold">studyflow</h1>
+      <h3 className="text-blue-800">{t("home.slogan")}</h3>
 
       <div className="flex flex-col gap-1 items-center justify-center mx-5">
-        <h3 className="text-neutral-50">{t("home.starting-message")}</h3>
+        <h3 className="text-black">{t("home.starting-message")}</h3>
       </div>
 
       <Link href="/auth/login">
-        <Button variant="outline">{t("home.login-button")}</Button>
+        <Button
+          variant="outline"
+          style={{
+            backgroundColor: "#0D4290",
+            color: "white",
+            borderRadius: "10px",
+          }}
+        >
+          {t("home.login-button")}
+        </Button>
       </Link>
 
-      <h3 className="text-neutral-50 text-sm mt-5">
+      <h3 className="text-black text-sm mt-5">
         {t("home.footer-message-1")}{" "}
         <a
           href="https://github.com/PedroDias-Dev"
           target="_blank"
           rel="noopener noreferrer"
-          className="underline text-teal-500"
+          className="underline text-blue-700"
         >
           <strong>noz</strong>
         </a>{" "}

@@ -74,10 +74,10 @@ export default function Register() {
     <div className="h-full flex flex-col gap-4">
       <div className="h-full flex flex-col gap-4">
         <div className="flex flex-col gap-1">
-          <h3 className="text-3xl font-bold flex gap-2 items-center text-neutral-50">
+          <h3 className="text-3xl font-bold flex gap-2 items-center text-neutral-100">
             studyflow
           </h3>
-          <h2 className="text-sm text-neutral-200">{t("register.subtitle")}</h2>
+          <h2 className="text-sm text-neutral-300">{t("register.subtitle")}</h2>
         </div>
         <Form {...form}>
           <div className="h-full">
@@ -141,7 +141,7 @@ export default function Register() {
                 <Button variant="link" asChild>
                   <Link
                     href="/auth/login"
-                    className="text-sm hover:underline tablet:!text-xs text-neutral-200"
+                    className="text-sm hover:underline tablet:!text-xs text-white"
                   >
                     {t("register.login-question")}
                   </Link>

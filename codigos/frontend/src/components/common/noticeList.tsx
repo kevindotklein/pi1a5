@@ -25,7 +25,7 @@ export default function NoticeList() {
   console.log(userData);
 
   return (
-    <div className="flex flex-col items-center justify-center gap-4 p-4 text-white w-full ">
+    <div className="flex flex-col items-center justify-center gap-4 p-4 text-black w-full ">
       <h2>{t("notice-list.title")}</h2>
 
       {userData?.notices?.length ? (
@@ -36,7 +36,7 @@ export default function NoticeList() {
               className="flex flex-col gap-3 p-4 border border-neutral-800 rounded-lg w-[50%]"
             >
               <div key={notice.id} className="flex flex-col gap-1">
-                <p className="text-lg text-neutral-100 cursor-pointer hover:text-neutral-200">
+                <p className="text-lg text-blue-600 cursor-pointer hover:text-blue-800">
                   {notice.name}
                 </p>
                 <span className="text-sm text-neutral-400">
@@ -53,14 +53,14 @@ export default function NoticeList() {
                     key={subject.id}
                     className="flex flex-col gap-3 p-4 border border-neutral-500 rounded-sm"
                   >
-                    <p className="text-lg text-neutral-100">{subject.name}</p>
+                    <p className="text-lg text-neutral-800">{subject.name}</p>
 
                     {subject.contents.map((content: any) => (
                       <div
                         key={content}
                         className="flex flex-col gap-1 p-2 border border-neutral-600 rounded-sm"
                       >
-                        <p className="text-sm text-neutral-200">{content}</p>
+                        <p className="text-sm text-black">{content}</p>
                       </div>
                     ))}
                   </div>

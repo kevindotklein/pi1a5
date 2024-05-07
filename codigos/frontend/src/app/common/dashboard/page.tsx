@@ -38,7 +38,7 @@ export default function Home() {
       )}
 
       <Link href="/common/payments">
-        <span className="text-neutral-50 underline flex gap-2">
+        <span className="text-black underline flex gap-2">
           {t("dashboard.payments")} <Link2 />
         </span>
       </Link>

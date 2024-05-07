@@ -12,7 +12,7 @@ export default function Payments() {
   );
 
   return (
-    <div className="flex flex-col items-center gap-5 justify-between text-neutral-50 w-full">
+    <div className="flex flex-col items-center gap-5 justify-between text-neutral-50 w-full mt-5">
       <Elements stripe={stripePromise}>
         <PaymentForm />
       </Elements>

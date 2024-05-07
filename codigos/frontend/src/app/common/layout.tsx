@@ -36,7 +36,7 @@ export default function CommonLayout({
 
   if (loading)
     return (
-      <div className="w-full min-h-screen flex items-center justify-center text-neutral-600">
+      <div className="w-full min-h-screen flex items-center justify-center text-neutral-100">
         loading...
       </div>
     );
@@ -53,13 +53,19 @@ export default function CommonLayout({
           height={50}
           className="rounded-full"
         />
-        <span className="text-lg font-bold text-neutral-50">
+        <span className="text-lg font-bold text-black">
           {user?.displayName || user?.email}
         </span>
 
         <Button
           onClick={async () => {
             logout();
+          }}
+          style={{
+            backgroundColor: "#0D4290",
+            color: "white",
+            borderRadius: "10px",
+            minWidth: "80px",
           }}
         >
           {t("auth-user-layout.logout-button")}
