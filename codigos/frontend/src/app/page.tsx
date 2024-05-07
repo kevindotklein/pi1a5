@@ -6,30 +6,29 @@ import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import "../locales/i18n";
+import { useTranslation } from "react-i18next";
 
 export default function Home() {
   const router = useRouter();
   const [note, setNote] = useState("note/");
+  const { t, i18n } = useTranslation();
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center gap-4 transition-all">
       <h1 className="text-neutral-50 font-bold">studyflow</h1>
-      <h3 className="text-teal-400">
-        your way of studying
-      </h3>
+      <h3 className="text-teal-400">{t("home.slogan")}</h3>
 
       <div className="flex flex-col gap-1 items-center justify-center mx-5">
-        <h3 className="text-neutral-50">
-          get started here:
-        </h3>
+        <h3 className="text-neutral-50">{t("home.starting-message")}</h3>
       </div>
 
       <Link href="/auth/login">
-        <Button variant="outline">login</Button>
+        <Button variant="outline">{t("home.login-button")}</Button>
       </Link>
 
       <h3 className="text-neutral-50 text-sm mt-5">
-        made by{" "}
+        {t("home.footer-message-1")}{" "}
         <a
           href="https://github.com/PedroDias-Dev"
           target="_blank"
@@ -38,7 +37,7 @@ export default function Home() {
         >
           <strong>noz</strong>
         </a>{" "}
-        for noz usage only
+        {t("home.footer-message-2")}
       </h3>
     </main>
   );

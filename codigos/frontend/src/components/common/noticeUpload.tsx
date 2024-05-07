@@ -49,6 +49,7 @@ import { useAuth } from "@/contexts/user";
 import { useFunctions } from "@/hooks/useFunctions";
 import { Textarea } from "../ui/textarea";
 import { useLoading } from "@/contexts/loading";
+import { useTranslation } from "react-i18next";
 
 export default function NoticeUpload({
   setHasNotice,
@@ -60,7 +61,7 @@ export default function NoticeUpload({
 
   const { refresh } = useAuth();
   const { processNotice } = useFunctions();
-  const {loading, setLoading} = useLoading();
+  const { loading, setLoading } = useLoading();
 
   const [user] = useAuthState(auth);
 
@@ -71,6 +72,8 @@ export default function NoticeUpload({
   const [progresspercent, setProgresspercent] = useState(0);
   const [shouldInputContent, setShouldInputContent] = useState(false);
   const [manualNoticeContent, setManualNoticeContent] = useState("");
+
+  const { t, i18n } = useTranslation();
 
   const formSchema = z.object({
     name: z.string().min(5),
@@ -140,7 +143,7 @@ export default function NoticeUpload({
 
     await action(
       async () => {
-        setLoading('please wait, uploading file...');
+        setLoading("please wait, uploading file...");
 
         const file_name = (Math.random() + 1).toString(36).substring(7);
 
@@ -192,7 +195,7 @@ export default function NoticeUpload({
     name?: string;
     downloadURL: string;
   }) => {
-    setLoading('please wait, processing notice...');
+    setLoading("please wait, processing notice...");
 
     const { notice_content, error } = await processNotice({
       url: downloadURL,
@@ -205,7 +208,7 @@ export default function NoticeUpload({
       return;
     }
 
-    setLoading('finishing up...');
+    setLoading("finishing up...");
 
     const notice = addDoc(collection(firestore, "notices"), {
       name,
@@ -253,21 +256,20 @@ export default function NoticeUpload({
 
   return (
     <main className="flex flex-col items-center gap-5 justify-between p-24 text-neutral-50">
-      <h1>
-        you still haven't uploaded any notice, let's get started by uploading a
-        file?
-      </h1>
+      <h1>{t("notice-upload.no-upload-message")}</h1>
 
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="secondary">Upload</Button>
+          <Button variant="secondary">
+            {t("notice-upload.upload-button")}
+          </Button>
         </DialogTrigger>
 
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>upload a file</DialogTitle>
+            <DialogTitle>{t("notice-upload.modal.title")}</DialogTitle>
             <DialogDescription>
-              drag and drop a file here or click to select a file
+              {t("notice-upload.modal.subtitle")}
             </DialogDescription>
 
             {progresspercent ? (
@@ -296,7 +298,7 @@ export default function NoticeUpload({
                   onClick={() => inputRef.current.click()}
                   ref={drop}
                 >
-                  drop file or click here
+                  {t("notice-upload.modal.upload-input")}
                 </div>
 
                 <Form {...form}>
@@ -332,7 +334,7 @@ export default function NoticeUpload({
                           </div>
                         ) : (
                           <div className="text-neutral-500">
-                            no file selected
+                            {t("notice-upload.modal.no-file-message")}
                           </div>
                         )}
                       </div>
@@ -343,10 +345,14 @@ export default function NoticeUpload({
                           name="name"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>name</FormLabel>
+                              <FormLabel>
+                                {t("notice-upload.modal.notice-name")}
+                              </FormLabel>
                               <FormControl>
                                 <Input
-                                  placeholder="insert the notice name"
+                                  placeholder={t(
+                                    "notice-upload.modal.notice-name-input"
+                                  )}
                                   {...field}
                                 />
                               </FormControl>
@@ -357,16 +363,19 @@ export default function NoticeUpload({
 
                         {shouldInputContent && (
                           <div className="flex flex-col gap-5">
-                            <h3>
-                              we couldn't automatically extract the notice
-                              content, please insert it manually
-                            </h3>
+                            <h3>{t("notice-upload.errors.extract-content")}</h3>
 
                             <FormItem>
-                              <FormLabel>notice content</FormLabel>
+                              <FormLabel>
+                                {t(
+                                  "notice-upload.modal.manually.notice-content"
+                                )}
+                              </FormLabel>
                               <FormControl>
                                 <Textarea
-                                  placeholder="manually insert the notice content"
+                                  placeholder={t(
+                                    "notice-upload.modal.manually.notice-content-input"
+                                  )}
                                   className="resize-none min-h-[200px]"
                                   value={manualNoticeContent}
                                   onChange={(e) =>
@@ -382,14 +391,16 @@ export default function NoticeUpload({
 
                       <div className="flex items-center justify-between w-full">
                         <DialogClose asChild>
-                          <Button variant="secondary">cancel</Button>
+                          <Button variant="secondary">
+                            {t("notice-upload.modal.cancel-button")}
+                          </Button>
                         </DialogClose>
 
                         <Button
                           // disabled={loading}
                           type="submit"
                         >
-                          upload
+                          {t("notice-upload.modal.submit-button")}
                         </Button>
                       </div>
                     </form>

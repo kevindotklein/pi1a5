@@ -9,16 +9,18 @@ import {
 import axios from "axios";
 import React from "react";
 import { Button } from "../ui/button";
+import { useTranslation } from "react-i18next";
 
 export default function PaymentForm() {
   const stripe = useStripe();
   const elements = useElements();
+  const { t, i18n } = useTranslation();
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const url =
-        process.env.environment === "prod"
+      process.env.environment === "prod"
         ? "https://studyflow-three.vercel.app"
         : "http://localhost:3000";
 
@@ -37,7 +39,7 @@ export default function PaymentForm() {
     >
       {/* <CardElement /> */}
       <Button type="submit" variant="default" size="lg">
-        test payment integration
+        {t("payments.check-in.message")}
       </Button>
     </form>
   );

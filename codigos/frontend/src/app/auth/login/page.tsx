@@ -22,11 +22,14 @@ import { auth } from "@/firebase/config";
 import { useToast } from "@/components/ui/use-toast";
 import { useAction } from "@/hooks/useAction";
 import { useLoading } from "@/contexts/loading";
+import { useTranslation } from "react-i18next";
 
 export default function Login() {
   const { toast } = useToast();
   const { setLoading } = useLoading();
   const action = useAction();
+
+  const { t, i18n } = useTranslation();
 
   const formSchema = z.object({
     email: z.string().email(),
@@ -44,14 +47,17 @@ export default function Login() {
 
     const { email, password } = values;
 
-    await action(async () => {
-      await signInWithEmailAndPassword(auth, email, password);
+    await action(
+      async () => {
+        await signInWithEmailAndPassword(auth, email, password);
 
-      setLoading(false);
-      router.push("/common/dashboard");
-    }, async () => {
-      setLoading(false);
-    });
+        setLoading(false);
+        router.push("/common/dashboard");
+      },
+      async () => {
+        setLoading(false);
+      }
+    );
   };
 
   return (
@@ -62,7 +68,7 @@ export default function Login() {
             studyflow
           </h3>
           <h2 className="text-sm text-secondary-200 text-neutral-200">
-            login to your account
+            {t("login.subtitle")}
           </h2>
         </div>
         <Form {...form}>
@@ -77,9 +83,12 @@ export default function Login() {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>e-mail</FormLabel>
+                      <FormLabel>{t("login.email")}</FormLabel>
                       <FormControl>
-                        <Input placeholder="insert your e-mail" {...field} />
+                        <Input
+                          placeholder={t("login.email-input")}
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -90,11 +99,11 @@ export default function Login() {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>password</FormLabel>
+                      <FormLabel>{t("login.password")}</FormLabel>
                       <FormControl>
                         <Input
                           type="password"
-                          placeholder="insert your password"
+                          placeholder={t("login.password-input")}
                           {...field}
                         />
                       </FormControl>
@@ -112,12 +121,12 @@ export default function Login() {
                     href="/auth/register"
                     className="text-sm hover:underline tablet:!text-xs text-neutral-200"
                   >
-                    {"don't have an account?"}
+                    {t("login.register-question")}
                   </Link>
                 </Button>
 
                 <Button variant="default" size="lg">
-                  login
+                  {t("login.submit-button")}
                 </Button>
               </div>
             </form>

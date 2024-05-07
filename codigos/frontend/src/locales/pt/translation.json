@@ -1,0 +1,79 @@
+{
+  "register": {
+    "subtitle": "crie sua conta, é rápido",
+    "name": "nome",
+    "name-input": "insira seu nome",
+    "email": "e-mail",
+    "email-input": "insira seu e-mail",
+    "password": "senha",
+    "password-input": "insira sua senha",
+    "login-question": "já tem uma conta?",
+    "submit-button": "registrar"
+  },
+
+  "home": {
+    "slogan": "seu jeito de estudar",
+    "starting-message": "comece aqui:",
+    "login-button": "login",
+    "footer-message-1": "feito por",
+    "footer-message-2": "apenas para uso do noz"
+  },
+
+  "login": {
+    "subtitle": "entre na sua conta",
+    "email": "e-mail",
+    "email-input": "insira seu e-mail",
+    "password": "senha",
+    "password-input": "insira sua senha",
+    "register-question": "não tem uma conta?",
+    "submit-button": "login"
+  },
+
+  "notice-upload": {
+    "no-upload-message": "você ainda não enviou um edital, vamos começar enviando um arquivo?",
+    "upload-button": "Enviar",
+    "modal": {
+      "title": "envie um arquivo",
+      "subtitle": "arraste um arquivo aqui ou clique para selecionar um arquivo",
+      "upload-input": "arraste um arquivo ou clique aqui",
+      "no-file-message": "nenhum arquivo selecionado",
+      "notice-name": "nome",
+      "notice-name-input": "insira o nome do edital",
+      "cancel-button": "cancelar",
+      "submit-button": "enviar",
+      "manually": {
+        "notice-content": "conteúdo do edital",
+        "notice-content-input": "insira manualmente os conteúdos do edital"
+      }
+    },
+    "errors" : {
+      "extract-content": "nós não conseguimos extrair os conteúdos do edital automaticamente, por favor insira-os manualmente"
+    }
+  },
+
+  "dashboard": {
+    "payments": "pagamentos"
+  },
+
+  "auth-user-layout": {
+    "logout-button": "sair"
+  },
+
+  "notice-list": {
+    "title": "seus editais",
+    "uploaded-at": "enviado em",
+    "subj-and-contents": "matérias e conteúdos:"
+  },
+
+  "payments": {
+    "check-in": {
+      "message": "testar a integração de pagamentos"
+    },
+    "success": {
+      "message": "pagamento processado com sucesso!"
+    },
+    "cancel": {
+      "message": "o pagamento foi cancelado ou falhou"
+    }
+  }
+}

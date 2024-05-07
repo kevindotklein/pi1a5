@@ -1,0 +1,79 @@
+{
+  "register": {
+    "subtitle": "create your account, really fast",
+    "name": "name",
+    "name-input": "insert your name",
+    "email": "e-mail",
+    "email-input": "insert your e-mail",
+    "password": "password",
+    "password-input": "insert your password",
+    "login-question": "already have an account?",
+    "submit-button": "register"
+  },
+
+  "home": {
+    "slogan": "your way of studying",
+    "starting-message": "get started here:",
+    "login-button": "login",
+    "footer-message-1": "made by",
+    "footer-message-2": "for noz usage only"
+  },
+
+  "login": {
+    "subtitle": "login to your account",
+    "email": "e-mail",
+    "email-input": "insert your e-mail",
+    "password": "password",
+    "password-input": "insert your password",
+    "register-question": "don't have an account?",
+    "submit-button": "login"
+  },
+
+  "notice-upload": {
+    "no-upload-message": "you still haven't uploaded any notice, let's get started by uploading a file?",
+    "upload-button": "Upload",
+    "modal": {
+      "title": "upload a file",
+      "subtitle": "drag and drop a file here or click to select a file",
+      "upload-input": "drop file or click here",
+      "no-file-message": "no file selected",
+      "notice-name": "name",
+      "notice-name-input": "insert the notice name",
+      "cancel-button": "cancel",
+      "submit-button": "upload",
+      "manually": {
+        "notice-content": "notice content",
+        "notice-content-input": "manually insert the notice content"
+      }
+    },
+    "errors" : {
+      "extract-content": "we couldn't automatically extract the notice content, please insert it manually"
+    }
+  },
+
+  "dashboard": {
+    "payments": "payments"
+  },
+
+  "auth-user-layout": {
+    "logout-button": "logout"
+  },
+
+  "notice-list": {
+    "title": "your notices",
+    "uploaded-at": "uploaded at",
+    "subj-and-contents": "subjects and contents:"
+  },
+
+  "payments": {
+    "check-in": {
+      "message": "test payment integration"
+    },
+    "success": {
+      "message": "payment processed succesfully!"
+    },
+    "cancel": {
+      "message": "payment canceled or failed"
+    }
+  }
+}

@@ -8,6 +8,8 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import "../../locales/i18n";
+import { useTranslation } from "react-i18next";
 
 export default function CommonLayout({
   children,
@@ -15,10 +17,12 @@ export default function CommonLayout({
   children: React.ReactNode;
 }>) {
   const router = useRouter();
-  
+
   const { logout } = useAuth() as any;
 
   const [user, loading] = useAuthState(auth) as any;
+
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     if (loading) return;
@@ -58,11 +62,10 @@ export default function CommonLayout({
             logout();
           }}
         >
-          logout
+          {t("auth-user-layout.logout-button")}
         </Button>
       </div>
 
-      
       {children}
     </main>
   );

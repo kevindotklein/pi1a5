@@ -23,11 +23,14 @@ import { useToast } from "@/components/ui/use-toast";
 import { useAction } from "@/hooks/useAction";
 import { collection, doc, setDoc } from "firebase/firestore";
 import { useLoading } from "@/contexts/loading";
+import { useTranslation } from "react-i18next";
 
 export default function Register() {
   const { toast } = useToast();
   const action = useAction();
   const { setLoading } = useLoading();
+
+  const { t, i18n } = useTranslation();
 
   const formSchema = z.object({
     full_name: z.string().min(3),
@@ -74,9 +77,7 @@ export default function Register() {
           <h3 className="text-3xl font-bold flex gap-2 items-center text-neutral-50">
             studyflow
           </h3>
-          <h2 className="text-sm text-neutral-200">
-            create your account, really fast
-          </h2>
+          <h2 className="text-sm text-neutral-200">{t("register.subtitle")}</h2>
         </div>
         <Form {...form}>
           <div className="h-full">
@@ -90,9 +91,12 @@ export default function Register() {
                   name="full_name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>name</FormLabel>
+                      <FormLabel>{t("register.name")}</FormLabel>
                       <FormControl>
-                        <Input placeholder="insert your name" {...field} />
+                        <Input
+                          placeholder={t("register.name-input")}
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -103,9 +107,12 @@ export default function Register() {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>e-mail</FormLabel>
+                      <FormLabel>{t("register.email")}</FormLabel>
                       <FormControl>
-                        <Input placeholder="insert your e-mail" {...field} />
+                        <Input
+                          placeholder={t("register.email-input")}
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -116,11 +123,11 @@ export default function Register() {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>password</FormLabel>
+                      <FormLabel>{t("register.password")}</FormLabel>
                       <FormControl>
                         <Input
                           type="password"
-                          placeholder="insert your password"
+                          placeholder={t("register.password-input")}
                           {...field}
                         />
                       </FormControl>
@@ -136,12 +143,12 @@ export default function Register() {
                     href="/auth/login"
                     className="text-sm hover:underline tablet:!text-xs text-neutral-200"
                   >
-                    {"already have an account?"}
+                    {t("register.login-question")}
                   </Link>
                 </Button>
 
                 <Button variant="default" size="lg">
-                  register
+                  {t("register.submit-button")}
                 </Button>
               </div>
             </form>

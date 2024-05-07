@@ -9,6 +9,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import "../../../locales/i18n";
+import { t } from "i18next";
 
 export default function Home() {
   const router = useRouter();
@@ -37,7 +39,7 @@ export default function Home() {
 
       <Link href="/common/payments">
         <span className="text-neutral-50 underline flex gap-2">
-          payments <Link2 />
+          {t("dashboard.payments")} <Link2 />
         </span>
       </Link>
     </div>

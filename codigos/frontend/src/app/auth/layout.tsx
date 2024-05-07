@@ -5,6 +5,7 @@ import { auth } from "@/firebase/config";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import "../../locales/i18n";
 
 export default function CommonLayout({
   children,

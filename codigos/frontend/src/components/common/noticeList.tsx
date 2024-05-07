@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import moment from "moment";
+import { useTranslation } from "react-i18next";
 
 export default function NoticeList() {
   const router = useRouter();
@@ -19,11 +20,13 @@ export default function NoticeList() {
 
   const [user, loading] = useAuthState(auth) as any;
 
+  const { t, i18n } = useTranslation();
+
   console.log(userData);
 
   return (
     <div className="flex flex-col items-center justify-center gap-4 p-4 text-white w-full ">
-      <h2>your notices</h2>
+      <h2>{t("notice-list.title")}</h2>
 
       {userData?.notices?.length ? (
         <div className="flex flex-col gap-4 items-center justify-center w-full">
@@ -37,12 +40,12 @@ export default function NoticeList() {
                   {notice.name}
                 </p>
                 <span className="text-sm text-neutral-400">
-                  {notice.file_name} - uploaded at{" "}
+                  {notice.file_name} - {t("notice-list.uploaded-at")}{" "}
                   {moment(notice.created_at).format("DD/MM/YYYY HH:mm")}
                 </span>
               </div>
 
-              <p>subjects and contents:</p>
+              <p>{t("notice-list.subj-and-contents")}</p>
 
               <div className="flex flex-col gap-4 w-full flex-wrap">
                 {notice.subjects.map((subject: any) => (
