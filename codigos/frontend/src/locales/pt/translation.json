@@ -48,7 +48,10 @@
     },
     "errors" : {
       "extract-content": "nós não conseguimos extrair os conteúdos do edital automaticamente, por favor insira-os manualmente"
-    }
+    },
+    "loading-message-1": "por favor aguarde, enviando arquivo...",
+    "loading-message-2": "por favor aguarde, processando edital...",
+    "loading-message-3": "finalizando..."
   },
 
   "dashboard": {

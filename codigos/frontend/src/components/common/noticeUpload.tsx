@@ -143,7 +143,7 @@ export default function NoticeUpload({
 
     await action(
       async () => {
-        setLoading("please wait, uploading file...");
+        setLoading(t("notice-upload.loading-message-1"));
 
         const file_name = (Math.random() + 1).toString(36).substring(7);
 
@@ -195,7 +195,7 @@ export default function NoticeUpload({
     name?: string;
     downloadURL: string;
   }) => {
-    setLoading("please wait, processing notice...");
+    setLoading(t("notice-upload.loading-message-2"));
 
     const { notice_content, error } = await processNotice({
       url: downloadURL,
@@ -208,7 +208,7 @@ export default function NoticeUpload({
       return;
     }
 
-    setLoading("finishing up...");
+    setLoading(t("notice-upload.loading-message-3"));
 
     const notice = addDoc(collection(firestore, "notices"), {
       name,

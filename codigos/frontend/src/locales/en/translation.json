@@ -48,7 +48,10 @@
     },
     "errors" : {
       "extract-content": "we couldn't automatically extract the notice content, please insert it manually"
-    }
+    },
+    "loading-message-1": "please wait, uploading file...",
+    "loading-message-2": "please wait, processing notice...",
+    "loading-message-3": "finishing up..."
   },
 
   "dashboard": {
