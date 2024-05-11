@@ -1,6 +1,6 @@
 import { https } from "firebase-functions";
 import { readPDF } from "./helpers/pdfReader.js";
-import { runModel } from "./models/contentInterpreter.js";
+import { runModel } from "./models/openContentInterpreter.js";
 import { config as configDotenv } from "dotenv";
 import { log } from "firebase-functions/logger";
 
