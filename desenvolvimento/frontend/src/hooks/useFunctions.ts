@@ -13,7 +13,7 @@ export const useFunctions = () => {
 
   const processNotice = async ({
     url: noticeUrl,
-    notice_content
+    notice_content,
   }: {
     url: string;
     notice_content: string;
@@ -31,11 +31,10 @@ export const useFunctions = () => {
 
       if (response.data.error) throw response.data.error;
 
-      if (!response.data)
-        throw "error processing notice";
+      if (!response.data) throw "error processing notice";
 
       return {
-        notice_content: response.data
+        notice_content: response.data,
       };
     } catch (error: any) {
       toast({
@@ -46,11 +45,58 @@ export const useFunctions = () => {
 
       return {
         error: error?.message || error,
-      }
+      };
+    }
+  };
+
+  const generateTasks = async ({
+    hours,
+    notice_content,
+  }: {
+    hours: number;
+    notice_content: any;
+  }) => {
+    try {
+      const subjects = notice_content?.subjects.map((subject: any) => {
+        return {
+          name: subject.name,
+          contents: JSON.stringify(subject.contents),
+        };
+      });
+
+      const response = await axios.post(
+        `${url}/generateTasks`,
+        { hours, notice_content, subjects },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.data.error) throw response.data.error;
+
+      if (!response.data || !response.data?.tasks)
+        throw "Erro ao gerar tarefas";
+
+      return {
+        tasks: response.data?.tasks,
+      };
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "Erro ao gerar tarefas",
+        description: error?.message || error,
+      });
+
+      return {
+        error: error?.message || error,
+      };
     }
   };
 
   return {
     processNotice,
+    generateTasks,
   };
 };

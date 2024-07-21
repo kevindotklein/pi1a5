@@ -31,7 +31,7 @@ export function AuthProvider({
   children: React.ReactNode;
 }>) {
   const router = useRouter();
-  
+
   const { setLoading } = useLoading();
   const [user, loading] = useAuthState(auth) as any;
 
@@ -47,8 +47,6 @@ export function AuthProvider({
 
   const getUserData = async () => {
     if (!user) return;
-
-    console.log(user);
 
     const docRef = doc(firestore, "users", user.uid as string);
     const docSnap = await getDoc(docRef);

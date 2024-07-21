@@ -1,8 +1,8 @@
 import { log } from "firebase-functions/logger";
 import { config as configDotenv } from "dotenv";
-import OpenAI from 'openai';
+import OpenAI from "openai";
 
-const runModel = async (knowledge) => {
+const runContentInterpreterModel = async (knowledge) => {
   configDotenv();
 
   const openai = new OpenAI({
@@ -21,8 +21,8 @@ const runModel = async (knowledge) => {
     `;
 
     const params = {
-      messages: [{ role: 'user', content: prompt }],
-      model: 'gpt-3.5-turbo',
+      messages: [{ role: "user", content: prompt }],
+      model: "gpt-3.5-turbo",
     };
 
     const chatCompletion = await openai.chat.completions.create(params);
@@ -43,4 +43,4 @@ const runModel = async (knowledge) => {
   }
 };
 
-export { runModel };
+export { runContentInterpreterModel };

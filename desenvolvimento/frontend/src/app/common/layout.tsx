@@ -18,7 +18,7 @@ export default function CommonLayout({
 }>) {
   const router = useRouter();
 
-  const { logout } = useAuth() as any;
+  const { logout, userData } = useAuth() as any;
 
   const [user, loading] = useAuthState(auth) as any;
 
@@ -43,38 +43,37 @@ export default function CommonLayout({
 
   if (loading) return <Loading />;
 
-  console.log('asdkajl');
-
-
-  consd
-
   return (
-    <main className="flex flex-col items-center justify-center p-4">
-      <div className="flex gap-4 items-center justify-center">
-        <Image
-          src={user?.photoURL || "/favicon.ico"}
-          alt="user avatar"
-          width={50}
-          height={50}
-          className="rounded-full"
-        />
-        <span className="text-lg font-bold text-black">
-          {user?.displayName || user?.email}
-        </span>
-
-        <Button
-          onClick={async () => {
-            logout();
-          }}
-          style={{
-            backgroundColor: "#0D4290",
-            color: "white",
-            borderRadius: "10px",
-            minWidth: "80px",
-          }}
+    <main className="flex flex-col items-center justify-center">
+      <div className="flex gap-4 items-center justify-between bg-blue-700 w-full pt-2 pr-6 pb-2 pl-6">
+        <span
+          className="text-lg font-bold text-white cursor-pointer"
+          onClick={() => router.push("/common/dashboard")}
         >
-          {t("auth-user-layout.logout-button")}
-        </Button>
+          studyflow
+        </span>
+        <div className="flex gap-4 items-center">
+          <Image
+            src={user?.photoURL || "/favicon.ico"}
+            alt="user avatar"
+            width={30}
+            height={30}
+            className="rounded-full"
+          />
+          <span className="text-lg font-bold text-white">
+            {userData?.full_name || userData?.displayName || userData?.email}
+          </span>
+
+          <Button
+            onClick={async () => {
+              logout();
+            }}
+            variant="link"
+            className="text-white"
+          >
+            {t("auth-user-layout.logout-button")}
+          </Button>
+        </div>
       </div>
 
       {children}

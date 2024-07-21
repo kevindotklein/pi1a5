@@ -256,14 +256,20 @@ export default function NoticeUpload({
 
   return (
     <main className="flex flex-col items-center gap-5 justify-between p-24 text-black">
-      <h1>{t("notice-upload.no-upload-message")}</h1>
+      <h1 className="text-xl font-bold text-black">
+        {t("notice-upload.no-upload-message")}{" "}
+        <strong className="text-blue-800 cursor-pointer">
+          {t("notice-upload.file")}
+        </strong>{" "}
+        ?
+      </h1>
 
       <Dialog>
         <DialogTrigger asChild>
           <Button
             variant="secondary"
             style={{
-              backgroundColor: "#292929",
+              backgroundColor: "#0D4290",
               color: "white",
               borderRadius: "10px",
             }}

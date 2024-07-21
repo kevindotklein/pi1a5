@@ -30,7 +30,8 @@
   },
 
   "notice-upload": {
-    "no-upload-message": "você ainda não enviou um edital, vamos começar enviando um arquivo?",
+    "no-upload-message": "Você ainda não enviou um edital, vamos começar enviando um ",
+    "file": "arquivo",
     "upload-button": "Enviar",
     "modal": {
       "title": "envie um arquivo",
@@ -46,8 +47,8 @@
         "notice-content-input": "insira manualmente os conteúdos do edital"
       }
     },
-    "errors" : {
-      "extract-content": "nós não conseguimos extrair os conteúdos do edital automaticamente, por favor insira-os manualmente"
+    "errors": {
+      "extract-content": "Houve um erro ao extrair os conteúdos do edital automaticamente, por favor, insira-os manualmente e tentaremos novamente"
     },
     "loading-message-1": "por favor aguarde, enviando arquivo...",
     "loading-message-2": "por favor aguarde, processando edital...",
@@ -55,7 +56,7 @@
   },
 
   "dashboard": {
-    "payments": "pagamentos"
+    "payments": "Testar Integração de Pagamentos"
   },
 
   "auth-user-layout": {
@@ -64,8 +65,8 @@
 
   "notice-list": {
     "title": "seus editais",
-    "uploaded-at": "enviado em",
-    "subj-and-contents": "matérias e conteúdos:"
+    "uploaded-at": "Enviado em",
+    "subj-and-contents": "Matérias e conteúdos:"
   },
 
   "payments": {
