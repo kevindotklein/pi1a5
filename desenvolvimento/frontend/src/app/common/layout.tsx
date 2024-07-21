@@ -43,6 +43,11 @@ export default function CommonLayout({
 
   if (loading) return <Loading />;
 
+  console.log('asdkajl');
+
+
+  consd
+
   return (
     <main className="flex flex-col items-center justify-center p-4">
       <div className="flex gap-4 items-center justify-center">

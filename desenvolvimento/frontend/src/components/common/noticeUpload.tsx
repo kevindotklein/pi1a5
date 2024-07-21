@@ -152,13 +152,13 @@ export default function NoticeUpload({
 
         uploadTask.on(
           "state_changed",
-          (snapshot) => {
+          (snapshot: any) => {
             const progress = Math.round(
               (snapshot.bytesTransferred / snapshot.totalBytes) * 100
             );
             // setProgresspercent(progress);
           },
-          (error) => {
+          (error: any) => {
             toast({
               variant: "destructive",
               title: "error!",
@@ -385,7 +385,7 @@ export default function NoticeUpload({
                                   )}
                                   className="resize-none min-h-[200px]"
                                   value={manualNoticeContent}
-                                  onChange={(e) =>
+                                  onChange={(e: any) =>
                                     setManualNoticeContent(e.target.value)
                                   }
                                 />

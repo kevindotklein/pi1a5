@@ -1,14 +1,14 @@
 "use client";
 
 import { FcGoogle } from "react-icons/fc";
-import { FaGithub } from "react-icons/fa";
+import { FaFacebookSquare, FaGithub } from "react-icons/fa";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import {
-  GithubAuthProvider,
   GoogleAuthProvider,
+  FacebookAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
 import { auth } from "@/firebase/config";
@@ -18,16 +18,16 @@ export const Social = () => {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl");
 
-  const onClick = async (provider: "google" | "github") => {
+  const onClick = async (provider: "google" | "facebook") => {
     try {
       if (provider === "google") {
         const googleProvider = new GoogleAuthProvider();
         await signInWithPopup(auth, googleProvider);
       }
 
-      if (provider === "github") {
-        const githubProvider = new GithubAuthProvider();
-        await signInWithPopup(auth, githubProvider);
+      if (provider === "facebook") {
+        const facebookProvider = new FacebookAuthProvider();
+        await signInWithPopup(auth, facebookProvider);
       }
 
       router.push(callbackUrl || DEFAULT_LOGIN_REDIRECT);
@@ -50,9 +50,9 @@ export const Social = () => {
         type="button"
         size="lg"
         className="w-full bg-neutral-800"
-        onClick={() => onClick("github")}
+        onClick={() => onClick("facebook")}
       >
-        <FaGithub className="h-5 w-5" />
+        <FaFacebookSquare className="h-5 w-5" />
       </Button>
     </div>
   );
