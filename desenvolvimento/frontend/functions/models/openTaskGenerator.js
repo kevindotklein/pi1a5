@@ -14,8 +14,6 @@ const runTaskGenerationModel = async ({ hours, notice_content, subjects }) => {
   try {
     log("Generating content with parts");
 
-    console.log(subjects);
-
     const subjectsToSend = JSON.stringify(subjects);
 
     const prompt = `
@@ -36,8 +34,6 @@ const runTaskGenerationModel = async ({ hours, notice_content, subjects }) => {
       Gere tarefas para as seguintes matérias e conteúdos, baseado na estrutura do JSON fornecido:
       ${subjectsToSend}
     `;
-
-    console.log(prompt);
 
     const params = {
       messages: [{ role: "user", content: prompt }],

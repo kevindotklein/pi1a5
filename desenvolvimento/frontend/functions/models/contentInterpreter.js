@@ -16,19 +16,21 @@ const runModel = async (knowledge) => {
       topP: 1,
       maxOutputTokens: 8192,
     };
-  
-    const safetySettings = [
-      
-    ];
 
-    const model = genAI.getGenerativeModel({ model: "gemini-pro", generationConfig, safetySettings });
+    const safetySettings = [];
+
+    const model = genAI.getGenerativeModel({
+      model: "gemini-pro",
+      generationConfig,
+      safetySettings,
+    });
 
     const prompt = `
-      Quais são as matérias e os conteudos desse texto? Responda em JSON (materias como subjects, e conteudo das materias como contents) Exemplo: { "subjects": [{"name": "Português", "contents": ["Gramática", "Interpretação de texto"]}, {"name": "Matemática", "contents": ["Álgebra", "Geometria"]}] }
+      Quais são as matérias e os conteudos desse texto? Responda em JSON (e sem \`\`\`json ou \`\`\`) (materias como subjects, e conteudo das materias como contents) Exemplo: { "subjects": [{"name": "Português", "contents": ["Gramática", "Interpretação de texto"]}, {"name": "Matemática", "contents": ["Álgebra", "Geometria"]}] }
 
       ${knowledge}
     `;
-  
+
     log("Generating content with parts");
 
     const result = await model.generateContent(prompt);
@@ -36,11 +38,11 @@ const runModel = async (knowledge) => {
     const text = response.text();
 
     log("Finished generating content");
-  
+
     return text;
   } catch (error) {
     log(`An error occurred while running the model: ${error}`);
-    
+
     return {
       error: error.message,
     };

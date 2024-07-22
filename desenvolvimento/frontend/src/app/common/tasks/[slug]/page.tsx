@@ -57,8 +57,6 @@ export default function Tasks({ params }: { params: { slug: string } }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(notice);
-
   const getNotice = async () => {
     if (!user) return;
 

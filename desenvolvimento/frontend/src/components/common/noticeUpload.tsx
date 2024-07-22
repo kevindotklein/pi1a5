@@ -191,16 +191,30 @@ export default function NoticeUpload({
   const proccessNotice = async ({
     name,
     downloadURL,
+    isRetry,
   }: {
     name?: string;
     downloadURL: string;
+    isRetry?: boolean;
   }) => {
-    setLoading(t("notice-upload.loading-message-2"));
+    setLoading(
+      isRetry
+        ? "Houve um problema no processamento mas já estamos tentando novamente..."
+        : t("notice-upload.loading-message-2")
+    );
 
-    const { notice_content, error } = await processNotice({
+    const { notice_content, error, retry_error } = await processNotice({
       url: downloadURL,
       notice_content: manualNoticeContent || "",
     });
+
+    if (retry_error) {
+      return proccessNotice({
+        name,
+        downloadURL,
+        isRetry: true,
+      });
+    }
 
     if (error) {
       setLoading(false);

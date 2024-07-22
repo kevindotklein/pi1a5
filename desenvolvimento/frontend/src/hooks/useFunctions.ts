@@ -37,6 +37,11 @@ export const useFunctions = () => {
         notice_content: response.data,
       };
     } catch (error: any) {
+      if (error?.message.contains("JSON")) {
+        return {
+          retry_error: error?.message || error,
+        };
+      }
       toast({
         variant: "destructive",
         title: "error processing notice",

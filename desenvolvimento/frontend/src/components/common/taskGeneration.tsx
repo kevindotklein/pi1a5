@@ -138,18 +138,10 @@ export default function TaskGeneration({
       return;
     }
 
-    console.log(tasks);
-
     setLoading("Guardando suas tarefas...");
 
     for (const task of tasks) {
       const notice_id = notice.id;
-
-      console.log({
-        notice_id,
-        ...task,
-        created_at: new Date().toISOString(),
-      });
 
       await addDoc(collection(firestore, "tasks"), {
         notice_id,
