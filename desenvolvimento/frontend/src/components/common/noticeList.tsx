@@ -25,7 +25,7 @@ import { useRef } from "react";
 
 export default function NoticeList() {
   const router = useRouter();
-  const triggerRef = useRef(null);
+  const triggerRef = useRef(null) as any;
 
   const { userData } = useAuth() as any;
 
@@ -33,7 +33,7 @@ export default function NoticeList() {
 
   const { t, i18n } = useTranslation();
 
-  const [noticeOpen, setNoticeOpen] = useState(false);
+  const [noticeOpen, setNoticeOpen] = useState(false) as any;
 
   return (
     <div className="flex flex-col gap-4 text-black w-full ">

@@ -105,7 +105,7 @@ export default function TaskGeneration({
         setLoading("Começando a gerar suas tarefas...");
 
         await startTaskGeneration({
-          hours,
+          hours: hours as number,
           notice,
         });
       },

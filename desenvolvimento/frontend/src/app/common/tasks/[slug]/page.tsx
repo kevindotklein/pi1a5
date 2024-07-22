@@ -38,13 +38,19 @@ export default function Tasks({ params }: { params: { slug: string } }) {
   const [hasTasks, setHasTasks] = useState(true) as any;
   const [tasks, setTasks] = useState([]) as any;
 
+  const showError = () => {
+    toast({
+      variant: "destructive",
+      title: "Erro!",
+      description: "Edital não encontrado.",
+    });
+  };
+
   useEffect(() => {
-    if (!params || !params.slug)
-      return toast({
-        variant: "destructive",
-        title: "Erro!",
-        description: "Edital não encontrado.",
-      });
+    if (!params || !params.slug) {
+      showError();
+      return;
+    }
 
     getNotice();
 
@@ -85,11 +91,7 @@ export default function Tasks({ params }: { params: { slug: string } }) {
       setLoading(false);
     } else {
       setLoading(false);
-      toast({
-        variant: "destructive",
-        title: "Erro!",
-        description: "Edital não encontrado.",
-      });
+      showError();
 
       router.push("/common/dashboard");
     }
