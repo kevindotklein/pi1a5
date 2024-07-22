@@ -209,11 +209,13 @@ export default function NoticeUpload({
     });
 
     if (retry_error) {
-      return proccessNotice({
+      await proccessNotice({
         name,
         downloadURL,
         isRetry: true,
       });
+
+      return;
     }
 
     if (error) {
