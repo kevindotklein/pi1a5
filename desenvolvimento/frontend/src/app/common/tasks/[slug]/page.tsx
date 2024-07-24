@@ -49,6 +49,8 @@ export default function Tasks({ params }: { params: { slug: string } }) {
     "Sunday",
   ]) as any;
 
+  const offset: number = Math.ceil(tasks.length / days.length);
+
   const showError = () => {
     toast({
       variant: "destructive",
@@ -129,18 +131,35 @@ export default function Tasks({ params }: { params: { slug: string } }) {
             />
           ) : (
             <div className="flex flex-row">
-              {days.map((day: string) => {
+              {console.log(tasks)}
+              {days.map((day: string, i: number) => {
                 return (
-                  <Layer day={day}>
-                    {tasks.map((task: any) => (
-                      <Task
-                        id={tasks.id}
-                        hours={task.hours}
-                        title={task.title as string}
-                        subject={task.subject as string}
-                        description={task.description as string}
-                      />
-                    ))}
+                  <Layer key={day} day={day}>
+                    {i === days.length - 1
+                      ? tasks
+                          .slice(i * offset)
+                          .map((task: any) => (
+                            <Task
+                              key={task.id}
+                              id={task.id}
+                              hours={task.hours}
+                              title={task.title as string}
+                              subject={task.subject as string}
+                              description={task.description as string}
+                            />
+                          ))
+                      : tasks
+                          .slice(i * offset, i * offset + offset)
+                          .map((task: any) => (
+                            <Task
+                              key={task.id}
+                              id={task.id}
+                              hours={task.hours}
+                              title={task.title as string}
+                              subject={task.subject as string}
+                              description={task.description as string}
+                            />
+                          ))}
                   </Layer>
                 );
               })}
