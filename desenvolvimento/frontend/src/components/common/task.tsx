@@ -16,7 +16,7 @@ export default function Task({
   return (
     <div
       key={id}
-      className="flex flex-col gap-4 p-4 bg-neutral-100 max-w-[200px] border border-neutral-500 rounded-sm"
+      className="flex flex-col gap-4 p-4 bg-neutral-100 max-w-[200px] border border-neutral-500 rounded-sm cursor-grab"
     >
       <div className="flex flex-col gap-1">
         <div className="flex items-center justify-end w-full mb-2">

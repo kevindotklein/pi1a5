@@ -130,7 +130,7 @@ export default function Tasks({ params }: { params: { slug: string } }) {
               refresh={getNotice}
             />
           ) : (
-            <div className="flex flex-row">
+            <div className="flex flex-row space-x-4 mx-auto">
               {console.log(tasks)}
               {days.map((day: string, i: number) => {
                 return (
