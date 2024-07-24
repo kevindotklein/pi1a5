@@ -49,8 +49,6 @@ export default function Tasks({ params }: { params: { slug: string } }) {
     "Sunday",
   ]) as any;
 
-  const offset: number = Math.ceil(tasks.length / days.length);
-
   const showError = () => {
     toast({
       variant: "destructive",
@@ -94,6 +92,62 @@ export default function Tasks({ params }: { params: { slug: string } }) {
 
       const tasks = taskSnap.docs.map((doc: any) => doc.data());
 
+      const offset: number = Math.ceil(tasks.length / days.length);
+
+      let layer: number = -1;
+
+      if (localStorage.getItem("tasks") === null) {
+        let toStore: {
+          0: number[];
+          1: number[];
+          2: number[];
+          3: number[];
+          4: number[];
+          5: number[];
+          6: number[];
+        } = {
+          0: [],
+          1: [],
+          2: [],
+          3: [],
+          4: [],
+          5: [],
+          6: [],
+        };
+
+        for (let i = 0; i < tasks.length; i++) {
+          i % offset == 0 ? layer++ : layer;
+          tasks[i].layerId = layer;
+          switch (layer) {
+            case 0:
+              toStore[0].push(i);
+              break;
+            case 1:
+              toStore[1].push(i);
+              break;
+            case 2:
+              toStore[2].push(i);
+              break;
+            case 3:
+              toStore[3].push(i);
+              break;
+            case 4:
+              toStore[4].push(i);
+              break;
+            case 5:
+              toStore[5].push(i);
+              break;
+            case 6:
+              toStore[6].push(i);
+              break;
+
+            default:
+              break;
+          }
+        }
+        localStorage.setItem(`tasks`, JSON.stringify(toStore));
+      }
+
       if (!tasks.length) setHasTasks(false);
 
       setNotice({ id, ...notice, subjects });
@@ -131,35 +185,26 @@ export default function Tasks({ params }: { params: { slug: string } }) {
             />
           ) : (
             <div className="flex flex-row space-x-4 mx-auto">
-              {console.log(tasks)}
+              {console.log(tasks[0])}
               {days.map((day: string, i: number) => {
+                const filteredTasks = JSON.parse(
+                  localStorage.getItem("tasks") || ""
+                );
+                console.log(filteredTasks);
                 return (
                   <Layer key={day} day={day}>
-                    {i === days.length - 1
-                      ? tasks
-                          .slice(i * offset)
-                          .map((task: any) => (
-                            <Task
-                              key={task.id}
-                              id={task.id}
-                              hours={task.hours}
-                              title={task.title as string}
-                              subject={task.subject as string}
-                              description={task.description as string}
-                            />
-                          ))
-                      : tasks
-                          .slice(i * offset, i * offset + offset)
-                          .map((task: any) => (
-                            <Task
-                              key={task.id}
-                              id={task.id}
-                              hours={task.hours}
-                              title={task.title as string}
-                              subject={task.subject as string}
-                              description={task.description as string}
-                            />
-                          ))}
+                    {filteredTasks[i].map((index: number) => {
+                      return (
+                        <Task
+                          key={tasks[index].title}
+                          id={tasks[index].title}
+                          hours={tasks[index].hours}
+                          title={tasks[index].title as string}
+                          subject={tasks[index].subject as string}
+                          description={tasks[index].description as string}
+                        />
+                      );
+                    })}
                   </Layer>
                 );
               })}
