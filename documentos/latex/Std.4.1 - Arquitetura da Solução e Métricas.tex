@@ -2,7 +2,7 @@
 \usepackage{caption}
 \usepackage{array}
 
-\chapter{DESENVOLVIMENTO DO PROJETO}
+\chapter{Desenvolvimento do Projeto}
 
 Este tópico apresenta informações do produto, desenvolvimento do \textit{software},
 tempo para execução, ferramentas utilizadas, viabilidade e riscos.
@@ -24,7 +24,6 @@ Vídeos & 1 & 2 & 2 & 2 & 3 & 3 & 3\\
 Requisitos & 12 & 12 & 19 & 19 & 19 & 19 & 19\\
 Entidades de BD & 0 & 0 & 6 & 6 & 6 & 6 & 6\\
 Commits & 3 & 4 & 6 & 9 & 23 & 25 & 30\\
-Testes Unitários Quantidade & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
 \end{tabular}
 \end{table}
 
@@ -170,13 +169,13 @@ Este motor é encarregado de interpretar o conteúdo pragmático após a filtrag
 Essas integrações permitem uma abordagem mais eficiente e personalizada no processo de estudo para concursos, aproveitando o poder dos modelos de linguagem avançados fornecidos pela OpenAI.
 
 \subsection{Versionamento de Código}
-O versionamento de código é uma prática fundamental no desenvolvimento de software, permitindo o controle e gerenciamento das alterações feitas ao longo do tempo em um projeto. Para isso, utilizaremos o \textit{GitHub} como plataforma de versionamento, que oferece uma série de recursos poderosos para colaboração e controle de versões. No nosso ambiente de desenvolvimento, teremos um repositório principal hospedado no GitHub:
+O versionamento de código é uma prática fundamental no desenvolvimento de software, permitindo o controle e gerenciamento das alterações feitas ao longo do tempo em um projeto. Para isso, utilizaremos o \textit{GitHub} como plataforma de versionamento, que oferece uma série de recursos poderosos para colaboração e controle de versões. No nosso ambiente de desenvolvimento, teremos um repositório principal hospedado no \textit{GitHub}:
 
 \textbf{Repositório do \textit{Front-end} e \textit{Functions} do Firebase:} \newline
-Este repositório conterá o código-fonte do \textit{Front-end} desenvolvido com Next.js, bem como as \textit{Functions} do Firebase utilizadas no Back-end. Será organizado de forma a separar claramente os diretórios relacionados ao Front-end e às functions do Firebase, mantendo uma estrutura de pastas intuitiva e coesa.
+Este repositório conterá o código-fonte do \textit{Front-end} desenvolvido com \textit{Next.js}, bem como as \textit{Functions} do Firebase utilizadas no Back-end. Será organizado de forma a separar claramente os diretórios relacionados ao Front-end e às functions do Firebase, mantendo uma estrutura de pastas intuitiva e coesa.
 
 \textbf{Estratégia de Versionamento: Gitflow} \newline
-Para gerenciar as diferentes etapas de desenvolvimento e garantir uma colaboração eficiente entre os membros da equipe, adotaremos a estratégia de versionamento Gitflow. Essa abordagem define um modelo de fluxo de trabalho baseado em branches, que facilita a organização das funcionalidades em desenvolvimento, testes e produção.
+Para gerenciar as diferentes etapas de desenvolvimento e garantir uma colaboração eficiente entre os membros da equipe, adotaremos a estratégia de versionamento \textit{Gitflow}. Essa abordagem define um modelo de fluxo de trabalho baseado em branches, que facilita a organização das funcionalidades em desenvolvimento, testes e produção.
 Principais \textit{Branches}:
 
 \begin{itemize}
@@ -187,23 +186,23 @@ Principais \textit{Branches}:
 \item \textbf{Feature Branches:} Para cada nova funcionalidade ou tarefa, uma nova \textit{branch} de \textit{feature} é criada a partir da \textit{branch develop}. Esta \textit{branch} é utilizada para implementar a funcionalidade de forma isolada, antes de ser integrada de volta à \textit{branch develop}.
 \end{itemize}
  
-Adotando essa estratégia de versionamento com o Gitflow, garantimos um desenvolvimento organizado, facilitando a colaboração entre os membros da equipe e mantendo um histórico claro e estruturado das alterações feitas no código-fonte ao longo do tempo.
+Adotando essa estratégia de versionamento com o \textit{Gitflow}, garantimos um desenvolvimento organizado, facilitando a colaboração entre os membros da equipe e mantendo um histórico claro e estruturado das alterações feitas no código-fonte ao longo do tempo.
 
 \subsection{Infraestrutura}
 Para hospedagem, optaremos por utilizar os serviços especializados de hospedagem da Vercel para o \textit{Front-end} e do Firebase para o \textit{Back-end} customizado.
 
 \textbf{Hospedagem do Front-end} \newline
-A Vercel oferece um serviço de hospedagem altamente escalável e otimizado para aplicações \textit{Front-end}, como o nosso desenvolvido com Next.js. Utilizando a plataforma da Vercel, podemos implantar e hospedar facilmente nosso Front-end, garantindo uma experiência de usuário rápida e confiável.
+A Vercel oferece um serviço de hospedagem altamente escalável e otimizado para aplicações \textit{Front-end}, como o nosso desenvolvido com \textit{Next.js}. Utilizando a plataforma da Vercel, podemos implantar e hospedar facilmente nosso Front-end, garantindo uma experiência de usuário rápida e confiável.
 
-\textbf{Hospedagem do Back-end no Firebase} \newline
+\textbf{Hospedagem do \textit{Back-end} no Firebase} \newline
 O Firebase oferece por padrão a hospedagem de seus serviços diretamente em sua plataforma, eliminando a necessidade de recorrer a soluções terceirizadas para essa finalidade. Essa integração nativa proporciona uma infraestrutura completa e integrada, capaz de suportar todas as necessidades de nossa aplicação de forma eficiente e escalável.
 
 \subsection{Escalabilidade}
-Tanto a Vercel quanto o Firebase oferecem opções de escalabilidade conforme as necessidades do projeto. No caso da Vercel, podemos facilmente escalar nossa aplicação Front-end de acordo com o aumento da demanda de tráfego. Já o Firebase, além de oferecer hospedagem escalável, também permite dimensionar automaticamente o banco de dados e outros serviços conforme necessário.
+Tanto a Vercel quanto o Firebase oferecem opções de escalabilidade conforme as necessidades do projeto. No caso da Vercel, podemos facilmente escalar nossa aplicação \textit{Front-end} de acordo com o aumento da demanda de tráfego. Já o Firebase, além de oferecer hospedagem escalável, também permite dimensionar automaticamente o banco de dados e outros serviços conforme necessário.
 
 \subsection{Convenções e Padronização de Código}
 
-Convenções são acordos ou regras estabelecidas para padronizar a forma como realizamos determinadas atividades ou interações. No contexto do desenvolvimento de software, as convenções de codificação são diretrizes estabelecidas para padronizar a escrita e a organização do código-fonte de uma aplicação. Elas definem como devemos nomear variáveis, formatar o código, documentar funcionalidades e adotar certas práticas de desenvolvimento.
+Convenções são acordos ou regras estabelecidas para padronizar a forma como realizamos determinadas atividades ou interações. No contexto do desenvolvimento de \textit{software}, as convenções de codificação são diretrizes estabelecidas para padronizar a escrita e a organização do código-fonte de uma aplicação. Elas definem como devemos nomear variáveis, formatar o código, documentar funcionalidades e adotar certas práticas de desenvolvimento.
 
 Para esse projeto, iremos seguir com as seguintes convenções e padrões de código:
 
@@ -211,7 +210,7 @@ Para esse projeto, iremos seguir com as seguintes convenções e padrões de có
     \item Nomenclatura de Variáveis e Funções:
 
 Utilize nomes descritivos e significativos para variáveis e funções.
-Prefira \textit{camelCase} para nomes de variáveis e funções em JavaScript/TypeScript.
+Prefira \textit{camelCase} para nomes de variáveis e funções em \textit{JavaScript/TypeScript}.
 
     \item Comentários:
 Inclua comentários claros e concisos para explicar trechos de código complexos ou de difícil compreensão.
@@ -230,7 +229,7 @@ Utilize \textit{try-catch} para capturar e lidar com exceções de forma apropri
 
     \item Gerenciamento de Dependências:
 
-Mantenha uma lista atualizada de todas as dependências e suas versões no arquivo de manifesto (como package.json).
+Mantenha uma lista atualizada de todas as dependências e suas versões no arquivo de manifesto (como \textit{package.json}).
 Utilize um gerenciador de dependências confiável, como \acs{npm} ou \acs{yarn}, e evite adicionar dependências desnecessárias.
 
     \item Revisões de Código:

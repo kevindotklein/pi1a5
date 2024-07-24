@@ -21,28 +21,28 @@ O Firebase desempenha um papel crucial na interação com os tokens \acs{jwt}, f
 
 \begin{itemize}
 \item \textbf{Geração de Tokens JWT:}
-Quando um usuário realiza o processo de autenticação no Firebase, seja por e-mail e senha, login social (como Google ou Facebook) ou outros métodos suportados, o Firebase gera um token \acs{jwt} válido que contém informações sobre a identidade do usuário, como seu ID exclusivo, endereço de e-mail e quaisquer metadados adicionais necessários para autorização.
+Quando um usuário realiza o processo de autenticação no Firebase, seja por e-mail e senha, login social (como \textit{Google} ou \textit{Facebook}) ou outros métodos suportados, o Firebase gera um token \acs{jwt} válido que contém informações sobre a identidade do usuário, como seu \acs{id} exclusivo, endereço de e-mail e quaisquer metadados adicionais necessários para autorização.
 
 \item \textbf{Validação dos Tokens:}
-O Firebase verifica a validade dos tokens JWT antes de conceder acesso aos recursos protegidos. Isso inclui a verificação da assinatura digital do token para garantir sua autenticidade e a verificação de outros atributos, como a data de expiração, para garantir que o token ainda esteja válido.
+O Firebase verifica a validade dos tokens \acs{jwt} antes de conceder acesso aos recursos protegidos. Isso inclui a verificação da assinatura digital do token para garantir sua autenticidade e a verificação de outros atributos, como a data de expiração, para garantir que o token ainda esteja válido.
 
 \item \textbf{Decodificação dos Tokens:}
-O Firebase decodifica os tokens \acs{jwt} para extrair as informações relevantes sobre o usuário. Isso pode incluir o ID do usuário, endereço de e-mail e quaisquer outros dados personalizados incluídos no token durante a geração.
+O Firebase decodifica os tokens \acs{jwt} para extrair as informações relevantes sobre o usuário. Isso pode incluir o \acs{id} do usuário, endereço de e-mail e quaisquer outros dados personalizados incluídos no token durante a geração.
 
 \item \textbf{Gerenciamento de Sessões:}
-O Firebase gerencia automaticamente as sessões de autenticação dos usuários, mantendo os tokens JWT válidos e atualizados durante o período de uso da aplicação. Isso permite que os usuários permaneçam autenticados em diferentes dispositivos e sessões sem a necessidade de reautenticação frequente.
+O Firebase gerencia automaticamente as sessões de autenticação dos usuários, mantendo os tokens \acs{jwt} válidos e atualizados durante o período de uso da aplicação. Isso permite que os usuários permaneçam autenticados em diferentes dispositivos e sessões sem a necessidade de reautenticação frequente.
 
 \item \textbf{Controle de Acesso:}
-Com base nas informações contidas nos tokens \textit{\acs{jwt}, o Firebase aplica políticas de autorização para determinar quais recursos e operações o usuário autenticado tem permissão para acessar. Isso inclui a aplicação de regras de segurança personalizadas em serviços como o Firebase Realtime Database e o Cloud Firestore.
+Com base nas informações contidas nos \textit{tokens} \acs{jwt}, o Firebase aplica políticas de autorização para determinar quais recursos e operações o usuário autenticado tem permissão para acessar. Isso inclui a aplicação de regras de segurança personalizadas em serviços como o \textit{Firebase Realtime Database} e o \textit{Cloud} Firestore.
 
 \end{itemize}
 
-Em resumo, o Firebase oferece uma integração completa e segura com tokens \acs{jwt}, facilitando a autenticação e autorização dos usuários em nossa aplicação. Essa abordagem robusta garante a proteção dos dados dos usuários e mantém a segurança da aplicação em todos os níveis.
+Em resumo, o Firebase oferece uma integração completa e segura com \textit{tokens} \acs{jwt}, facilitando a autenticação e autorização dos usuários em nossa aplicação. Essa abordagem robusta garante a proteção dos dados dos usuários e mantém a segurança da aplicação em todos os níveis.
 
 \textbf{Autorização:}
 A autorização, por sua vez, determina quais recursos e operações um usuário autenticado tem permissão para acessar e executar. Para isso, implementaremos controles de acesso granulares em toda a plataforma. Cada solicitação feita por um usuário será verificada em relação às políticas de autorização configuradas. Isso inclui restrições de acesso a determinadas funcionalidades com base no papel do usuário, como administrador, moderador ou usuário padrão.
 
-Ao implementar um sistema de autenticação e autorização sólido, estamos fortalecendo as defesas da nossa aplicação contra ameaças de segurança. O uso de tokens \acs{jwt} oferece uma camada adicional de segurança, pois eles são assinados digitalmente e podem incluir informações sobre o usuário, como permissões e papéis, que são verificados em cada solicitação.
+Ao implementar um sistema de autenticação e autorização sólido, estamos fortalecendo as defesas da nossa aplicação contra ameaças de segurança. O uso de \textit{tokens} \acs{jwt} oferece uma camada adicional de segurança, pois eles são assinados digitalmente e podem incluir informações sobre o usuário, como permissões e papéis, que são verificados em cada solicitação.
 
 Além disso, ao adotar práticas de segurança recomendadas, como criptografia de dados, gerenciamento seguro de credenciais e monitoramento de atividades suspeitas, estamos reduzindo significativamente o risco de violações de segurança e protegendo os dados sensíveis dos nossos usuários.
 

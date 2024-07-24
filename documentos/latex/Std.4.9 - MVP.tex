@@ -1,15 +1,23 @@
 \section{Mínimo Produto Víavel (MVP)}
 
-Esta seção tem por objetivo informar as alterações, descartes e escolhas feitas no projeto para o MVP, em relação ao sistema da POC. Essas mudanças refletem os problemas e inconsistências enfrentadas durante o desenvolvimento da POC, e foram motivadas pela necessidade de otimizar a eficiência e o desempenho do sistema, de forma a atender os requisitos do MVP da melhor maneira possível.
+Esta seção tem por objetivo informar as alterações, descartes e escolhas feitas no projeto para o MVP, em relação ao sistema da \acs{poc}. Essas mudanças refletem os problemas e inconsistências enfrentadas durante o desenvolvimento da \acs{poc}, e foram motivadas pela necessidade de otimizar a eficiência e o desempenho do sistema, de forma a atender os requisitos do \acs{mvp} da melhor maneira possível.
 
 \subsection{Mudanças na Infraestrutura}
  
-	A principal atualização feita no projeto em relação à POC foi o descarte do Google Gemini, substituído pelo serviço da OpenAI. Inicialmente, o Gemini foi escolhido devido ao seu baixo custo e à integração facilitada com o Firebase, visando manter todos os serviços em um único ecossistema. Além disso, o Gemini oferecia um serviço de treinamento de modelos customizados, baseado em outros modelos de processamento de texto pré-treinados da Google.
+A principal atualização feita no projeto em relação à \acs{poc} foi o descarte do Google Gemini, substituído pelo serviço da OpenAI. Inicialmente, o Gemini foi escolhido devido ao seu baixo custo e à integração facilitada com o Firebase, visando manter todos os serviços em um único ecossistema. Além disso, o Gemini oferecia um serviço de treinamento de modelos customizados, baseado em outros modelos de processamento de texto pré-treinados da Google.
  
-	Um dos primeiros problemas enfrentados com o serviço do Gemini foi justamente a customização dos modelos. Embora tivéssemos sucesso em treinar e utilizar um modelo com textos de editais e retorno de JSON, não conseguimos utilizar o mesmo fora da plataforma da Google, ou seja, não conseguimos integrar o serviço ao nosso código. Além disso, por ser um serviço relativamente recente, a documentação em certas funcionalidades ainda é escassa, assim como o suporte da comunidade.
+Um dos primeiros problemas enfrentados com o serviço do Gemini foi justamente a customização dos modelos. Embora tivéssemos sucesso em treinar e utilizar um modelo com textos de editais e retorno de \acs{json}, não conseguimos utilizar o mesmo fora da plataforma da Google, ou seja, não conseguimos integrar o serviço ao nosso código. Além disso, por ser um serviço relativamente recente, a documentação em certas funcionalidades ainda é escassa, assim como o suporte da comunidade.
  
-	Os problemas que mais nos afetaram foram a inconsistência e os bloqueios ao utilizar um modelo de processamento de texto já treinado. Os textos JSON gerados pela IA eram frequentemente quebrados ou não formatados corretamente, impossibilitando seu consumo dentro da plataforma. Além disso, ao enviar o mesmo texto do edital diversas vezes para processamento, o sistema retornava erros de "recitação" ou de conteúdo não autorizado. Esses erros também possuíam uma documentação extremamente limitada, dificultando ainda mais a solução dos problemas.
+Os problemas que mais nos afetaram foram a inconsistência e os bloqueios ao utilizar um modelo de processamento de texto já treinado. Os textos \acs{json} gerados pela \acs{ia} eram frequentemente quebrados ou não formatados corretamente, impossibilitando seu consumo dentro da plataforma. Além disso, ao enviar o mesmo texto do edital diversas vezes para processamento, o sistema retornava erros de "recitação" ou de conteúdo não autorizado. Esses erros também possuíam uma documentação extremamente limitada, dificultando ainda mais a solução dos problemas.
  
-	Essas dificuldades nos levaram a substituir o Google Gemini pelo serviço da OpenAI, que oferecia maior estabilidade e consistência na geração dos conteúdos, melhor documentação e suporte mais robusto. A substituição dos serviços foi um processo relativamente simples, e desde o início os modelos da OpenAI se mostraram muito eficientes. Porém, tivemos a mudança nos custos também, anteriormente, pois estávamos trabalhando com os serviços gratuitos do Gemini, e agora temos outros valores e custos consideravelmente maiores para levar em consideração para o projeto no futuro.
+Essas dificuldades nos levaram a substituir o Google Gemini pelo serviço da OpenAI, que oferecia maior estabilidade e consistência na geração dos conteúdos, melhor documentação e suporte mais robusto. A substituição dos serviços foi um processo relativamente simples, e desde o início os modelos da OpenAI se mostraram muito eficientes. Porém, tivemos a mudança nos custos também, anteriormente, pois estávamos trabalhando com os serviços gratuitos do Gemini, e agora temos outros valores e custos consideravelmente maiores para levar em consideração para o projeto no futuro.
  
-	A mudança do serviço de IA utilizado foi a única alteração relevante nesse período. O restante do sistema e outras integrações se mostraram satisfatórios, atendendo às expectativas e requisitos estabelecidos durante a fase de planejamento.
+A mudança do serviço de \acs{ia} utilizado foi a única alteração relevante nesse período. O restante do sistema e outras integrações se mostraram satisfatórios, atendendo às expectativas e requisitos estabelecidos durante a fase de planejamento.
+
+ \begin{figure}[!htb]
+ 	    \centering
+ 	    \caption{\label{logo}QRCode do Deploy: \\ https://studyflow-three.vercel.app}
+ 	    \includegraphics[width=5cm]{img/qrcode-plataforma.png}
+ 	    \fonte{Os autores.}
+\end{figure}
+\FloatBarrier
