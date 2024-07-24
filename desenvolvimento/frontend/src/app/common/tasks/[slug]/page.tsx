@@ -120,7 +120,7 @@ export default function Tasks({ params }: { params: { slug: string } }) {
           ) : (
             <div className="flex flex-wrap gap-4">
               {tasks.map((task: any) => (
-                <Task id={tasks.id} hours={task.hours} title={task.title as string} subject={task.subject as string} description={task.description as string} />
+                <Task id={task.id} hours={task.hours} title={task.title as string} subject={task.subject as string} description={task.description as string} />
               ))}
             </div>
           )}
