@@ -24,6 +24,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useLoading } from "@/contexts/loading";
 import moment from "moment";
 import TaskGeneration from "@/components/common/taskGeneration";
+import Task from "@/components/common/task";
 
 export default function Tasks({ params }: { params: { slug: string } }) {
   const router = useRouter();
@@ -119,30 +120,7 @@ export default function Tasks({ params }: { params: { slug: string } }) {
           ) : (
             <div className="flex flex-wrap gap-4">
               {tasks.map((task: any) => (
-                <div
-                  key={task.id}
-                  className="flex flex-col gap-4 p-4 bg-neutral-100 max-w-[200px] border border-neutral-500 rounded-sm"
-                >
-                  <div className="flex flex-col gap-1">
-                    <div className="flex items-center justify-end w-full mb-2">
-                      <div className="flex items-center justify-center gap-2 rounded-md bg-blue-800 px-2 py-1 text-xs text-white">
-                        {task.hours} horas
-                      </div>
-                    </div>
-                    <h3 className="text-lg font-bold text-black leading-5">
-                      {task.title}
-                    </h3>
-                    <h4 className="text-sm font-bold text-neutral-500">
-                      {task.subject}
-                    </h4>
-                  </div>
-
-                  <p className="text-sm text-neutral-500">
-                    {task?.description.length > 100
-                      ? task.description.substring(0, 100) + "..."
-                      : task.description}
-                  </p>
-                </div>
+                <Task id={tasks.id} hours={task.hours} title={task.title as string} subject={task.subject as string} description={task.description as string} />
               ))}
             </div>
           )}
