@@ -30,7 +30,6 @@
 \renewcommand{\imprimirautor}{
 \begin{tabular}{lr}
 Kevin Klein & SP3096289 \\
-Leonardo Tumani & SP309474X \\
 Luiz Fernando & SP3096301\\
 Ruan de Souza  & SP3069672 \\
 Pedro Dias & SP3099211 \\
@@ -40,7 +39,7 @@ Pedro Dias & SP3099211 \\
 
 \disciplina{PI1A5 - Projeto Integrado I}
 
-\preambulo{Desenho da aplicação para disciplina de PI1A5}
+\preambulo{Documento final da aplicação.}
 
 \data{2024}
 
@@ -106,7 +105,7 @@ Pedro Dias & SP3099211 \\
 % ---
 % Capa
 % ---
-% \imprimircapa
+\imprimircapa
 
 \newcounter{todocounter}
 \newcommand{\todonum}[2][]
@@ -114,31 +113,41 @@ Pedro Dias & SP3099211 \\
 
 \imprimirfolhaderosto
 
+% ----
+%Resumo ----
+
+\input{Std.Resumo}
+\cleardoublepage
+%-----
+\pdfbookmark[0]{Abstract}{abstract} % Sets a PDF bookmark for the abstract
+\input{Std.Abstract}
+\cleardoublepage
+
 % ---
 % inserir lista de ilustrações
 % ---
-%\pdfbookmark[0]{\listfigurename}{lof}
-%\listoffigures*
-%\cleardoublepage
+\pdfbookmark[0]{\listfigurename}{lof}
+\listoffigures*
+\cleardoublepage
 % ---
 
 % ---
 % inserir lista de tabelas
 % ---
-%\pdfbookmark[0]{\listtablename}{lot}
-%\listoftables*
-%\cleardoublepage
+\pdfbookmark[0]{\listtablename}{lot}
+\listoftables*
+\cleardoublepage
 % ---
 
 % ---
 % inserir lista de quadros
 % ---
-%\pdfbookmark[0]{\listofquadrosname}{loq}
-%\listofquadros*
-%\cleardoublepage
+\pdfbookmark[0]{\listofquadrosname}{loq}
+\listofquadros*
+\cleardoublepage
 % ---
 
-%\input{pre-simbolos}
+\input{pre-siglas}
 %\todo[inline]{Remover lista de simbolos se não for necessário}
 
 
@@ -160,11 +169,16 @@ Pedro Dias & SP3099211 \\
 \input{Std.1 - Introducao}
 \input{Std.2 - Revisão da Literatura}
 \input{Std.3 - Gestao do Projeto}
-\input{Std.4.1 - Arquitetura da Solução}
+\input{Std.4.1 - Arquitetura da Solução e Métricas}
 \input{Std.4.2 - Historias do usuário}
 \input{Std.4.3 - Fases de Entrega}
 \input{Std.4.4 - Segurança}
-
+%\input{Std.4.5 - Identidade Visual}
+%\input{Std.4.6 - Plano de Testes}
+\input{Std.4.7 - Viabilidade Financeira}
+\input{Std.4.8 - Prova de Conceito}
+\input{Std.4.9 - MVP}
+\input{Std.5 - Conclusão}
 
 \begin{comment}
 
@@ -195,9 +209,10 @@ Pedro Dias & SP3099211 \\
 
 \bibliography{referencias}
 
-\input{pos-glossario}
+%\input{pos-glossario}
 
 %\input{pos-apendices}
+
 %\input{pos-anexos}
 
 

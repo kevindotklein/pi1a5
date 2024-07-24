@@ -1,0 +1,60 @@
+\section{Viabilidade Financeira}
+
+Inicialmente, para a fase de desenvolvimento e testes, vamos utilizar os planos gratuitos oferecidos pela Vercel para hospedar nosso Front-end. Essa escolha nos permitirá iniciar o projeto de maneira ágil e econômica, facilitando a implantação e os testes iniciais da aplicação.
+
+No entanto, para a fase de produção e lançamento oficial da plataforma, planejamos migrar para soluções pagas. Na Vercel, iremos adotar, inicialmente, o plano Pro, que oferece recursos adicionais, como escalabilidade aprimorada, limites maiores de "bandwidth" e de cachê de dados, além de suporte especializado. Isso garantirá um desempenho consistente e confiável da nossa aplicação em ambiente de produção, além de proporcionar um nível mais alto de serviço e suporte.
+
+Já no Firebase, desde a fase de desenvolvimento iremos optar pelo plano pago Blaze. Isso se dá pois esse plano nos da acesso a serviços específicos da plataforma, como as Functions, funcionalidade que será essencial para o funcionamento da plataforma. Apesar de ser um plano pago, nossos custos iniciais serão baixos, pois o plano segue o formato \textit{"pay-as-you-go"}, ou seja, o faturamento da conta será conforme o uso da plataforma. A flexibilidade desse modelo de pagamento nos permitirá começar com custos mínimos e aumentar conforme o crescimento e a demanda da aplicação.
+
+
+Essas abordagens nos possibilitam começar com investimentos mínimos durante a fase de desenvolvimento, ajustando nossos gastos de acordo com o crescimento e a maturidade do projeto. Dessa forma, garantimos uma transição suave para o ambiente de produção, maximizando o valor entregue aos usuários finais e garantindo o sucesso contínuo da nossa aplicação.
+
+\subsection{Custos}
+
+Até a criação da aplicação não haverá custos com as tecnologias já citadas. Para a próxima fase da aplicação, o teste de mercado, os custos de se manter a aplicação de pé e até 10 mil usuários foram levantados nas tabelas \ref{tab: Custos Fixos} e \ref{tab: Custos Variaveis}, que tratam dos custos fixos e variaveis respectivamente.
+
+\begin{table}[!htp]
+\centering
+\caption{Custos Fixos}\label{tab: Custos Fixos}
+\scriptsize
+\begin{tabular}{lrr}\toprule
+Tecnologias &Custo Mensal \\\cmidrule{1-2}
+Firestore &15.00 \\\cmidrule{1-2}
+Cloud Storage &10.00 \\\cmidrule{1-2}
+Cloud Functions &30.00 \\\cmidrule{1-2}
+Vercel &100.00 \\\cmidrule{1-2}
+Serviço de e-mail &40.00 \\\cmidrule{1-2}
+Domínio &45.00 \\\midrule
+\bottomrule
+\end{tabular}
+\fonte{Os autores.}
+\end{table}
+
+Os custos variaveis são todos referentes a \acs{api} da OPenAI. Para cada modelo utilizado o custo de requisição se difere. 
+
+\begin{table}[!htp]\centering
+\caption{Custos Variaveis}\label{tab: Custos Variaveis}
+\scriptsize
+\begin{tabular}{lrrrr}\toprule
+Tasks IA &Custo por requisição &Requisições mensais &Total Mês \\\cmidrule{1-4}
+Leitura de Edital &0.05 &10000 &500.00 \\\cmidrule{1-4}
+Geração de Tarefas &0.02 &10000 &200.00 \\\midrule
+\bottomrule
+\end{tabular}
+\end{table}
+
+Ao total, com os custos fixos e váriaveis, para a plataforma do Studyflow se manter no ar e funcionando, com a capacidade de até 10 mil usuários, é necessário a quantia de R\$ 940,00 mensais.
+\subsection{Planos de Assinatura e Expectativa Financeira}
+
+Após a análise dos custos envolvidos na operação da plataforma, reconhecemos a necessidade de implementar um modelo de assinatura para garantir o acesso completo às ferramentas oferecidas pela nossa aplicação. Este modelo de assinatura será oferecido em formatos mensal e anual, proporcionando flexibilidade aos usuários de acordo com suas preferências e necessidades. Abaixo, detalhamos os planos disponíveis:
+
+\textbf{Plano Gratuito}
+
+Com o plano gratuito, o usuário terá acesso a todas as funcionalidades da plataforma. Porém, ele está limitado a fazer o upload de apenas um edital, e de utilizar a geração de tarefas por até 3 semanas. Dessa forma, o usuário pode ter uma experiência dentro da plataforma, e decidir se faz sentido ou não começar a pagar pelos serviços completos.
+
+\textbf{Plano Pago}
+
+Nosso Plano Pago oferece aos usuários acesso ilimitado a todas as funcionalidades e recursos avançados da plataforma. Com este plano, os usuários podem fazer o upload de múltiplos editais e aproveitar a geração ilimitada de tarefas.
+
+Para cobrir os custos operacionais e garantir a sustentabilidade da plataforma, estimamos o preço mensal da assinatura em R\$24,99 e o preço anual em R\$249,90. Essa estrutura de preços proporciona aos usuários flexibilidade e economia, incentivando-os a aderir ao plano anual para obter um desconto significativo.
+

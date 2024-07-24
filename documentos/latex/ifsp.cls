@@ -3,6 +3,7 @@
 
 \RequirePackage{ifthen}
 \RequirePackage{ifdraft}
+\RequirePackage[brazil]{babel}
 \newboolean{utilizarPaginasA3}
 \newboolean{utilizarQRCODE}
 \newboolean{utilizarSIGLAS}
@@ -393,3 +394,21 @@
 % Utilizando uma data futura ele mostra a mais recente
 \newcommand{\waUrl}[1]{\href{http://web.archive.org/web/20990229123340/#1}{#1}}
 \newcommand{\waUrlTitle}[2]{\href{http://web.archive.org/web/20990229123340/#1}{#2}}
+
+
+
+\newcommand{\PalavrasChave}[1]{%
+	\newcommand{\palavraschave}{#1}	
+}
+
+\newcommand{\KeyWords}[1]{%
+	\newcommand{\keywords}{#1}	
+}
+
+% ----------------------------------------- %
+%
+%	Resumo e abstract da tese
+%
+% ----------------------------------------- %
+
+
