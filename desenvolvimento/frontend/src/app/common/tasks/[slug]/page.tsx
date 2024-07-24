@@ -25,6 +25,7 @@ import { useLoading } from "@/contexts/loading";
 import moment from "moment";
 import TaskGeneration from "@/components/common/taskGeneration";
 import Task from "@/components/common/task";
+import Layer from "@/components/common/layer";
 
 export default function Tasks({ params }: { params: { slug: string } }) {
   const router = useRouter();
@@ -38,6 +39,15 @@ export default function Tasks({ params }: { params: { slug: string } }) {
   const [notice, setNotice] = useState(null) as any;
   const [hasTasks, setHasTasks] = useState(true) as any;
   const [tasks, setTasks] = useState([]) as any;
+  const [days, setDays] = useState([
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ]) as any;
 
   const showError = () => {
     toast({
@@ -118,10 +128,22 @@ export default function Tasks({ params }: { params: { slug: string } }) {
               refresh={getNotice}
             />
           ) : (
-            <div className="flex flex-wrap gap-4">
-              {tasks.map((task: any) => (
-                <Task id={task.id} hours={task.hours} title={task.title as string} subject={task.subject as string} description={task.description as string} />
-              ))}
+            <div className="flex flex-row">
+              {days.map((day: string) => {
+                return (
+                  <Layer day={day}>
+                    {tasks.map((task: any) => (
+                      <Task
+                        id={tasks.id}
+                        hours={task.hours}
+                        title={task.title as string}
+                        subject={task.subject as string}
+                        description={task.description as string}
+                      />
+                    ))}
+                  </Layer>
+                );
+              })}
             </div>
           )}
         </>
