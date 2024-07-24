@@ -152,13 +152,13 @@ export default function NoticeUpload({
 
         uploadTask.on(
           "state_changed",
-          (snapshot) => {
+          (snapshot: any) => {
             const progress = Math.round(
               (snapshot.bytesTransferred / snapshot.totalBytes) * 100
             );
             // setProgresspercent(progress);
           },
-          (error) => {
+          (error: any) => {
             toast({
               variant: "destructive",
               title: "error!",
@@ -191,16 +191,32 @@ export default function NoticeUpload({
   const proccessNotice = async ({
     name,
     downloadURL,
+    isRetry,
   }: {
     name?: string;
     downloadURL: string;
+    isRetry?: boolean;
   }) => {
-    setLoading(t("notice-upload.loading-message-2"));
+    setLoading(
+      isRetry
+        ? "Houve um problema no processamento mas já estamos tentando novamente..."
+        : t("notice-upload.loading-message-2")
+    );
 
-    const { notice_content, error } = await processNotice({
+    const { notice_content, error, retry_error } = await processNotice({
       url: downloadURL,
       notice_content: manualNoticeContent || "",
     });
+
+    if (retry_error) {
+      await proccessNotice({
+        name,
+        downloadURL,
+        isRetry: true,
+      });
+
+      return;
+    }
 
     if (error) {
       setLoading(false);
@@ -256,14 +272,20 @@ export default function NoticeUpload({
 
   return (
     <main className="flex flex-col items-center gap-5 justify-between p-24 text-black">
-      <h1>{t("notice-upload.no-upload-message")}</h1>
+      <h1 className="text-xl font-bold text-black">
+        {t("notice-upload.no-upload-message")}{" "}
+        <strong className="text-blue-800 cursor-pointer">
+          {t("notice-upload.file")}
+        </strong>{" "}
+        ?
+      </h1>
 
       <Dialog>
         <DialogTrigger asChild>
           <Button
             variant="secondary"
             style={{
-              backgroundColor: "#292929",
+              backgroundColor: "#0D4290",
               color: "white",
               borderRadius: "10px",
             }}
@@ -385,7 +407,7 @@ export default function NoticeUpload({
                                   )}
                                   className="resize-none min-h-[200px]"
                                   value={manualNoticeContent}
-                                  onChange={(e) =>
+                                  onChange={(e: any) =>
                                     setManualNoticeContent(e.target.value)
                                   }
                                 />

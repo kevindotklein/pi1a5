@@ -1,12 +1,13 @@
 import { https } from "firebase-functions";
 import { readPDF } from "./helpers/pdfReader.js";
-import { runModel } from "./models/openContentInterpreter.js";
+import { runContentInterpreterModel } from "./models/openContentInterpreter.js";
 import { config as configDotenv } from "dotenv";
 import { log } from "firebase-functions/logger";
 
 import cors from "cors";
 import { filterKnowledge } from "./helpers/filterKnowledge.js";
 import { filterJSON } from "./helpers/filterJSON.js";
+import { runTaskGenerationModel } from "./models/openTaskGenerator.js";
 const corsHandler = cors({ origin: true });
 
 export const getContentFromPdf = https.onRequest(async (request, response) => {
@@ -56,7 +57,7 @@ export const getContentFromPdf = https.onRequest(async (request, response) => {
         const filteredText = filterKnowledge(knowledge);
 
         log("Filtered knowledge, running model");
-        const processedContent = await runModel(filteredText);
+        const processedContent = await runContentInterpreterModel(filteredText);
 
         if (processedContent.error) throw new Error(processedContent.error);
 
@@ -70,6 +71,52 @@ export const getContentFromPdf = https.onRequest(async (request, response) => {
           error: "No knowledge found",
         });
       }
+    } catch (error) {
+      const text = `An error occurred while processing the content: ${error}`;
+
+      log(text);
+      response.status(400).json({
+        error: text,
+      });
+    }
+  });
+});
+
+export const generateTasks = https.onRequest(async (request, response) => {
+  configDotenv();
+
+  corsHandler(request, response, async () => {
+    try {
+      log("Running task generation", {
+        structuredData: true,
+      });
+
+      log(`req body: ${JSON.stringify(request.body)}`);
+
+      const { hours, notice_content, subjects } = request.body;
+
+      log(`Hours: ${hours}`, {
+        structuredData: true,
+      });
+
+      log(`Notice content: ${notice_content}`, {
+        structuredData: true,
+      });
+
+      log("Running model");
+      const processedContent = await runTaskGenerationModel({
+        hours,
+        notice_content,
+        subjects,
+      });
+
+      if (processedContent.error) throw new Error(processedContent.error);
+
+      log("Building JSON object");
+
+      const jsonObject = filterJSON(processedContent);
+
+      response.json(jsonObject);
     } catch (error) {
       const text = `An error occurred while processing the content: ${error}`;
 

@@ -28,13 +28,15 @@ export default function Home() {
   }, [userData]);
 
   return (
-    <div className="flex flex-col items-center gap-5 justify-between text-neutral-50 w-full">
-      <h1></h1>
-
+    <div className="flex flex-col gap-5 justify-between text-neutral-50 w-full p-10 h-[calc(100vh-56px)]">
       {!hasNotice && hasNotice !== null ? (
         <NoticeUpload setHasNotice={setHasNotice} />
       ) : (
-        <NoticeList />
+        <div className="flex flex-col gap-5 text-neutral-50 w-full">
+          <h1 className="text-2xl font-bold text-black">Seus Concursos</h1>
+
+          <NoticeList />
+        </div>
       )}
 
       <Link href="/common/payments">

@@ -30,7 +30,8 @@
   },
 
   "notice-upload": {
-    "no-upload-message": "you still haven't uploaded any notice, let's get started by uploading a file?",
+    "no-upload-message": "you still haven't uploaded any notice, let's get started by uploading a ",
+    "file": "file",
     "upload-button": "Upload",
     "modal": {
       "title": "upload a file",
@@ -46,7 +47,7 @@
         "notice-content-input": "manually insert the notice content"
       }
     },
-    "errors" : {
+    "errors": {
       "extract-content": "we couldn't automatically extract the notice content, please insert it manually"
     },
     "loading-message-1": "please wait, uploading file...",
@@ -55,7 +56,7 @@
   },
 
   "dashboard": {
-    "payments": "payments"
+    "payments": "Test Payment Integration"
   },
 
   "auth-user-layout": {
