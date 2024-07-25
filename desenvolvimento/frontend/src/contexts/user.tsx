@@ -14,6 +14,10 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/navigation";
 import { useLoading } from "./loading";
+import {
+  useCollectionData,
+  useDocumentData,
+} from "react-firebase-hooks/firestore";
 
 export const AuthContext = createContext({
   refresh: () => {},
@@ -35,6 +39,10 @@ export function AuthProvider({
   const { setLoading } = useLoading();
   const [user, loading] = useAuthState(auth) as any;
 
+  const [userDoc] = useDocumentData(
+    user?.uid ? doc(firestore, "users", user.uid) : null
+  );
+
   const [userData, setUserData] = useState(null) as any;
 
   useEffect(() => {
@@ -45,41 +53,40 @@ export function AuthProvider({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, loading]);
 
+  useEffect(() => {
+    if (userDoc) getUserData();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userDoc]);
+
   const getUserData = async () => {
-    if (!user) return;
+    if (!user || !userDoc) return;
 
-    const docRef = doc(firestore, "users", user.uid as string);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      let data = docSnap.data();
+    let data = userDoc;
 
-      if (data.has_notice) {
-        const noticesRef = collection(firestore, "notices");
-        const noticesQuery = query(
-          noticesRef,
-          where("user_uid", "==", user.uid)
-        );
-        const noticesSnap = await getDocs(noticesQuery);
+    if (data.has_notice) {
+      const noticesRef = collection(firestore, "notices");
+      const noticesQuery = query(noticesRef, where("user_uid", "==", user.uid));
+      const noticesSnap = await getDocs(noticesQuery);
 
-        const notices = [] as any;
+      const notices = [] as any;
 
-        for (const notice of noticesSnap.docs) {
-          const id = notice.id;
+      for (const notice of noticesSnap.docs) {
+        const id = notice.id;
 
-          const subjectRef = collection(firestore, "subjects");
-          const subjectQuery = query(subjectRef, where("notice_id", "==", id));
-          const subjectSnap = await getDocs(subjectQuery);
+        const subjectRef = collection(firestore, "subjects");
+        const subjectQuery = query(subjectRef, where("notice_id", "==", id));
+        const subjectSnap = await getDocs(subjectQuery);
 
-          const subjects = subjectSnap.docs.map((doc: any) => doc.data());
+        const subjects = subjectSnap.docs.map((doc: any) => doc.data());
 
-          notices.push({ id, ...notice.data(), subjects });
-        }
-
-        data = { ...data, notices };
+        notices.push({ id, ...notice.data(), subjects });
       }
 
-      setUserData(data);
+      data = { ...data, notices };
     }
+
+    setUserData(data);
   };
 
   const logout = async () => {

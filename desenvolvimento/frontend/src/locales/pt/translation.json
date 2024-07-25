@@ -51,7 +51,7 @@
       "extract-content": "Houve um erro ao extrair os conteúdos do edital automaticamente, por favor, insira-os manualmente e tentaremos novamente"
     },
     "loading-message-1": "por favor aguarde, enviando arquivo...",
-    "loading-message-2": "por favor aguarde, processando edital...",
+    "loading-message-2": "por favor aguarde, estamos processando o edital. esse processo pode demorar um pouco...",
     "loading-message-3": "finalizando..."
   },
 
