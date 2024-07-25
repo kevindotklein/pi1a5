@@ -50,14 +50,13 @@ import { useFunctions } from "@/hooks/useFunctions";
 import { Textarea } from "../ui/textarea";
 import { useLoading } from "@/contexts/loading";
 import { useTranslation } from "react-i18next";
+import DayCheckbox from "./dayCheckbox";
 
 export default function TaskGeneration({
   notice,
-  setHasTasks,
   refresh,
 }: {
   notice: any;
-  setHasTasks: (hasNotice: boolean) => void;
   refresh: () => void;
 }) {
   const action = useAction();
@@ -69,6 +68,7 @@ export default function TaskGeneration({
   const [user] = useAuthState(auth);
 
   const { t, i18n } = useTranslation();
+  const days: string[] = ["M", "T", "W", "T", "F", "S", "S"];
 
   const formSchema = z.object({
     hours: z
@@ -108,6 +108,7 @@ export default function TaskGeneration({
           hours: hours as number,
           notice,
         });
+
       },
       async () => {
         setLoading(false);
@@ -139,14 +140,18 @@ export default function TaskGeneration({
     }
 
     setLoading("Guardando suas tarefas...");
+    let day: number = -1;
+    const offset: number = Math.ceil(tasks.length / 7);
 
-    for (const task of tasks) {
+    for (let i=0; i<tasks.length; i++) {
       const notice_id = notice.id;
+      i % offset === 0 ? day++ : day;
 
       await addDoc(collection(firestore, "tasks"), {
         notice_id,
-        ...task,
+        ...tasks[i],
         created_at: new Date().toISOString(),
+        day,
       });
     }
 
@@ -158,8 +163,6 @@ export default function TaskGeneration({
     });
 
     setLoading(false);
-
-    setHasTasks(true);
   };
 
   return (
@@ -189,7 +192,6 @@ export default function TaskGeneration({
             <DialogDescription>
               Preencha o formulário abaixo para gerar suas tarefas dessa semana.
             </DialogDescription>
-
             <Form {...form}>
               <div className="h-full">
                 <form
@@ -215,6 +217,14 @@ export default function TaskGeneration({
                         </FormItem>
                       )}
                     />
+                  </div>
+
+                  <div className="flex flex-row w-full gap-4 justify-center">
+                      {days.map((day: string, i: number) => {
+                        return(
+                          <DayCheckbox onClick={() => console.log(day)} label={day}/>
+                        )
+                      })}
                   </div>
 
                   <div className="flex items-center justify-between w-full">
