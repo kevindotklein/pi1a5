@@ -52,9 +52,13 @@ import { useLoading } from "@/contexts/loading";
 import { useTranslation } from "react-i18next";
 
 export default function NoticeUpload({
+  hasNotice,
   setHasNotice,
+  triggerRef,
 }: {
+  hasNotice: boolean;
   setHasNotice: (hasNotice: boolean) => void;
+  triggerRef: any;
 }) {
   const action = useAction();
   const { toast } = useToast();
@@ -67,6 +71,7 @@ export default function NoticeUpload({
 
   const inputRef = useRef(null) as any;
   const drop = useRef(null) as any;
+  const closeRef = useRef(null) as any;
 
   const [fileToUpload, setFileToUpload] = useState<File>(null as any);
   const [progresspercent, setProgresspercent] = useState(0);
@@ -192,10 +197,12 @@ export default function NoticeUpload({
     name,
     downloadURL,
     isRetry,
+    tryNumber = 1,
   }: {
     name?: string;
     downloadURL: string;
     isRetry?: boolean;
+    tryNumber?: number;
   }) => {
     setLoading(
       isRetry
@@ -203,16 +210,17 @@ export default function NoticeUpload({
         : t("notice-upload.loading-message-2")
     );
 
-    const { notice_content, error, retry_error } = await processNotice({
+    const { notice_content, error } = await processNotice({
       url: downloadURL,
       notice_content: manualNoticeContent || "",
     });
 
-    if (retry_error) {
+    if (error?.includes("JSON") && tryNumber < 3) {
       await proccessNotice({
         name,
         downloadURL,
         isRetry: true,
+        tryNumber: tryNumber + 1,
       });
 
       return;
@@ -268,30 +276,47 @@ export default function NoticeUpload({
     setLoading(false);
 
     setHasNotice(true);
+
+    closeRef.current.click();
   };
 
+  const show_upload = !hasNotice && hasNotice !== null;
+
   return (
-    <main className="flex flex-col items-center gap-5 justify-between p-24 text-black">
-      <h1 className="text-xl font-bold text-black">
-        {t("notice-upload.no-upload-message")}{" "}
-        <strong className="text-blue-800 cursor-pointer">
-          {t("notice-upload.file")}
-        </strong>{" "}
-        ?
-      </h1>
+    <main
+      className={
+        show_upload
+          ? "flex flex-col items-center gap-5 justify-between p-24 text-black"
+          : "hidden"
+      }
+    >
+      {show_upload ? (
+        <h1 className="text-xl font-bold text-black">
+          {t("notice-upload.no-upload-message")}{" "}
+          <strong className="text-blue-800 cursor-pointer">
+            {t("notice-upload.file")}
+          </strong>{" "}
+          ?
+        </h1>
+      ) : null}
 
       <Dialog>
         <DialogTrigger asChild>
-          <Button
-            variant="secondary"
-            style={{
-              backgroundColor: "#0D4290",
-              color: "white",
-              borderRadius: "10px",
-            }}
-          >
-            {t("notice-upload.upload-button")}
-          </Button>
+          {show_upload ? (
+            <Button
+              ref={triggerRef}
+              variant="secondary"
+              style={{
+                backgroundColor: "#0D4290",
+                color: "white",
+                borderRadius: "10px",
+              }}
+            >
+              {t("notice-upload.upload-button")}
+            </Button>
+          ) : (
+            <div ref={triggerRef} />
+          )}
         </DialogTrigger>
 
         <DialogContent>
@@ -421,6 +446,7 @@ export default function NoticeUpload({
                       <div className="flex items-center justify-between w-full">
                         <DialogClose asChild>
                           <Button
+                            ref={closeRef}
                             variant="secondary"
                             style={{
                               borderRadius: "10px",

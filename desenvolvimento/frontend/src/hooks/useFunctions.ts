@@ -31,20 +31,18 @@ export const useFunctions = () => {
 
       if (response.data.error) throw response.data.error;
 
-      if (!response.data) throw "error processing notice";
+      if (!response.data) throw "Houve um erro ao processar o edital:";
 
       return {
         notice_content: response.data,
       };
     } catch (error: any) {
-      if (error?.message.contains("JSON")) {
-        return {
-          retry_error: error?.message || error,
-        };
-      }
+      if (error?.includes("JSON") || error?.message?.includes("JSON"))
+        return { error: error?.message ?? error };
+
       toast({
         variant: "destructive",
-        title: "error processing notice",
+        title: "Houve um erro ao processar o edital:",
         description: error?.message || error,
       });
 

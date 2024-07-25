@@ -56,6 +56,18 @@ export const getContentFromPdf = https.onRequest(async (request, response) => {
 
         const filteredText = filterKnowledge(knowledge);
 
+        if (filteredText.length > 25000) {
+          log(
+            "The knowledge is too long, please try again with a shorter notice"
+          );
+          response.json({
+            error:
+              "Parece que o conteúdo do edital é muito longo, por favor, tente novamente com um edital mais curto, ou insira o conteúdo manualmente.",
+          });
+
+          return;
+        }
+
         log("Filtered knowledge, running model");
         const processedContent = await runContentInterpreterModel(filteredText);
 
