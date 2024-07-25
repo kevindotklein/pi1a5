@@ -15,9 +15,12 @@ import { t } from "i18next";
 import {
   collection,
   doc,
+  DocumentData,
+  FirestoreError,
   getDoc,
   getDocs,
   query,
+  QuerySnapshot,
   where,
 } from "firebase/firestore";
 import { useToast } from "@/components/ui/use-toast";
@@ -26,6 +29,10 @@ import moment from "moment";
 import TaskGeneration from "@/components/common/taskGeneration";
 import Task from "@/components/common/task";
 import Layer from "@/components/common/layer";
+import {
+  useCollection,
+  useCollectionData,
+} from "react-firebase-hooks/firestore";
 
 export default function Tasks({ params }: { params: { slug: string } }) {
   const router = useRouter();
@@ -33,11 +40,16 @@ export default function Tasks({ params }: { params: { slug: string } }) {
   const { setLoading } = useLoading();
 
   const { userData, logout } = useAuth() as any;
+  const taskRef = collection(firestore, "tasks");
+  const taskQuery = query(
+    taskRef,
+    where("notice_id", "==", params?.slug as string)
+  );
+  const [taskSnap, loading, error] = useCollectionData(taskQuery, {});
 
   const [user] = useAuthState(auth) as any;
 
   const [notice, setNotice] = useState(null) as any;
-  const [hasTasks, setHasTasks] = useState(true) as any;
   const [tasks, setTasks] = useState([]) as any;
   const [days, setDays] = useState([
     "Monday",
@@ -58,11 +70,17 @@ export default function Tasks({ params }: { params: { slug: string } }) {
   };
 
   useEffect(() => {
+    setTasks(taskSnap);
+  }, [taskSnap]);
+
+  console.log("tasks ", tasks);
+  console.log("taskSnap ", taskSnap);
+
+  useEffect(() => {
     if (!params || !params.slug) {
       showError();
       return;
     }
-
     getNotice();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -86,72 +104,7 @@ export default function Tasks({ params }: { params: { slug: string } }) {
 
       const subjects = subjectSnap.docs.map((doc: any) => doc.data());
 
-      const taskRef = collection(firestore, "tasks");
-      const taskQuery = query(taskRef, where("notice_id", "==", id));
-      const taskSnap = await getDocs(taskQuery);
-
-      const tasks = taskSnap.docs.map((doc: any) => doc.data());
-
-      const offset: number = Math.ceil(tasks.length / days.length);
-
-      let layer: number = -1;
-
-      if (localStorage.getItem("tasks") === null) {
-        let toStore: {
-          0: number[];
-          1: number[];
-          2: number[];
-          3: number[];
-          4: number[];
-          5: number[];
-          6: number[];
-        } = {
-          0: [],
-          1: [],
-          2: [],
-          3: [],
-          4: [],
-          5: [],
-          6: [],
-        };
-
-        for (let i = 0; i < tasks.length; i++) {
-          i % offset == 0 ? layer++ : layer;
-          tasks[i].layerId = layer;
-          switch (layer) {
-            case 0:
-              toStore[0].push(i);
-              break;
-            case 1:
-              toStore[1].push(i);
-              break;
-            case 2:
-              toStore[2].push(i);
-              break;
-            case 3:
-              toStore[3].push(i);
-              break;
-            case 4:
-              toStore[4].push(i);
-              break;
-            case 5:
-              toStore[5].push(i);
-              break;
-            case 6:
-              toStore[6].push(i);
-              break;
-
-            default:
-              break;
-          }
-        }
-        localStorage.setItem(`tasks`, JSON.stringify(toStore));
-      }
-
-      if (!tasks.length) setHasTasks(false);
-
-      setNotice({ id, ...notice, subjects });
-      setTasks(tasks);
+      await setNotice({ id, ...notice, subjects });
 
       setLoading(false);
     } else {
@@ -177,34 +130,30 @@ export default function Tasks({ params }: { params: { slug: string } }) {
 
           <h2 className="text-xl font-bold text-black">Suas Tarefas</h2>
 
-          {!hasTasks ? (
+          {taskSnap?.length ? (
             <TaskGeneration
               notice={notice}
-              setHasTasks={setHasTasks}
               refresh={getNotice}
             />
           ) : (
             <div className="flex flex-row space-x-4 mx-auto">
-              {console.log(tasks[0])}
               {days.map((day: string, i: number) => {
-                const filteredTasks = JSON.parse(
-                  localStorage.getItem("tasks") || ""
-                );
-                console.log(filteredTasks);
                 return (
                   <Layer key={day} day={day}>
-                    {filteredTasks[i].map((index: number) => {
-                      return (
-                        <Task
-                          key={tasks[index].title}
-                          id={tasks[index].title}
-                          hours={tasks[index].hours}
-                          title={tasks[index].title as string}
-                          subject={tasks[index].subject as string}
-                          description={tasks[index].description as string}
-                        />
-                      );
-                    })}
+                    {tasks
+                        .filter((t: any) => t.day == i)
+                        .map((task: any) => {
+                          return (
+                            <Task
+                              key={task.title}
+                              id={task.title}
+                              hours={task.hours}
+                              title={task.title as string}
+                              subject={task.subject as string}
+                              description={task.description as string}
+                            />
+                          );
+                        })}
                   </Layer>
                 );
               })}
