@@ -130,7 +130,7 @@ export default function Tasks({ params }: { params: { slug: string } }) {
 
           <h2 className="text-xl font-bold text-black">Suas Tarefas</h2>
 
-          {taskSnap?.length ? (
+          {!taskSnap?.length ? (
             <TaskGeneration
               notice={notice}
               refresh={getNotice}

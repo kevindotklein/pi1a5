@@ -68,7 +68,9 @@ export default function TaskGeneration({
   const [user] = useAuthState(auth);
 
   const { t, i18n } = useTranslation();
-  const days: string[] = ["M", "T", "W", "T", "F", "S", "S"];
+  const daysLabel: string[] = ["M", "T", "W", "T", "F", "S", "S"];
+
+  const [days, setDays] = useState<number[]>([]);
 
   const formSchema = z.object({
     hours: z
@@ -122,6 +124,10 @@ export default function TaskGeneration({
     );
   };
 
+  const chunkDays = (index: number): void => {
+    days.includes(index) ? setDays(days.filter(d => d !== index)) : setDays([...days, index]);
+  }
+
   const startTaskGeneration = async ({
     hours,
     notice,
@@ -140,8 +146,8 @@ export default function TaskGeneration({
     }
 
     setLoading("Guardando suas tarefas...");
-    let day: number = -1;
-    const offset: number = Math.ceil(tasks.length / 7);
+    let day: number = Math.min(...days) - 1;
+    const offset: number = Math.ceil(tasks.length / days.length);
 
     for (let i=0; i<tasks.length; i++) {
       const notice_id = notice.id;
@@ -220,9 +226,9 @@ export default function TaskGeneration({
                   </div>
 
                   <div className="flex flex-row w-full gap-4 justify-center">
-                      {days.map((day: string, i: number) => {
+                      {daysLabel.map((day: string, i: number) => {
                         return(
-                          <DayCheckbox onClick={() => console.log(day)} label={day}/>
+                          <DayCheckbox key={i} onClick={() => {chunkDays(i);}} label={day}/>
                         )
                       })}
                   </div>
