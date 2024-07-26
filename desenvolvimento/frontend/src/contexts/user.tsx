@@ -59,9 +59,12 @@ export function AuthProvider({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userDoc]);
 
+  console.log(userData);
+
   const getUserData = async () => {
     if (!user || !userDoc) return;
 
+    setLoading(true);
     let data = userDoc;
 
     if (data.has_notice) {
@@ -80,13 +83,20 @@ export function AuthProvider({
 
         const subjects = subjectSnap.docs.map((doc: any) => doc.data());
 
-        notices.push({ id, ...notice.data(), subjects });
+        const taskRef = collection(firestore, "tasks");
+        const taskQuery = query(taskRef, where("notice_id", "==", id));
+        const taskSnap = await getDocs(taskQuery);
+        const tasks = taskSnap.docs.map((doc: any) => doc.data());
+
+        notices.push({ id, ...notice.data(), subjects, tasks });
       }
 
       data = { ...data, notices };
     }
 
     setUserData(data);
+
+    setLoading(false);
   };
 
   const logout = async () => {

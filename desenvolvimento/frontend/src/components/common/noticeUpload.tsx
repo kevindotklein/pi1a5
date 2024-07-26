@@ -332,7 +332,7 @@ export default function NoticeUpload({
                 {progresspercent}%
               </div>
             ) : (
-              <div className="mt-5 flex flex-col gap-10">
+              <div className="mt-5 flex flex-col gap-4">
                 <input
                   title="upload file"
                   ref={inputRef}

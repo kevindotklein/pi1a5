@@ -4,6 +4,8 @@ import "@/styles/globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { AuthProvider } from "@/contexts/user";
 import { LoadingProvider } from "@/contexts/loading";
+import { motion } from "framer-motion";
+import Transition from "@/components/common/transition";
 
 const mulish = Mulish({ subsets: ["latin"] });
 
@@ -21,7 +23,9 @@ export default async function RootLayout({
     <html lang="en">
       <body className={`${mulish.className} bg-neutral-100`}>
         <LoadingProvider>
-          <AuthProvider>{children}</AuthProvider>
+          <AuthProvider>
+            <Transition>{children}</Transition>
+          </AuthProvider>
         </LoadingProvider>
 
         <Toaster />
