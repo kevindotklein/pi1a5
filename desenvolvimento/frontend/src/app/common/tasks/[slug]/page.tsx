@@ -116,7 +116,7 @@ export default function Tasks({ params }: { params: { slug: string } }) {
   };
 
   return (
-    <div className="flex flex-col gap-5 text-neutral-50 w-full p-10 h-[calc(100vh-56px)]">
+    <div className="flex flex-col gap-5 text-neutral-50 w-full px-10 h-[calc(100vh-112px)]">
       {notice ? (
         <>
           <div className="flex flex-col gap-2 w-full">
@@ -131,29 +131,26 @@ export default function Tasks({ params }: { params: { slug: string } }) {
           <h2 className="text-xl font-bold text-black">Suas Tarefas</h2>
 
           {!taskSnap?.length ? (
-            <TaskGeneration
-              notice={notice}
-              refresh={getNotice}
-            />
+            <TaskGeneration notice={notice} refresh={getNotice} />
           ) : (
             <div className="flex flex-row space-x-4 mx-auto">
               {days.map((day: string, i: number) => {
                 return (
                   <Layer key={day} day={day}>
                     {tasks
-                        .filter((t: any) => t.day == i)
-                        .map((task: any) => {
-                          return (
-                            <Task
-                              key={task.title}
-                              id={task.title}
-                              hours={task.hours}
-                              title={task.title as string}
-                              subject={task.subject as string}
-                              description={task.description as string}
-                            />
-                          );
-                        })}
+                      .filter((t: any) => t.day == i)
+                      .map((task: any) => {
+                        return (
+                          <Task
+                            key={task.title}
+                            id={task.title}
+                            hours={task.hours}
+                            title={task.title as string}
+                            subject={task.subject as string}
+                            description={task.description as string}
+                          />
+                        );
+                      })}
                   </Layer>
                 );
               })}

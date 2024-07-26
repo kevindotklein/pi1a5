@@ -22,6 +22,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useRef } from "react";
+import Subject from "./subject";
+import { BookMarked, Component } from "lucide-react";
 
 export default function NoticeList() {
   const router = useRouter();
@@ -49,13 +51,20 @@ export default function NoticeList() {
               }}
             >
               <div key={notice.id} className="flex flex-col gap-1">
-                <p className="text-lg text-blue-600 cursor-pointer hover:text-blue-800">
-                  {notice.name}
+                <p className="text-lg text-blue-600 font-bold flex gap-1 items-center cursor-pointer hover:text-blue-800">
+                  <BookMarked size={20} /> {notice.name}
                 </p>
-                <span className="text-sm text-neutral-400">
-                  {t("notice-list.uploaded-at")}{" "}
-                  {moment(notice.created_at).format("DD/MM/YYYY HH:mm")}
-                </span>
+
+                <div className="flex items-center w-full justify-between">
+                  <span className="text-sm text-neutral-400">
+                    {t("notice-list.uploaded-at")}{" "}
+                    {moment(notice.created_at).format("DD/MM/YYYY HH:mm")}
+                  </span>
+
+                  <span className="text-sm text-neutral-500 font-medium">
+                    {notice.tasks.length} tarefas
+                  </span>
+                </div>
               </div>
             </div>
           ))}
@@ -67,7 +76,7 @@ export default function NoticeList() {
       <Dialog>
         <DialogTrigger ref={triggerRef} />
 
-        <DialogContent className="max-w-[80vw] overflow-auto">
+        <DialogContent className="max-w-[40vw] overflow-auto tablet:max-w-[100vw] tablet:overflow-auto">
           <DialogHeader>
             <DialogTitle>{noticeOpen?.name}</DialogTitle>
             <DialogDescription>
@@ -81,30 +90,14 @@ export default function NoticeList() {
           <p>{t("notice-list.subj-and-contents")}</p>
 
           <div className="flex gap-4 flex-col w-full h-full max-h-[600px] overflow-auto">
-            <div className="flex gap-4 w-full">
+            <div className="flex flex-col gap-4 w-full">
               {noticeOpen?.subjects?.map((subject: any) => (
-                <div
-                  key={subject.id}
-                  className="flex flex-col gap-3 p-4 border border-neutral-500 rounded-sm w-[400px]"
-                >
-                  <p className="text-lg text-blue-600 font-bold">
-                    {subject.name}
-                  </p>
-
-                  {subject.contents.map((content: any) => (
-                    <div
-                      key={content}
-                      className="flex flex-col gap-1 p-2 bg-neutral-200 rounded-sm"
-                    >
-                      <p className="text-sm text-black">{content}</p>
-                    </div>
-                  ))}
-                </div>
+                <Subject key={subject.id} subject={subject} />
               ))}
             </div>
           </div>
 
-          <div className="flex w-full p-4 gap-4 justify-end">
+          <div className="flex w-full py-4 gap-4 justify-end">
             <Button
               variant="secondary"
               style={{
