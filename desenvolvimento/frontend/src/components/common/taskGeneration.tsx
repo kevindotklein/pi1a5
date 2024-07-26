@@ -149,6 +149,7 @@ export default function TaskGeneration({
     let day: number = Math.min(...days) - 1;
     const offset: number = Math.ceil(tasks.length / days.length);
 
+    console.log(days);
     for (let i=0; i<tasks.length; i++) {
       const notice_id = notice.id;
       i % offset === 0 ? day++ : day;
@@ -157,7 +158,7 @@ export default function TaskGeneration({
         notice_id,
         ...tasks[i],
         created_at: new Date().toISOString(),
-        day,
+        day: days[day],
       });
     }
 

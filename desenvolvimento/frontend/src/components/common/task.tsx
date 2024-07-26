@@ -21,7 +21,7 @@ export default function Task({
       key={id}
       className="flex flex-col gap-4 p-4 bg-neutral-100 max-w-[200px] border border-neutral-500 rounded-sm cursor-grab"
     >
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-1 break-words">
         <div className="flex items-center justify-between w-full mb-2">
           <TaskCheckbox />
           <div className="flex items-center justify-center gap-2 rounded-md bg-blue-800 px-2 py-1 text-xs text-white select-none">
