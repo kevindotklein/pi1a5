@@ -7,6 +7,8 @@ interface Props {
   title: string;
   subject: string;
   description: string;
+  setActiveCard: (index: number | null) => void;
+  index: number;
 }
 
 export default function Task({
@@ -15,9 +17,14 @@ export default function Task({
   title,
   subject,
   description,
+  setActiveCard,
+  index
 }: Props) {
   return (
     <div
+      draggable
+      onDragStart={() => {setActiveCard(index)}}
+      onDragEnd={() => {setActiveCard(null)}}
       key={id}
       className="flex flex-col gap-4 p-4 bg-neutral-100 max-w-[200px] border border-neutral-500 rounded-sm cursor-grab"
     >

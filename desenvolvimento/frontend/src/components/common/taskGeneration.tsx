@@ -148,18 +148,29 @@ export default function TaskGeneration({
     setLoading("Guardando suas tarefas...");
     let day: number = Math.min(...days) - 1;
     const offset: number = Math.ceil(tasks.length / days.length);
+    let prio: number = 0;
+    let taskId: number = 0;
 
     console.log(days);
     for (let i=0; i<tasks.length; i++) {
       const notice_id = notice.id;
-      i % offset === 0 ? day++ : day;
+      if(i % offset === 0) {
+        day++;
+        prio = 0;
+      } else {
+        prio++;
+      }
 
       await addDoc(collection(firestore, "tasks"), {
+        taskId,
         notice_id,
         ...tasks[i],
         created_at: new Date().toISOString(),
         day: days[day],
+        prio,
       });
+
+      taskId++;
     }
 
     refresh();

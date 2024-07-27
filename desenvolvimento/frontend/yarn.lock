@@ -1929,6 +1929,13 @@ fraction.js@^4.3.7:
   resolved "https://registry.npmjs.org/fraction.js/-/fraction.js-4.3.7.tgz"
   integrity sha512-ZsDfxO51wGAXREY55a7la9LScWpwv9RxIrYABrlvOFBlH/ShPnrtsXeuUIfXKKOVicNxQ+o8JTbJvjS4M89yew==
 
+framer-motion@^11.3.17:
+  version "11.3.18"
+  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-11.3.18.tgz#ca380896ef4f4b3a15fa6627309e964d2af63189"
+  integrity sha512-pPJXcshW+AABch6FQxFCeBd/bZFaZC2w/VdkSEZGvKIaVGA4IsOS2SqUEIWMKMJJsKwr96O+7vY66M+/S7mOlw==
+  dependencies:
+    tslib "^2.4.0"
+
 fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz"

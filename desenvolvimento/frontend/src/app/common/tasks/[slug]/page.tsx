@@ -7,7 +7,7 @@ import { auth, firestore } from "@/firebase/config";
 import { Link2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import "../../../../locales/i18n";
 import { t } from "i18next";
@@ -19,8 +19,10 @@ import {
   FirestoreError,
   getDoc,
   getDocs,
+  orderBy,
   query,
   QuerySnapshot,
+  setDoc,
   where,
 } from "firebase/firestore";
 import { useToast } from "@/components/ui/use-toast";
@@ -33,6 +35,7 @@ import {
   useCollection,
   useCollectionData,
 } from "react-firebase-hooks/firestore";
+import DropArea from "@/components/common/dropArea";
 
 export default function Tasks({ params }: { params: { slug: string } }) {
   const router = useRouter();
@@ -43,9 +46,10 @@ export default function Tasks({ params }: { params: { slug: string } }) {
   const taskRef = collection(firestore, "tasks");
   const taskQuery = query(
     taskRef,
-    where("notice_id", "==", params?.slug as string)
+    where("notice_id", "==", params?.slug as string),
+    orderBy("prio")
   );
-  const [taskSnap, loading, error] = useCollectionData(taskQuery, {});
+  const [taskSnap, loading, error] = useCollection(taskQuery, {});
 
   const [user] = useAuthState(auth) as any;
 
@@ -60,6 +64,7 @@ export default function Tasks({ params }: { params: { slug: string } }) {
     "Saturday",
     "Sunday",
   ]) as any;
+  const [activeCard, setActiveCard] = useState(null) as any;
 
   const showError = () => {
     toast({
@@ -70,11 +75,15 @@ export default function Tasks({ params }: { params: { slug: string } }) {
   };
 
   useEffect(() => {
-    setTasks(taskSnap);
+    const taskData = taskSnap?.docs.map((doc: any) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    if (taskData) setTasks(taskData);
   }, [taskSnap]);
 
   console.log("tasks ", tasks);
-  console.log("taskSnap ", taskSnap);
+  //console.log("taskSnap ", taskSnap);
 
   useEffect(() => {
     if (!params || !params.slug) {
@@ -115,6 +124,44 @@ export default function Tasks({ params }: { params: { slug: string } }) {
     }
   };
 
+  const onDrop = async (day: number, prio: number) => {
+    console.log(`card: ${activeCard} | day: ${day} | prio: ${prio}`);
+
+    const taskRef = collection(firestore, "tasks");
+    const taskQuery = query(
+      taskRef,
+      where("notice_id", "==", params?.slug as string),
+      where("day", "==", day),
+      where("prio", ">=", prio),
+      orderBy("prio", "asc")
+    );
+    const taskDocs = await getDocs(taskQuery);
+
+    let prioCounter: number = prio;
+    for (const task of taskDocs.docs) {
+      const taskDocRef = doc(firestore, "tasks", task.id as string);
+
+      setDoc(
+        taskDocRef,
+        {
+          prio: prioCounter++,
+        },
+        { merge: true }
+      );
+    }
+
+    const taskDocRef = doc(firestore, "tasks", activeCard as string);
+
+    setDoc(
+      taskDocRef,
+      {
+        day,
+        prio,
+      },
+      { merge: true }
+    );
+  };
+
   return (
     <div className="flex flex-col gap-5 text-neutral-50 w-full px-10 h-[calc(100vh-112px)]">
       {notice ? (
@@ -130,7 +177,7 @@ export default function Tasks({ params }: { params: { slug: string } }) {
 
           <h2 className="text-xl font-bold text-black">Suas Tarefas</h2>
 
-          {!taskSnap?.length ? (
+          {!tasks.length ? (
             <TaskGeneration notice={notice} refresh={getNotice} />
           ) : (
             <div className="flex flex-row space-x-4 mx-auto">
@@ -141,14 +188,26 @@ export default function Tasks({ params }: { params: { slug: string } }) {
                       .filter((t: any) => t.day == i)
                       .map((task: any) => {
                         return (
-                          <Task
-                            key={task.title}
-                            id={task.title}
-                            hours={task.hours}
-                            title={task.title as string}
-                            subject={task.subject as string}
-                            description={task.description as string}
-                          />
+                          <React.Fragment key={task.title}>
+                            <Task
+                              key={task.title}
+                              id={task.title}
+                              index={task.id}
+                              setActiveCard={setActiveCard}
+                              hours={task.hours}
+                              title={task.title as string}
+                              subject={task.subject as string}
+                              description={task.description as string}
+                            />
+                            <DropArea
+                              onDrop={onDrop}
+                              day={i}
+                              prio={task.prio + 1}
+                            />
+                            <h1 className="text-black">
+                              active card: {activeCard}
+                            </h1>
+                          </React.Fragment>
                         );
                       })}
                   </Layer>
