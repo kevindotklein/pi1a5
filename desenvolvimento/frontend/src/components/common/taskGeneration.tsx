@@ -11,6 +11,7 @@ import {
   where,
   deleteDoc,
   doc,
+  getDocs,
 } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollectionOnce } from "react-firebase-hooks/firestore";
@@ -55,10 +56,15 @@ import DayCheckbox from "./dayCheckbox";
 export default function TaskGeneration({
   notice,
   refresh,
+  triggerRef,
+  shouldShow,
 }: {
   notice: any;
   refresh: () => void;
+  triggerRef: any;
+  shouldShow: boolean;
 }) {
+  const closeRef = useRef(null) as any;
   const action = useAction();
   const { toast } = useToast();
 
@@ -68,7 +74,15 @@ export default function TaskGeneration({
   const [user] = useAuthState(auth);
 
   const { t, i18n } = useTranslation();
-  const daysLabel: string[] = ["M", "T", "W", "T", "F", "S", "S"];
+  const daysLabel: string[] = [
+    "Segunda",
+    "Terça",
+    "Quarta",
+    "Quinta",
+    "Sexta",
+    "Sábado",
+    "Domingo",
+  ];
 
   const [days, setDays] = useState<number[]>([]);
 
@@ -110,7 +124,6 @@ export default function TaskGeneration({
           hours: hours as number,
           notice,
         });
-
       },
       async () => {
         setLoading(false);
@@ -125,8 +138,10 @@ export default function TaskGeneration({
   };
 
   const chunkDays = (index: number): void => {
-    days.includes(index) ? setDays(days.filter(d => d !== index)) : setDays([...days, index]);
-  }
+    days.includes(index)
+      ? setDays(days.filter((d) => d !== index))
+      : setDays([...days, index]);
+  };
 
   const startTaskGeneration = async ({
     hours,
@@ -135,8 +150,59 @@ export default function TaskGeneration({
     hours: number;
     notice: any;
   }) => {
+    console.log(notice);
+    const { subjects } = notice;
+
+    const taskRef = collection(firestore, "tasks");
+    const taskQuery = query(
+      taskRef,
+      where("notice_id", "==", notice?.id as string)
+    );
+    const taskDocs = await getDocs(taskQuery);
+
+    const doneSubjects = taskDocs.docs.map((doc) => doc.data().content);
+    console.log(doneSubjects);
+
+    for (let subject of subjects) {
+      const filteredContents = subject?.contents.filter(
+        (content: any) => !doneSubjects.includes(content)
+      );
+
+      console.log(subject?.name, filteredContents);
+      notice.contents = filteredContents;
+    }
+
+    const total_previous_hours = taskDocs.docs
+      .filter((item) => !item.data().is_finished)
+      .reduce((acc, doc) => acc + parseFloat(doc.data().hours), 0);
+
+    const total_hours = hours - total_previous_hours;
+
+    if (total_hours <= 0) {
+      setLoading(false);
+      return toast({
+        title: "Atenção!",
+        description:
+          "Parece que você ainda tem horas de estudo restantes dessa semana. Antes de gerar as tarefas novamente, finalize as tarefas que você já tem.",
+      });
+    }
+
+    for (const task of taskDocs.docs.filter(
+      (item) => item.data().is_finished
+    )) {
+      const taskDocRef = doc(firestore, "tasks", task.id as string);
+
+      setDoc(
+        taskDocRef,
+        {
+          hidden: true,
+        },
+        { merge: true }
+      );
+    }
+
     const { tasks, error } = await generateTasks({
-      hours,
+      hours: total_hours,
       notice_content: notice,
     });
 
@@ -146,15 +212,16 @@ export default function TaskGeneration({
     }
 
     setLoading("Guardando suas tarefas...");
-    let day: number = Math.min(...days) - 1;
+    let day: number = -1;
     const offset: number = Math.ceil(tasks.length / days.length);
     let prio: number = 0;
     let taskId: number = 0;
 
     console.log(days);
-    for (let i=0; i<tasks.length; i++) {
+    console.log(day);
+    for (let i = 0; i < tasks.length; i++) {
       const notice_id = notice.id;
-      if(i % offset === 0) {
+      if (i % offset === 0) {
         day++;
         prio = 0;
       } else {
@@ -168,6 +235,8 @@ export default function TaskGeneration({
         created_at: new Date().toISOString(),
         day: days[day],
         prio,
+        is_finished: false,
+        hidden: false,
       });
 
       taskId++;
@@ -180,11 +249,17 @@ export default function TaskGeneration({
       description: "Suas tarefas foram geradas com sucesso!",
     });
 
+    closeRef.current.click();
+
     setLoading(false);
   };
 
   return (
-    <main className="flex flex-col items-center gap-5 justify-between p-24 text-black">
+    <main
+      className={`flex flex-col items-center gap-5 justify-between p-24 text-black ${
+        shouldShow ? "" : "hidden"
+      }`}
+    >
       <h1 className="text-xl font-bold text-black">
         Parece que você ainda não tem tarefas para este edital. Vamos gerar suas{" "}
         <strong className="text-blue-800 cursor-pointer">tarefas</strong> ?
@@ -193,6 +268,7 @@ export default function TaskGeneration({
       <Dialog>
         <DialogTrigger asChild>
           <Button
+            ref={triggerRef}
             variant="secondary"
             style={{
               backgroundColor: "#0D4290",
@@ -237,17 +313,27 @@ export default function TaskGeneration({
                     />
                   </div>
 
-                  <div className="flex flex-row w-full gap-4 justify-center">
-                      {daysLabel.map((day: string, i: number) => {
-                        return(
-                          <DayCheckbox key={i} onClick={() => {chunkDays(i);}} label={day}/>
-                        )
-                      })}
+                  <span className="text-md font-bold text-black">
+                    Selecione os dias da semana que você deseja estudar:
+                  </span>
+                  <div className="w-full h-full grid grid-cols-2 gap-2 justify-center">
+                    {daysLabel.map((day: string, i: number) => {
+                      return (
+                        <DayCheckbox
+                          key={i}
+                          onClick={() => {
+                            chunkDays(i);
+                          }}
+                          label={day}
+                        />
+                      );
+                    })}
                   </div>
 
                   <div className="flex items-center justify-between w-full">
                     <DialogClose asChild>
                       <Button
+                        ref={closeRef}
                         variant="secondary"
                         style={{
                           borderRadius: "10px",

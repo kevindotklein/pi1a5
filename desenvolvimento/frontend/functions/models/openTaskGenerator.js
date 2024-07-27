@@ -23,6 +23,7 @@ const runTaskGenerationModel = async ({ hours, notice_content, subjects }) => {
         "tasks": [
           {
             "subject" : "Português",
+            "content" : "Gramática",
             "title" : "Gramática",
             "description" : "Estude a gramática do português",
             "hours" : 2,

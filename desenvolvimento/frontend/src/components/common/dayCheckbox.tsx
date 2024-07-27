@@ -15,7 +15,7 @@ export default function DayCheckbox({ onClick, label }: Props) {
 
   return (
     <div
-      className={`w-12 h-11 my-1 rounded-sm font-bold flex justify-center items-center cursor-pointer select-none ${
+      className={`w-full h-11 my-1 rounded-sm font-bold flex justify-center items-center cursor-pointer select-none ${
         isClicked
           ? "bg-blue-200 text-blue-800 border-2 border-blue-800"
           : "bg-neutral-200"
