@@ -61,7 +61,7 @@ export default function Login() {
   };
 
   return (
-    <div className="h-full flex flex-col gap-4">
+    <div className="h-full flex flex-col gap-4 tablet:w-full">
       <div className="h-full flex flex-col gap-4">
         <div className="flex flex-col gap-1">
           <h3 className="text-3xl font-bold flex gap-2 items-center text-neutral-100">
@@ -83,7 +83,9 @@ export default function Login() {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>{t("login.email")}</FormLabel>
+                      <FormLabel className="!text-white">
+                        {t("login.email")}
+                      </FormLabel>
                       <FormControl>
                         <Input
                           placeholder={t("login.email-input")}
@@ -99,7 +101,9 @@ export default function Login() {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>{t("login.password")}</FormLabel>
+                      <FormLabel className="!text-white">
+                        {t("login.password")}
+                      </FormLabel>
                       <FormControl>
                         <Input
                           type="password"
@@ -115,17 +119,17 @@ export default function Login() {
 
               <Social />
 
-              <div className="flex items-baseline justify-between mt-8 gap-2 tablet:!flex-col">
+              <div className="flex items-baseline justify-between mt-8 gap-2 tablet:!flex-col tablet:w-full">
                 <Button variant="link" asChild>
                   <Link
                     href="/auth/register"
-                    className="text-sm hover:underline tablet:!text-xs text-white"
+                    className="text-sm hover:underline tablet:!text-xs text-white tablet:w-full"
                   >
                     {t("login.register-question")}
                   </Link>
                 </Button>
 
-                <Button variant="default" size="lg">
+                <Button variant="default" size="lg" className="tablet:w-full">
                   {t("login.submit-button")}
                 </Button>
               </div>

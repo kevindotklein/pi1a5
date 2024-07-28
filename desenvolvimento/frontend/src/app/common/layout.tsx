@@ -73,7 +73,7 @@ export default function CommonLayout({
       transition={{ ease: "easeInOut", duration: 0.75 }}
     >
       <main className="flex flex-col items-center justify-center">
-        <div className="flex gap-4 items-center justify-between bg-blue-700 w-full pt-2 pr-6 pb-2 pl-6">
+        <div className="flex gap-4 items-center justify-between bg-blue-700 w-full pt-2 pr-6 pb-2 pl-6 sticky top-0 z-50">
           <span
             className="text-lg font-bold text-white cursor-pointer flex gap-2 items-center"
             onClick={() => router.push("/common/dashboard")}
@@ -105,7 +105,7 @@ export default function CommonLayout({
           </div>
         </div>
 
-        <div className="flex gap3 items-center gap-1.5 py-4 px-10 w-full transition-all">
+        <div className="flex gap3 items-center gap-1.5 py-4 px-10 w-full transition-all tablet:px-3">
           {pathname !== "/common/dashboard" ? (
             <ChevronLeft
               size={15}

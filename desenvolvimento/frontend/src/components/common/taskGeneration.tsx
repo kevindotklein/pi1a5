@@ -256,11 +256,11 @@ export default function TaskGeneration({
 
   return (
     <main
-      className={`flex flex-col items-center gap-5 justify-between p-24 text-black ${
+      className={`flex flex-col items-center gap-5 justify-between p-24 text-black tablet:p-6 ${
         shouldShow ? "" : "hidden"
       }`}
     >
-      <h1 className="text-xl font-bold text-black">
+      <h1 className="text-xl font-bold text-black tablet:text-center">
         Parece que você ainda não tem tarefas para este edital. Vamos gerar suas{" "}
         <strong className="text-blue-800 cursor-pointer">tarefas</strong> ?
       </h1>

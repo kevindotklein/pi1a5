@@ -40,11 +40,11 @@ export default function NoticeList() {
   return (
     <div className="flex flex-col gap-4 text-black w-full ">
       {userData?.notices?.length ? (
-        <div className="flex flex-col gap-4 justify-center w-full max-w-[800px]">
+        <div className="flex flex-col gap-4 justify-center w-full max-w-[800px] tablet:w-full tablet:max-w-full">
           {userData.notices.map((notice: any) => (
             <div
               key={notice.id}
-              className="flex flex-col gap-3 p-4 border border-neutral-800 rounded-lg w-[50%] cursor-pointer hover:bg-neutral-200 transition-all"
+              className="flex flex-col gap-3 p-4 border border-neutral-800 rounded-lg w-[50%] cursor-pointer hover:bg-neutral-200 transition-all tablet:max-w-full tablet:w-full"
               onClick={() => {
                 setNoticeOpen(notice);
                 triggerRef.current?.click();

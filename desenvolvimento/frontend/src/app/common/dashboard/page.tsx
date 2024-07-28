@@ -30,7 +30,7 @@ export default function Home() {
   }, [userData]);
 
   return (
-    <div className="flex flex-col gap-5 justify-between text-neutral-50 w-full px-10 h-[calc(100vh-112px)] pb-4">
+    <div className="flex flex-col gap-5 justify-between text-neutral-50 w-full px-10 h-[calc(100vh-112px)] pb-4 tablet:px-3">
       <div className="flex flex-col gap-5 text-neutral-50 w-full">
         <div className="flex gap-3 text-neutral-50 w-full items-center">
           <h1 className="text-2xl font-bold text-black">Seus Concursos</h1>

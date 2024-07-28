@@ -28,7 +28,7 @@ export default function CommonLayout({
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center gap-4">
-      <div className="flex flex-col items-center justify-center gap-4 rounded-md bg-blue-800 p-6">
+      <div className="flex flex-col items-center justify-center gap-4 rounded-md bg-blue-800 p-6 tablet:w-[400px]">
         {children}
       </div>
     </main>

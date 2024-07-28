@@ -16,7 +16,7 @@
     "starting-message": "get started here:",
     "login-button": "login",
     "footer-message-1": "made by",
-    "footer-message-2": "for noz usage only"
+    "footer-message-2": "for IFSP - 2024"
   },
 
   "login": {
@@ -71,7 +71,7 @@
 
   "payments": {
     "check-in": {
-      "message": "test payment integration"
+      "message": "Create monthly subscription on the platform"
     },
     "success": {
       "message": "payment processed succesfully!"

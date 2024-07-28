@@ -175,7 +175,7 @@ export default function Tasks({ params }: { params: { slug: string } }) {
   };
 
   return (
-    <div className="flex flex-col gap-5 text-neutral-50 w-full px-10 h-[calc(100vh-112px)] pb-4`">
+    <div className="flex flex-col gap-5 text-neutral-50 w-full px-10 h-[calc(100vh-112px)] pb-4 tablet:px-3">
       {notice ? (
         <>
           <div className="flex flex-col gap-2 w-full">
@@ -206,7 +206,7 @@ export default function Tasks({ params }: { params: { slug: string } }) {
           />
 
           {tasks.length ? (
-            <div className="h-full grid grid-cols-7 gap-[30px] overflow-y-auto">
+            <div className="h-full grid grid-cols-7 gap-[30px] tablet:grid-cols-[repeat(7,minmax(240px,1fr))] tablet:overflow-auto">
               {days.map((day: string, i: number) => {
                 return (
                   <Layer

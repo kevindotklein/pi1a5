@@ -286,12 +286,12 @@ export default function NoticeUpload({
     <main
       className={
         show_upload
-          ? "flex flex-col items-center gap-5 justify-between p-24 text-black"
+          ? "flex flex-col items-center gap-5 justify-between p-24 text-black tablet:p-6"
           : "hidden"
       }
     >
       {show_upload ? (
-        <h1 className="text-xl font-bold text-black">
+        <h1 className="text-xl font-bold text-black tablet:text-center">
           {t("notice-upload.no-upload-message")}{" "}
           <strong className="text-blue-800 cursor-pointer">
             {t("notice-upload.file")}

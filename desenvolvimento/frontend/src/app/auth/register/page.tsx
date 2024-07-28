@@ -71,7 +71,7 @@ export default function Register() {
   };
 
   return (
-    <div className="h-full flex flex-col gap-4">
+    <div className="h-full flex flex-col gap-4 tablet:w-full">
       <div className="h-full flex flex-col gap-4">
         <div className="flex flex-col gap-1">
           <h3 className="text-3xl font-bold flex gap-2 items-center text-neutral-100">
@@ -91,7 +91,9 @@ export default function Register() {
                   name="full_name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>{t("register.name")}</FormLabel>
+                      <FormLabel className="!text-white">
+                        {t("register.name")}
+                      </FormLabel>
                       <FormControl>
                         <Input
                           placeholder={t("register.name-input")}
@@ -107,7 +109,9 @@ export default function Register() {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>{t("register.email")}</FormLabel>
+                      <FormLabel className="!text-white">
+                        {t("register.email")}
+                      </FormLabel>
                       <FormControl>
                         <Input
                           placeholder={t("register.email-input")}
@@ -123,7 +127,9 @@ export default function Register() {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>{t("register.password")}</FormLabel>
+                      <FormLabel className="!text-white">
+                        {t("register.password")}
+                      </FormLabel>
                       <FormControl>
                         <Input
                           type="password"
@@ -137,17 +143,17 @@ export default function Register() {
                 />
               </div>
 
-              <div className="flex items-baseline justify-between mt-8 gap-2 tablet:!flex-col">
+              <div className="flex items-baseline justify-between mt-8 gap-2 tablet:!flex-col tablet:w-full">
                 <Button variant="link" asChild>
                   <Link
                     href="/auth/login"
-                    className="text-sm hover:underline tablet:!text-xs text-white"
+                    className="text-sm hover:underline tablet:!text-xs text-white tablet:w-full"
                   >
                     {t("register.login-question")}
                   </Link>
                 </Button>
 
-                <Button variant="default" size="lg">
+                <Button variant="default" size="lg" className="tablet:w-full">
                   {t("register.submit-button")}
                 </Button>
               </div>
