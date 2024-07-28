@@ -24,11 +24,12 @@ export default async function RootLayout({
       <body className={`${mulish.className} bg-neutral-100`}>
         <LoadingProvider>
           <AuthProvider>
-            <Transition>{children}</Transition>
+            <Transition>
+              {children}
+              <Toaster />
+            </Transition>
           </AuthProvider>
         </LoadingProvider>
-
-        <Toaster />
       </body>
     </html>
   );

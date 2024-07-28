@@ -17,7 +17,7 @@ export default function Home() {
 
   const triggerRef = useRef(null) as any;
 
-  const { userData, logout } = useAuth() as any;
+  const { userData, refresh } = useAuth() as any;
 
   const [user, loading] = useAuthState(auth) as any;
 
@@ -28,6 +28,12 @@ export default function Home() {
 
     if (userData?.has_notice !== undefined) setHasNotice(userData?.has_notice);
   }, [userData]);
+
+  useEffect(() => {
+    refresh();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="flex flex-col gap-5 justify-between text-neutral-50 w-full px-10 h-[calc(100vh-112px)] pb-4 tablet:px-3">

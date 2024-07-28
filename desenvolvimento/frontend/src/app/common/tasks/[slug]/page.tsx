@@ -206,7 +206,7 @@ export default function Tasks({ params }: { params: { slug: string } }) {
           />
 
           {tasks.length ? (
-            <div className="h-full grid grid-cols-7 gap-[30px] tablet:grid-cols-[repeat(7,minmax(240px,1fr))] tablet:overflow-auto">
+            <div className="h-full grid gap-[30px] grid-cols-[repeat(7,minmax(240px,1fr))] overflow-auto">
               {days.map((day: string, i: number) => {
                 return (
                   <Layer
@@ -224,9 +224,15 @@ export default function Tasks({ params }: { params: { slug: string } }) {
                     ) : null}
                     {tasks
                       .filter((t: any) => t.day == i)
-                      .map((task: any) => {
+                      .map((task: any, index: number) => {
                         return (
                           <React.Fragment key={task.title}>
+                            <DropArea
+                              onDrop={onDrop}
+                              day={i}
+                              prio={task.prio}
+                              isEmpty={false}
+                            />
                             <Task
                               key={task.title}
                               id={task.id}
@@ -241,12 +247,15 @@ export default function Tasks({ params }: { params: { slug: string } }) {
                               is_finished={task.is_finished as boolean}
                               prio={task.prio}
                             />
-                            <DropArea
-                              onDrop={onDrop}
-                              day={i}
-                              prio={task.prio + 1}
-                              isEmpty={false}
-                            />
+                            {index ==
+                            tasks.filter((t: any) => t.day == i).length - 1 ? (
+                              <DropArea
+                                onDrop={onDrop}
+                                day={i}
+                                prio={task.prio + 1}
+                                isEmpty={false}
+                              />
+                            ) : null}
                           </React.Fragment>
                         );
                       })}

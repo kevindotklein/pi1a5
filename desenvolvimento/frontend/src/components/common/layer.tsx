@@ -13,6 +13,7 @@ export default function Layer({ children, day, count }: Props) {
         <p className="text-xl font-bold text-blue-800 select-none">{day}</p>
         <p className="text-lg font-bold text-blue-400 select-none">{count}</p>
       </div>
+
       {children}
     </div>
   );
