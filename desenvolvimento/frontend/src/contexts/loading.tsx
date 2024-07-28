@@ -50,7 +50,14 @@ export function LoadingProvider({
                 <span className="sr-only">Loading...</span>
               </div>
 
-              {typeof loading === "string" ? <p>{loading}</p> : null}
+              {typeof loading === "string" ? (
+                <p className="text-neutral-200 text-center">
+                  {loading
+                    .split(" ")
+                    // eslint-disable-next-line react/jsx-key
+                    .map((word) => (word === "\n" ? <br /> : word + " "))}
+                </p>
+              ) : null}
             </div>
           </Transition>
         </div>
