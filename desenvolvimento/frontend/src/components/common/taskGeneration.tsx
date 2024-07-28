@@ -169,7 +169,7 @@ export default function TaskGeneration({
       );
 
       console.log(subject?.name, filteredContents);
-      notice.contents = filteredContents;
+      subject.contents = filteredContents;
     }
 
     const total_previous_hours = taskDocs.docs
