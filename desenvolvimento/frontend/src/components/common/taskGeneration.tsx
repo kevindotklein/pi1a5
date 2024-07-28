@@ -217,8 +217,7 @@ export default function TaskGeneration({
     let prio: number = 0;
     let taskId: number = 0;
 
-    console.log(days);
-    console.log(day);
+    console.log("days ", days);
     for (let i = 0; i < tasks.length; i++) {
       const notice_id = notice.id;
       if (i % offset === 0) {
@@ -242,6 +241,7 @@ export default function TaskGeneration({
       taskId++;
     }
 
+    //setDays([]);
     refresh();
 
     toast({
@@ -265,8 +265,8 @@ export default function TaskGeneration({
         <strong className="text-blue-800 cursor-pointer">tarefas</strong> ?
       </h1>
 
-      <Dialog>
-        <DialogTrigger asChild>
+      <Dialog onOpenChange={() => setDays([])}>
+        <DialogTrigger asChild onClick={() => setDays([])}>
           <Button
             ref={triggerRef}
             variant="secondary"
