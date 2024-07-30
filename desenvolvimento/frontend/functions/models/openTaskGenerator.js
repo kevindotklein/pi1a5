@@ -32,6 +32,7 @@ const runTaskGenerationModel = async ({ hours, notice_content, subjects }) => {
         ]
       }
 
+      As horas das tarefas devem ser em número inteiros, e somadas em um total de ${hours} horas.
       Gere tarefas para as seguintes matérias e conteúdos, baseado na estrutura do JSON fornecido:
       ${subjectsToSend}
     `;

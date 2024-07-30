@@ -21,6 +21,11 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/assets/cap.svg" sizes="any" />
+        <title key="title">{metadata.title as any}</title>
+        <meta name="description" content={metadata.description as any} />
+      </head>
       <body className={`${mulish.className} bg-neutral-100`}>
         <LoadingProvider>
           <AuthProvider>
