@@ -62,7 +62,7 @@ export default function NoticeList() {
                   </span>
 
                   <span className="text-sm text-neutral-500 font-medium">
-                    {notice.tasks.length} tarefas
+                    {notice.tasks.length} {t("notice-list.tasks")}
                   </span>
                 </div>
               </div>
@@ -70,7 +70,7 @@ export default function NoticeList() {
           ))}
         </div>
       ) : (
-        <p>no notices yet...</p>
+        <p>{t("notice-list.no-notices")}</p>
       )}
 
       <Dialog>
@@ -109,7 +109,7 @@ export default function NoticeList() {
                 router.push("/common/tasks/" + noticeOpen.id);
               }}
             >
-              Ver suas tarefas
+              {t("notice-list.view-tasks")}
             </Button>
           </div>
         </DialogContent>

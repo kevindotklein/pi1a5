@@ -1,6 +1,9 @@
 import { Check } from "lucide-react";
 import TaskCheckbox from "./taskCheckbox";
 import { useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
+
+const { t, i18n } = useTranslation();
 
 import {
   Dialog,
@@ -98,13 +101,13 @@ export default function Task({
               <div className="flex gap-2 items-center">
                 <TaskCheckbox id={id} is_finished={is_finished} />
                 <p className="text-sm text-neutral-600">
-                  Marcar como concluído
+                  {t("common-tasks.done")}
                 </p>
               </div>
             </div>
 
             <DialogClose asChild>
-              <Button variant="secondary">Fechar</Button>
+              <Button variant="secondary">{t("common.tasks.close-button")}</Button>
             </DialogClose>
           </DialogHeader>
         </DialogContent>

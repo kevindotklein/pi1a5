@@ -60,7 +60,7 @@ export default function CommonLayout({
   if (loading)
     return (
       <div className="w-full min-h-screen flex items-center justify-center text-neutral-100">
-        loading...
+        {t("auth-user-layout.loading")}
       </div>
     );
 

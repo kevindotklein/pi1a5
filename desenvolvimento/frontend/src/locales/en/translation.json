@@ -56,17 +56,45 @@
   },
 
   "dashboard": {
-    "payments": "Test Payment Integration"
+    "payments": "Test Payment Integration",
+    "competitive-exams": "Your competitive exams"
   },
 
   "auth-user-layout": {
-    "logout-button": "logout"
+    "logout-button": "logout",
+    "loading": "loading..."
   },
 
   "notice-list": {
     "title": "your notices",
     "uploaded-at": "uploaded at",
-    "subj-and-contents": "subjects and contents:"
+    "subj-and-contents": "subjects and contents:",
+    "tasks": "tasks",
+    "no-notices": "No notices yet...",
+    "view-tasks": "View your tasks"
+  },
+
+  "tasks": {
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday",
+    "sunday": "Sunday",
+    "not-found": "Document not found.",
+    "set-loading": "Searching for your document...",
+    "your-tasks": "Your Tasks",
+    "loading": "loading..."
+  },
+
+  "common-loading": {
+    "loading": "loading..."
+  },
+
+  "common-task": {
+    "done": "Mark as done",
+    "close-button": "Close"
   },
 
   "payments": {
@@ -78,6 +106,9 @@
     },
     "cancel": {
       "message": "payment canceled or failed"
+    },
+    "integration-test": {
+      "message": "Test the payment integration with Stripe to create a monthly subscription of"
     }
   }
 }

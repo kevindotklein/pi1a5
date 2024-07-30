@@ -62,13 +62,13 @@ export default function Tasks({ params }: { params: { slug: string } }) {
   const [notice, setNotice] = useState(null) as any;
   const [tasks, setTasks] = useState([]) as any;
   const [days, setDays] = useState([
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
+    t("tasks.monday"),
+    t("tasks.tuesday"),
+    t("tasks.wednesday"),
+    t("tasks.thursday"),
+    t("tasks.friday"),
+    t("tasks.saturday"),
+    t("tasks.sunday"),
   ]) as any;
 
   const [activeCard, setActiveCard] = useState(null) as any;
@@ -78,7 +78,7 @@ export default function Tasks({ params }: { params: { slug: string } }) {
     toast({
       variant: "destructive",
       title: "Erro!",
-      description: "Edital não encontrado.",
+      description: t("tasks.not-found"),
     });
   };
 
@@ -106,7 +106,7 @@ export default function Tasks({ params }: { params: { slug: string } }) {
   const getNotice = async () => {
     if (!user) return;
 
-    setLoading("Buscando seu edital...");
+    setLoading(t("tasks.set-loading"));
 
     const docRef = doc(firestore, "notices", params?.slug as string);
     const docSnap = await getDoc(docRef);
@@ -188,7 +188,7 @@ export default function Tasks({ params }: { params: { slug: string } }) {
           </div>
 
           <div className="flex gap-3 text-neutral-50 w-full items-center">
-            <h2 className="text-xl font-bold text-black">Suas Tarefas</h2>
+            <h2 className="text-xl font-bold text-black">{t("tasks.your-tasks")}</h2>
 
             <Plus
               size={20}
@@ -266,7 +266,7 @@ export default function Tasks({ params }: { params: { slug: string } }) {
           ) : null}
         </>
       ) : (
-        <span>Carregando...</span>
+        <span>{t("tasks.loading")}</span>
       )}
     </div>
   );

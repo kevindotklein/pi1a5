@@ -56,17 +56,45 @@
   },
 
   "dashboard": {
-    "payments": "Testar Integração de Pagamentos"
+    "payments": "Testar Integração de Pagamentos",
+    "competitive-exams": "Seus Concursos"
   },
 
   "auth-user-layout": {
-    "logout-button": "sair"
+    "logout-button": "sair",
+    "loading": "carregando..."
   },
 
   "notice-list": {
     "title": "seus editais",
     "uploaded-at": "Enviado em",
-    "subj-and-contents": "Matérias e conteúdos:"
+    "subj-and-contents": "Matérias e conteúdos:",
+    "tasks": "tarefas",
+    "no-notices": "Nenhum aviso ainda...",
+    "view-tasks": "Ver suas tarefas"
+  },
+
+  "tasks": {
+    "monday": "Segunda-Feira",
+    "tuesday": "Terça-Feira",
+    "wednesday": "Quarta-Feira",
+    "thursday": "Quinta-Feira",
+    "friday": "Sexta-Feira",
+    "saturday": "Sábado",
+    "sunday": "Domingo",
+    "not-found": "Edital não encontrado.",
+    "set-loading": "Buscando seu edital...",
+    "your-tasks": "Suas Tarefas",
+    "loading": "carregando..."
+  },
+
+  "common-loading": {
+    "loading": "carregando..."
+  },
+
+  "common-task": {
+    "done": "Marcar como concluído",
+    "close-button": "Fechar"
   },
 
   "payments": {
@@ -78,6 +106,9 @@
     },
     "cancel": {
       "message": "O pagamento foi cancelado ou falhou!"
+    },
+    "integration-test": {
+      "message": "Teste a integração de pagamento com o Stripe para criar uma inscrição mensal de"
     }
   }
 }
