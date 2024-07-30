@@ -37,7 +37,7 @@
     "invalid-type": "Tipo de arquivo inválido",
     "invalid-name": "Nome inválido",
     "upload-file": "Por favor, envie um arquivo PDF",
-    "upload-name": "Por favor, insira um nome para o edital", 
+    "upload-name": "Por favor, insira um nome para o edital",
     "file-uploaded": "Arquivo enviado!",
     "notice-uploaded": "Seu edital foi enviado com sucesso!",
     "upload-file-error": "Ocorreu um erro ao enviar o arquivo! por favor, tente novamente mais tarde.",
@@ -60,7 +60,7 @@
       "extract-content": "Houve um erro ao extrair os conteúdos do edital automaticamente, por favor, insira-os manualmente e tentaremos novamente"
     },
     "loading-message-1": "Por favor aguarde, enviando arquivo...",
-    "loading-message-2": "Por favor aguarde, estamos processando o edital. \n esse processo pode demorar um pouco...",
+    "loading-message-2": "Por favor aguarde, estamos processando o edital. \n Esse processo pode demorar um pouco...",
     "loading-message-3": "Finalizando..."
   },
 

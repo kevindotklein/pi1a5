@@ -16,7 +16,7 @@ export default function Payments() {
     <div className="flex flex-col items-center gap-5 justify-between text-neutral-50 w-full mt-5">
       <h1 className="text-xl font-bold text-black tablet:text-center">
         {t("payments.integration-test.message")}{" "}
-        <strong className="text-blue-800 cursor-pointer">R$ 29,90</strong>:
+        <strong className="text-blue-800 cursor-pointer">R$ 24,99</strong>:
       </h1>
       <Elements stripe={stripePromise}>
         <PaymentForm />
