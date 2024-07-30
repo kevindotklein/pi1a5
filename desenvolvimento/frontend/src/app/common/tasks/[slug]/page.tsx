@@ -175,7 +175,7 @@ export default function Tasks({ params }: { params: { slug: string } }) {
   };
 
   return (
-    <div className="flex flex-col gap-5 text-neutral-50 w-full px-10 h-[calc(100vh-112px)] pb-4 tablet:px-3">
+    <div className="flex flex-col gap-5 text-neutral-50 w-full px-10 h-[calc(100vh-112px)] pb-4 tablet:px-3 select-none">
       {notice ? (
         <>
           <div className="flex flex-col gap-2 w-full">
@@ -188,7 +188,9 @@ export default function Tasks({ params }: { params: { slug: string } }) {
           </div>
 
           <div className="flex gap-3 text-neutral-50 w-full items-center">
-            <h2 className="text-xl font-bold text-black">{t("tasks.your-tasks")}</h2>
+            <h2 className="text-xl font-bold text-black">
+              {t("tasks.your-tasks")}
+            </h2>
 
             <Plus
               size={20}

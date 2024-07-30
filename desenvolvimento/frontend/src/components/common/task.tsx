@@ -3,8 +3,6 @@ import TaskCheckbox from "./taskCheckbox";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-const { t, i18n } = useTranslation();
-
 import {
   Dialog,
   DialogClose,
@@ -44,6 +42,7 @@ export default function Task({
   prio,
 }: Props) {
   const ref = useRef() as any;
+  const { t, i18n } = useTranslation();
 
   return (
     <>
@@ -66,7 +65,7 @@ export default function Task({
             : "bg-neutral-100"
         } border border-neutral-500 rounded-sm cursor-grab transition-all hover:bg-neutral-200`}
       >
-        <div className="flex flex-col gap-1 break-words">
+        <div className="flex flex-col gap-1 break-words select-none">
           <div className="flex items-center justify-end w-full">
             <div className="flex items-center justify-center gap-2 rounded-md bg-blue-800 px-2 py-1 text-xs text-white select-none">
               {hours} hora{hours > 1 ? "s" : ""}
@@ -101,13 +100,15 @@ export default function Task({
               <div className="flex gap-2 items-center">
                 <TaskCheckbox id={id} is_finished={is_finished} />
                 <p className="text-sm text-neutral-600">
-                  {t("common-tasks.done")}
+                  {t("common-task.done")}
                 </p>
               </div>
             </div>
 
             <DialogClose asChild>
-              <Button variant="secondary">{t("common.tasks.close-button")}</Button>
+              <Button variant="secondary">
+                {t("common-task.close-button")}
+              </Button>
             </DialogClose>
           </DialogHeader>
         </DialogContent>
