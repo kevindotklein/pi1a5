@@ -33,7 +33,7 @@ export const getContentFromPdf = https.onRequest(async (request, response) => {
 
       if (!notice_url) {
         response.json({
-          error: "No URL was provided",
+          error: "Nenhuma URL fornecida.",
         });
         return;
       }
@@ -80,11 +80,11 @@ export const getContentFromPdf = https.onRequest(async (request, response) => {
         response.json(jsonObject);
       } else {
         response.json({
-          error: "No knowledge found",
+          error: "Não foi encontrado nenhum conteúdo programático.",
         });
       }
     } catch (error) {
-      const text = `An error occurred while processing the content: ${error}`;
+      const text = `Houve um erro ao processar o conteúdo: ${error}`;
 
       log(text);
       response.status(400).json({
@@ -130,7 +130,7 @@ export const generateTasks = https.onRequest(async (request, response) => {
 
       response.json(jsonObject);
     } catch (error) {
-      const text = `An error occurred while processing the content: ${error}`;
+      const text = `Houve um erro ao processar o conteúdo: ${error}`;
 
       log(text);
       response.status(400).json({
