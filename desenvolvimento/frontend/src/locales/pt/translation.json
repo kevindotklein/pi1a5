@@ -1,58 +1,67 @@
 {
   "register": {
-    "subtitle": "crie sua conta, é rápido",
-    "name": "nome",
-    "name-input": "insira seu nome",
-    "email": "e-mail",
-    "email-input": "insira seu e-mail",
-    "password": "senha",
-    "password-input": "insira sua senha",
-    "login-question": "já tem uma conta?",
-    "submit-button": "registrar"
+    "subtitle": "Crie sua conta, é rápido",
+    "name": "Nome",
+    "name-input": "Insira seu nome",
+    "email": "E-mail",
+    "email-input": "Insira seu e-mail",
+    "password": "Senha",
+    "password-input": "Insira sua senha",
+    "login-question": "Já tem uma conta?",
+    "submit-button": "Registrar"
   },
 
   "home": {
-    "slogan": "seu jeito de estudar",
-    "starting-message": "comece aqui:",
-    "login-button": "login",
-    "footer-message-1": "feito por",
+    "slogan": "Seu jeito de estudar",
+    "starting-message": "Comece aqui:",
+    "login-button": "Login",
+    "footer-message-1": "Feito por",
     "footer-message-2": "para IFSP - 2024"
   },
 
   "login": {
-    "subtitle": "entre na sua conta",
-    "email": "e-mail",
-    "email-input": "insira seu e-mail",
-    "password": "senha",
-    "password-input": "insira sua senha",
-    "register-question": "não tem uma conta?",
-    "submit-button": "login"
+    "subtitle": "Entre na sua conta",
+    "email": "E-mail",
+    "email-input": "Insira seu e-mail",
+    "password": "Senha",
+    "password-input": "Insira sua senha",
+    "register-question": "Não tem uma conta?",
+    "submit-button": "Login"
   },
 
   "notice-upload": {
     "no-upload-message": "Você ainda não enviou um edital, vamos começar enviando um ",
-    "file": "arquivo",
+    "file": "Arquivo",
     "upload-button": "Enviar",
+    "error": "Erro!",
+    "invalid-type": "Tipo de arquivo inválido",
+    "invalid-name": "Nome inválido",
+    "upload-file": "Por favor, envie um arquivo PDF",
+    "upload-name": "Por favor, insira um nome para o edital", 
+    "file-uploaded": "Arquivo enviado!",
+    "notice-uploaded": "Seu edital foi enviado com sucesso!",
+    "upload-file-error": "Ocorreu um erro ao enviar o arquivo! por favor, tente novamente mais tarde.",
+    "load-file-error": "Houve um problema no processamento mas já estamos tentando novamente...",
     "modal": {
-      "title": "envie um arquivo",
-      "subtitle": "arraste um arquivo aqui ou clique para selecionar um arquivo",
-      "upload-input": "arraste um arquivo ou clique aqui",
-      "no-file-message": "nenhum arquivo selecionado",
-      "notice-name": "nome",
-      "notice-name-input": "insira o nome do edital",
-      "cancel-button": "cancelar",
-      "submit-button": "enviar",
+      "title": "Envie um arquivo",
+      "subtitle": "Arraste um arquivo aqui ou clique para selecionar um arquivo",
+      "upload-input": "Arraste um arquivo ou clique aqui",
+      "no-file-message": "Nenhum arquivo selecionado",
+      "notice-name": "Nome",
+      "notice-name-input": "Insira o nome do edital",
+      "cancel-button": "Cancelar",
+      "submit-button": "Enviar",
       "manually": {
-        "notice-content": "conteúdo do edital",
-        "notice-content-input": "insira manualmente os conteúdos do edital"
+        "notice-content": "Conteúdo do edital",
+        "notice-content-input": "Insira manualmente os conteúdos do edital"
       }
     },
     "errors": {
       "extract-content": "Houve um erro ao extrair os conteúdos do edital automaticamente, por favor, insira-os manualmente e tentaremos novamente"
     },
-    "loading-message-1": "por favor aguarde, enviando arquivo...",
-    "loading-message-2": "por favor aguarde, estamos processando o edital. \n esse processo pode demorar um pouco...",
-    "loading-message-3": "finalizando..."
+    "loading-message-1": "Por favor aguarde, enviando arquivo...",
+    "loading-message-2": "Por favor aguarde, estamos processando o edital. \n esse processo pode demorar um pouco...",
+    "loading-message-3": "Finalizando..."
   },
 
   "dashboard": {
@@ -61,15 +70,15 @@
   },
 
   "auth-user-layout": {
-    "logout-button": "sair",
-    "loading": "carregando..."
+    "logout-button": "Sair",
+    "loading": "Carregando..."
   },
 
   "notice-list": {
-    "title": "seus editais",
+    "title": "Seus editais",
     "uploaded-at": "Enviado em",
     "subj-and-contents": "Matérias e conteúdos:",
-    "tasks": "tarefas",
+    "tasks": "Tarefas",
     "no-notices": "Nenhum aviso ainda...",
     "view-tasks": "Ver suas tarefas"
   },
@@ -85,11 +94,41 @@
     "not-found": "Edital não encontrado.",
     "set-loading": "Buscando seu edital...",
     "your-tasks": "Suas Tarefas",
-    "loading": "carregando..."
+    "loading": "Carregando..."
+  },
+
+  "task-generation": {
+    "monday": "Segunda-Feira",
+    "tuesday": "Terça-Feira",
+    "wednesday": "Quarta-Feira",
+    "thursday": "Quinta-Feira",
+    "friday": "Sexta-Feira",
+    "saturday": "Sábado",
+    "sunday": "Domingo",
+    "invalid-hours": "Horas inválidas",
+    "one-hour": "Insira pelo menos 1 hora de estudo.",
+    "add-hours": "Adicione quantas horas você deseja estudar.",
+    "generate-tasks": "Começando a gerar suas tarefas...",
+    "error": "Erro!",
+    "upload-error": "Ocorreu um erro ao enviar o arquivo! Por favor, tente novamente mais tarde.",
+    "attention": "Atenção!",
+    "study-hours": "Parece que você ainda tem horas de estudo restantes dessa semana. Antes de gerar as tarefas novamente, finalize as tarefas que você já tem.",
+    "saving-tasks": "Guardando suas tarefas...",
+    "success": "Sucesso!",
+    "generated-tasks": "Suas tarefas foram geradas com sucesso!",
+    "tasks": "Tarefas",
+    "no-tasks": "Parece que você ainda não tem tarefas para este edital. Vamos gerar suas",
+    "create-tasks-button": "Criar Tarefas",
+    "tasks-generation-1": "Geração de Tarefas",
+    "fill-form": "Preencha o formulário abaixo para gerar suas tarefas dessa semana.",
+    "hours-to-study": "Horas de Estudo",
+    "how-many-hours": "Quantas horas você deseja estudar essa semana?",
+    "select-days": "Selecione os dias da semana que você deseja estudar:",
+    "generate-button": "Gerar"
   },
 
   "common-loading": {
-    "loading": "carregando..."
+    "loading": "Carregando..."
   },
 
   "common-task": {

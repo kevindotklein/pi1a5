@@ -125,16 +125,16 @@ export default function NoticeUpload({
     if (!fileToUpload || fileToUpload.type !== "application/pdf") {
       return toast({
         variant: "destructive",
-        title: "invalid file type",
-        description: "please upload a pdf file",
+        title: t("notice-upload.invalid-type"),
+        description: t("notice-upload.upload-file"),
       });
     }
 
     if (!name) {
       return toast({
         variant: "destructive",
-        title: "invalid name",
-        description: "please insert a name for the notice",
+        title: t("notice-upload.invalid-name"),
+        description: t("notice-upload.upload-name"),
       });
     }
 
@@ -166,7 +166,7 @@ export default function NoticeUpload({
           (error: any) => {
             toast({
               variant: "destructive",
-              title: "error!",
+              title: t("notice-upload.error"),
               description: error.message,
             });
           },
@@ -185,9 +185,9 @@ export default function NoticeUpload({
         setProgresspercent(0);
 
         toast({
-          title: "error!",
+          title: t("notice-upload.error"),
           description:
-            "an error occurred while uploading the file! please try again later.",
+            t("notice-upload.upload-file-error"),
         });
       }
     );
@@ -206,7 +206,7 @@ export default function NoticeUpload({
   }) => {
     setLoading(
       isRetry
-        ? "Houve um problema no processamento mas já estamos tentando novamente..."
+        ? t("notice-upload.load-file-error")
         : t("notice-upload.loading-message-2")
     );
 
@@ -268,8 +268,8 @@ export default function NoticeUpload({
     setFileToUpload(null as any);
 
     toast({
-      title: "file uploaded!",
-      description: "your notice has been uploaded successfully!",
+      title: t("notice-upload.file-uploaded"),
+      description: t("notice-upload.notice-uploaded"),
     });
 
     setProgresspercent(0);

@@ -75,13 +75,13 @@ export default function TaskGeneration({
 
   const { t, i18n } = useTranslation();
   const daysLabel: string[] = [
-    "Segunda",
-    "Terça",
-    "Quarta",
-    "Quinta",
-    "Sexta",
-    "Sábado",
-    "Domingo",
+    t("task-generation.monday"),
+    t("task-generation.tuesday"),
+    t("task-generation.wednesday"),
+    t("task-generation.thursday"),
+    t("task-generation.friday"),
+    t("task-generation.saturday"),
+    t("task-generation.sunday"),
   ];
 
   const [days, setDays] = useState<number[]>([]);
@@ -89,14 +89,14 @@ export default function TaskGeneration({
   const formSchema = z.object({
     hours: z
       .number({
-        message: "Horas inválidas",
+        message: t("task-generation.invalid-hours"),
       })
       .min(1, {
-        message: "Insira pelo menos 1 hora de estudo.",
+        message: t("task-generation.one-hour"),
       })
       .or(
         z.string().refine((value) => value !== "" && Number(value) > 1, {
-          message: "Insira pelo menos 1 hora de estudo.",
+          message: t("task-generation.one-hour"),
         })
       ),
   });
@@ -111,14 +111,14 @@ export default function TaskGeneration({
     if (!hours) {
       return toast({
         variant: "destructive",
-        title: "Horas inválidas",
-        description: "Adicione quantas horas você deseja estudar.",
+        title: t("task-generation.invalid-hours"),
+        description: t("task-generation.add-hours"),
       });
     }
 
     await action(
       async () => {
-        setLoading("Começando a gerar suas tarefas...");
+        setLoading(t("task-generation.generate-tasks"));
 
         await startTaskGeneration({
           hours: hours as number,
@@ -129,9 +129,9 @@ export default function TaskGeneration({
         setLoading(false);
 
         toast({
-          title: "error!",
+          title: t("task-generation.error"),
           description:
-            "an error occurred while uploading the file! please try again later.",
+            t("task-generation.upload-error"),
         });
       }
     );
@@ -181,9 +181,9 @@ export default function TaskGeneration({
     if (total_hours <= 0) {
       setLoading(false);
       return toast({
-        title: "Atenção!",
+        title: t("task-generation.attention"),
         description:
-          "Parece que você ainda tem horas de estudo restantes dessa semana. Antes de gerar as tarefas novamente, finalize as tarefas que você já tem.",
+          t("task-generation.study-hours"),
       });
     }
 
@@ -211,7 +211,7 @@ export default function TaskGeneration({
       return;
     }
 
-    setLoading("Guardando suas tarefas...");
+    setLoading(t("task-generation.saving-tasks"));
     let day: number = -1;
     const offset: number = Math.ceil(tasks.length / days.length);
     let prio: number = 0;
@@ -245,8 +245,8 @@ export default function TaskGeneration({
     refresh();
 
     toast({
-      title: "Sucesso!",
-      description: "Suas tarefas foram geradas com sucesso!",
+      title: t("task-generation.success"),
+      description: t("task-generation.generated-tasks"),
     });
 
     closeRef.current.click();
@@ -261,8 +261,8 @@ export default function TaskGeneration({
       }`}
     >
       <h1 className="text-xl font-bold text-black tablet:text-center">
-        Parece que você ainda não tem tarefas para este edital. Vamos gerar suas{" "}
-        <strong className="text-blue-800 cursor-pointer">tarefas</strong> ?
+        {t("task-generation.no-tasks")}{" "}
+        <strong className="text-blue-800 cursor-pointer">{t("task-generation.tasks")}</strong> ?
       </h1>
 
       <Dialog onOpenChange={() => setDays([])}>
@@ -276,15 +276,15 @@ export default function TaskGeneration({
               borderRadius: "10px",
             }}
           >
-            Criar Tarefas
+            {t("task-generation.create-tasks-button")}
           </Button>
         </DialogTrigger>
 
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Geração de Tarefas</DialogTitle>
+            <DialogTitle>{t("task-generation.tasks-generation-1")}</DialogTitle>
             <DialogDescription>
-              Preencha o formulário abaixo para gerar suas tarefas dessa semana.
+              {t("task-generation.fill-form")}
             </DialogDescription>
             <Form {...form}>
               <div className="h-full">
@@ -298,11 +298,11 @@ export default function TaskGeneration({
                       name="hours"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Horas de Estudo</FormLabel>
+                          <FormLabel>{t("task-generation.hours-to-study")}</FormLabel>
                           <FormControl>
                             <Input
                               placeholder={
-                                "Quantas horas você deseja estudar essa semana?"
+                                t("task-generation.how-many-hours")
                               }
                               {...field}
                             />
@@ -314,7 +314,7 @@ export default function TaskGeneration({
                   </div>
 
                   <span className="text-md font-bold text-black">
-                    Selecione os dias da semana que você deseja estudar:
+                    {t("task-generation.select-days")}
                   </span>
                   <div className="w-full h-full grid grid-cols-2 gap-2 justify-center">
                     {daysLabel.map((day: string, i: number) => {
@@ -352,7 +352,7 @@ export default function TaskGeneration({
                         borderRadius: "10px",
                       }}
                     >
-                      Gerar
+                      {t("task-generation.generate-button")}
                     </Button>
                   </div>
                 </form>

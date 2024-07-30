@@ -1,63 +1,72 @@
 {
   "register": {
-    "subtitle": "create your account, really fast",
-    "name": "name",
-    "name-input": "insert your name",
-    "email": "e-mail",
-    "email-input": "insert your e-mail",
-    "password": "password",
-    "password-input": "insert your password",
-    "login-question": "already have an account?",
-    "submit-button": "register"
+    "subtitle": "Create your account, really fast",
+    "name": "Name",
+    "name-input": "Insert your name",
+    "email": "E-mail",
+    "email-input": "Insert your e-mail",
+    "password": "Password",
+    "password-input": "Insert your password",
+    "login-question": "Already have an account?",
+    "submit-button": "Register"
   },
 
   "home": {
-    "slogan": "your way of studying",
-    "starting-message": "get started here:",
-    "login-button": "login",
-    "footer-message-1": "made by",
+    "slogan": "Your way of studying",
+    "starting-message": "Get started here:",
+    "login-button": "Login",
+    "footer-message-1": "Made by",
     "footer-message-2": "for IFSP - 2024"
   },
 
   "login": {
-    "subtitle": "login to your account",
-    "email": "e-mail",
-    "email-input": "insert your e-mail",
-    "password": "password",
-    "password-input": "insert your password",
-    "register-question": "don't have an account?",
-    "submit-button": "login"
+    "subtitle": "Login to your account",
+    "email": "E-mail",
+    "email-input": "Insert your e-mail",
+    "password": "Password",
+    "password-input": "Insert your password",
+    "register-question": "Don't have an account?",
+    "submit-button": "Login"
   },
 
   "notice-upload": {
-    "no-upload-message": "you still haven't uploaded any notice, let's get started by uploading a ",
-    "file": "file",
+    "no-upload-message": "You still haven't uploaded any notice, let's get started by uploading a ",
+    "file": "File",
     "upload-button": "Upload",
+    "error": "Error!",
+    "invalid-type": "Invalid file type",
+    "invalid-name": "Invalid name",
+    "upload-file": "Please upload a pdf file",
+    "upload-name": "Please insert a name for the notice", 
+    "file-uploaded": "File uploaded!",
+    "notice-uploaded": "Your notice has been uploaded successfully!",
+    "upload-file-error" : "An error occurred while uploading the file! please try again later.",
+    "load-file-error": "There was a problem processing but we are trying again...",
     "modal": {
-      "title": "upload a file",
-      "subtitle": "drag and drop a file here or click to select a file",
-      "upload-input": "drop file or click here",
-      "no-file-message": "no file selected",
-      "notice-name": "name",
-      "notice-name-input": "insert the notice name",
-      "cancel-button": "cancel",
-      "submit-button": "upload",
+      "title": "Upload a file",
+      "subtitle": "Drag and drop a file here or click to select a file",
+      "upload-input": "Drop file or click here",
+      "no-file-message": "No file selected",
+      "notice-name": "Name",
+      "notice-name-input": "Insert the notice name",
+      "cancel-button": "Cancel",
+      "submit-button": "Upload",
       "manually": {
-        "notice-content": "notice content",
-        "notice-content-input": "manually insert the notice content"
+        "notice-content": "Notice content",
+        "notice-content-input": "Manually insert the notice content"
       }
     },
     "errors": {
-      "extract-content": "we couldn't automatically extract the notice content, please insert it manually"
+      "extract-content": "We couldn't automatically extract the notice content, please insert it manually"
     },
-    "loading-message-1": "please wait, uploading file...",
-    "loading-message-2": "please wait, processing notice...",
-    "loading-message-3": "finishing up..."
+    "loading-message-1": "Please wait, uploading file...",
+    "loading-message-2": "Please wait, processing notice...",
+    "loading-message-3": "Finishing up..."
   },
 
   "dashboard": {
     "payments": "Test Payment Integration",
-    "competitive-exams": "Your competitive exams"
+    "competitive-exams": "Your notices"
   },
 
   "auth-user-layout": {
@@ -66,10 +75,10 @@
   },
 
   "notice-list": {
-    "title": "your notices",
-    "uploaded-at": "uploaded at",
-    "subj-and-contents": "subjects and contents:",
-    "tasks": "tasks",
+    "title": "Your notices",
+    "uploaded-at": "Uploaded at",
+    "subj-and-contents": "Subjects and contents:",
+    "tasks": "Tasks",
     "no-notices": "No notices yet...",
     "view-tasks": "View your tasks"
   },
@@ -88,6 +97,36 @@
     "loading": "loading..."
   },
 
+  "task-generation": {
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday",
+    "sunday": "Sunday",
+    "invalid-hours": "Invalid hours",
+    "one-hour": "Enter at least 1 hour of study.",
+    "add-hours": "Add how many hours you want to study.",
+    "generate-tasks": "Starting to generate your tasks...",
+    "error": "Error!",
+    "upload-error": "An error occurred while uploading the file! Please try again later.",
+    "attention": "Attention!",
+    "study-hours": "It looks like you still have hours of study left this week. Before generating tasks again, finish the tasks you already have.",
+    "saving-tasks": "Saving your tasks...",
+    "success": "Success!",
+    "generated-tasks": "Your tasks have been generated successfully!",
+    "tasks": "Tasks",
+    "no-tasks": "It looks like you don't have any tasks for this notice yet. Let's generate your",
+    "create-tasks-button": "Create Tasks",
+    "tasks-generation-1": "Tasks Generation",
+    "fill-form": "Fill out the form below to generate your tasks for this week.",
+    "hours-to-study": "Study Hours",
+    "how-many-hours": "How many hours do you want to study this week?",
+    "select-days": "Select the days of the week you want to study:",
+    "generate-button": "Generate"
+  },
+
   "common-loading": {
     "loading": "loading..."
   },
@@ -102,10 +141,10 @@
       "message": "Create monthly subscription on the platform"
     },
     "success": {
-      "message": "payment processed succesfully!"
+      "message": "Payment processed succesfully!"
     },
     "cancel": {
-      "message": "payment canceled or failed"
+      "message": "Payment canceled or failed"
     },
     "integration-test": {
       "message": "Test the payment integration with Stripe to create a monthly subscription of"
