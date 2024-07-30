@@ -130,8 +130,7 @@ export default function TaskGeneration({
 
         toast({
           title: t("task-generation.error"),
-          description:
-            t("task-generation.upload-error"),
+          description: t("task-generation.upload-error"),
         });
       }
     );
@@ -179,8 +178,7 @@ export default function TaskGeneration({
       setLoading(false);
       return toast({
         title: t("task-generation.attention"),
-        description:
-          t("task-generation.study-hours"),
+        description: t("task-generation.study-hours"),
       });
     }
 
@@ -236,7 +234,7 @@ export default function TaskGeneration({
       taskId++;
     }
 
-    //setDays([]);
+    setDays([]);
     refresh();
 
     toast({
@@ -244,6 +242,7 @@ export default function TaskGeneration({
       description: t("task-generation.generated-tasks"),
     });
 
+    form.reset();
     closeRef.current.click();
 
     setLoading(false);
@@ -257,7 +256,10 @@ export default function TaskGeneration({
     >
       <h1 className="text-xl font-bold text-black tablet:text-center">
         {t("task-generation.no-tasks")}{" "}
-        <strong className="text-blue-800 cursor-pointer">{t("task-generation.tasks")}</strong> ?
+        <strong className="text-blue-800 cursor-pointer">
+          {t("task-generation.tasks")}
+        </strong>{" "}
+        ?
       </h1>
 
       <Dialog onOpenChange={() => setDays([])}>
@@ -293,12 +295,12 @@ export default function TaskGeneration({
                       name="hours"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>{t("task-generation.hours-to-study")}</FormLabel>
+                          <FormLabel>
+                            {t("task-generation.hours-to-study")}
+                          </FormLabel>
                           <FormControl>
                             <Input
-                              placeholder={
-                                t("task-generation.how-many-hours")
-                              }
+                              placeholder={t("task-generation.how-many-hours")}
                               {...field}
                             />
                           </FormControl>

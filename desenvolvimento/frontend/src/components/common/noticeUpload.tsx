@@ -186,8 +186,7 @@ export default function NoticeUpload({
 
         toast({
           title: t("notice-upload.error"),
-          description:
-            t("notice-upload.upload-file-error"),
+          description: t("notice-upload.upload-file-error"),
         });
       }
     );
@@ -276,6 +275,7 @@ export default function NoticeUpload({
     setLoading(false);
 
     setHasNotice(true);
+    form.reset();
 
     closeRef.current.click();
   };

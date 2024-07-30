@@ -37,7 +37,12 @@ export const useFunctions = () => {
         notice_content: response.data,
       };
     } catch (error: any) {
-      if (error?.includes("JSON") || error?.message?.includes("JSON"))
+      console.log(error);
+
+      if (
+        error?.message?.includes("JSON") ||
+        (typeof error === "string" && error?.includes("JSON"))
+      )
         return { error: error?.message ?? error };
 
       toast({
