@@ -150,7 +150,6 @@ export default function TaskGeneration({
     hours: number;
     notice: any;
   }) => {
-    console.log(notice);
     const { subjects } = notice;
 
     const taskRef = collection(firestore, "tasks");
@@ -161,14 +160,12 @@ export default function TaskGeneration({
     const taskDocs = await getDocs(taskQuery);
 
     const doneSubjects = taskDocs.docs.map((doc) => doc.data().content);
-    console.log(doneSubjects);
 
     for (let subject of subjects) {
       const filteredContents = subject?.contents.filter(
         (content: any) => !doneSubjects.includes(content)
       );
 
-      console.log(subject?.name, filteredContents);
       subject.contents = filteredContents;
     }
 
@@ -216,8 +213,6 @@ export default function TaskGeneration({
     const offset: number = Math.ceil(tasks.length / days.length);
     let prio: number = 0;
     let taskId: number = 0;
-
-    console.log("days ", days);
     for (let i = 0; i < tasks.length; i++) {
       const notice_id = notice.id;
       if (i % offset === 0) {

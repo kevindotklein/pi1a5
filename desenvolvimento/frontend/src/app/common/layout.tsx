@@ -36,8 +36,6 @@ export default function CommonLayout({
   const getCurrentRouteName = (pathname: string) => {
     let name;
 
-    console.log(pathname);
-
     for (const key of Object.keys(routes)) {
       if (pathname.includes(key)) {
         name = routes[key];

@@ -59,8 +59,6 @@ export function AuthProvider({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userDoc]);
 
-  console.log(userData);
-
   const getUserData = async () => {
     if (!user || !userDoc) return;
 

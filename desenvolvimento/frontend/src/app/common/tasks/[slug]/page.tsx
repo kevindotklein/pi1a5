@@ -55,8 +55,6 @@ export default function Tasks({ params }: { params: { slug: string } }) {
   );
   const [taskSnap, loading, error] = useCollection(taskQuery, {});
 
-  console.log(error);
-
   const [user] = useAuthState(auth) as any;
 
   const [notice, setNotice] = useState(null) as any;
@@ -89,9 +87,6 @@ export default function Tasks({ params }: { params: { slug: string } }) {
     }));
     if (taskData) setTasks(taskData);
   }, [taskSnap]);
-
-  console.log("tasks ", tasks);
-  //console.log("taskSnap ", taskSnap);
 
   useEffect(() => {
     if (!params || !params.slug) {
@@ -134,7 +129,6 @@ export default function Tasks({ params }: { params: { slug: string } }) {
 
   const onDrop = async (day: number, prio: number) => {
     if (!activeCard) return;
-    console.log(`card: ${activeCard} | day: ${day} | prio: ${prio}`);
 
     const taskRef = collection(firestore, "tasks");
     const taskQuery = query(
