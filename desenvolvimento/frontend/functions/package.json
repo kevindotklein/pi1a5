@@ -22,7 +22,7 @@
     "chai-http": "^5.0.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "firebase-admin": "^11.5.0",
+    "firebase-admin": "^11.11.1",
     "firebase-functions": "^4.2.0",
     "mocha": "^10.7.0",
     "openai": "^4.45.0",

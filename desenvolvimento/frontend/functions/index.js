@@ -9,11 +9,32 @@ import { filterKnowledge } from "./helpers/filterKnowledge.js";
 import { filterJSON } from "./helpers/filterJSON.js";
 import { runTaskGenerationModel } from "./models/openTaskGenerator.js";
 const corsHandler = cors({ origin: true });
+import admin from "firebase-admin";
 
 export const getContentFromPdf = https.onRequest(async (request, response) => {
   configDotenv();
 
+  if (!admin.apps.length) {
+    admin.initializeApp({
+      credential: admin.credential.cert({
+        type: process.env.TYPE,
+        project_id: process.env.PROJECT_ID,
+        private_key_id: process.env.PRIVATE_KEY_ID,
+        private_key: process.env.PRIVATE_KEY.replace(/\\n/gm, "\n"),
+        client_email: process.env.CLIENT_EMAIL,
+        client_id: process.env.CLIENT_ID,
+        auth_uri: process.env.AUTH_URI,
+        token_uri: process.env.TOKEN_URI,
+        auth_provider_x509_cert_url: process.env.AUTH_PROVIDER_X509_CERT_URL,
+        client_x509_cert_url: process.env.CLIENT_X509_CERT_URL,
+      }),
+      databaseURL: "https://noz-ifsp-default-rtdb.firebaseio.com",
+    });
+  }
+
   corsHandler(request, response, async () => {
+    var firestore = admin.firestore();
+
     try {
       log("Running content interpreter model", {
         structuredData: true,
@@ -21,7 +42,13 @@ export const getContentFromPdf = https.onRequest(async (request, response) => {
 
       log(`req body: ${JSON.stringify(request.body)}`);
 
-      const { url: notice_url, notice_content } = request.body;
+      const {
+        url: notice_url,
+        notice_content,
+        user_uid,
+        file_name,
+        notice_name,
+      } = request.body;
 
       log(`Notice url: ${notice_url}`, {
         structuredData: true,
@@ -76,6 +103,37 @@ export const getContentFromPdf = https.onRequest(async (request, response) => {
         log("Building JSON object");
 
         const jsonObject = filterJSON(processedContent);
+
+        // Add the notice to Firestore
+        const noticeRef = await firestore.collection("notices").add({
+          name: notice_name,
+          file_name: file_name,
+          url: notice_url,
+          user_uid: user_uid,
+          processed: true,
+          created_at: new Date().toISOString(),
+        });
+
+        const notice_id = noticeRef.id;
+
+        // Store related subjects in Firestore
+        for (const subject of jsonObject?.subjects || []) {
+          await firestore.collection("subjects").add({
+            ...subject,
+            notice_id,
+          });
+        }
+
+        if (user_uid) {
+          const userDocRef = firestore.doc(`users/${user_uid}`);
+          await userDocRef.set(
+            {
+              has_notice: true,
+              notice_name: notice_name,
+            },
+            { merge: true }
+          );
+        }
 
         response.json(jsonObject);
       } else {

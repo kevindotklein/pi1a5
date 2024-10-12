@@ -209,66 +209,22 @@ export default function NoticeUpload({
         : t("notice-upload.loading-message-2")
     );
 
-    const { notice_content, error } = await processNotice({
+    processNotice({
       url: downloadURL,
       notice_content: manualNoticeContent || "",
+      user_uid: user?.uid || "",
+      file_name: fileToUpload?.name,
+      notice_name: name || "",
     });
-
-    if (error?.includes("JSON") && tryNumber < 3) {
-      await proccessNotice({
-        name,
-        downloadURL,
-        isRetry: true,
-        tryNumber: tryNumber + 1,
-      });
-
-      return;
-    }
-
-    if (error) {
-      setLoading(false);
-      setShouldInputContent(true);
-      return;
-    }
-
-    setLoading(t("notice-upload.loading-message-3"));
-
-    const notice = addDoc(collection(firestore, "notices"), {
-      name,
-      file_name: fileToUpload.name,
-      url: downloadURL,
-      user_uid: user ? user?.uid : "anonymous",
-      processed: true,
-      created_at: new Date().toISOString(),
-    });
-
-    const notice_id = (await notice).id;
-
-    for (const subject of notice_content?.subjects) {
-      await addDoc(collection(firestore, "subjects"), {
-        ...subject,
-        notice_id,
-      });
-    }
-
-    const userDocRef = doc(firestore, "users", user?.uid as string);
-
-    setDoc(
-      userDocRef,
-      {
-        has_notice: true,
-        notice_name: name,
-      },
-      { merge: true }
-    );
 
     refresh();
 
     setFileToUpload(null as any);
 
     toast({
-      title: t("notice-upload.file-uploaded"),
-      description: t("notice-upload.notice-uploaded"),
+      title: "Estamos processando o seu edital",
+      description:
+        "Por favor, aguarde enquanto o processo é executado. Você receberá uma notificação quando o processo for concluído.",
     });
 
     setProgresspercent(0);

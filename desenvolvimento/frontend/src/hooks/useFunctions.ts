@@ -1,10 +1,12 @@
 "use client";
 
 import { useToast } from "@/components/ui/use-toast";
+import { useAuth } from "@/contexts/user";
 import axios from "axios";
 
 export const useFunctions = () => {
   const { toast } = useToast();
+  const { refresh } = useAuth();
 
   const url =
     process.env.environment === "prod"
@@ -14,14 +16,20 @@ export const useFunctions = () => {
   const processNotice = async ({
     url: noticeUrl,
     notice_content,
+    user_uid,
+    file_name,
+    notice_name,
   }: {
     url: string;
     notice_content: string;
+    user_uid: string;
+    file_name: string;
+    notice_name: string;
   }) => {
     try {
       const response = await axios.post(
         `${url}/getContentFromPdf`,
-        { url: noticeUrl, notice_content },
+        { url: noticeUrl, notice_content, user_uid, file_name, notice_name },
         {
           headers: {
             "Content-Type": "application/json",
@@ -32,6 +40,15 @@ export const useFunctions = () => {
       if (response.data.error) throw response.data.error;
 
       if (!response.data) throw "Houve um erro ao processar o edital:";
+
+      refresh();
+
+      toast({
+        variant: "default",
+        title: "Sucesso!",
+        description:
+          "Seu edital foi processado com sucesso! Confira suas matérias.",
+      });
 
       return {
         notice_content: response.data,
