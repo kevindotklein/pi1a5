@@ -12,30 +12,16 @@ import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { useRef } from "react";
-import Subject from "./subject";
 import { BookMarked, Component } from "lucide-react";
 
 export default function NoticeList() {
   const router = useRouter();
-  const triggerRef = useRef(null) as any;
 
   const { userData } = useAuth() as any;
 
   const [user, loading] = useAuthState(auth) as any;
 
   const { t, i18n } = useTranslation();
-
-  const [noticeOpen, setNoticeOpen] = useState(false) as any;
 
   return (
     <div className="flex flex-col gap-4 text-black w-full ">
@@ -46,8 +32,7 @@ export default function NoticeList() {
               key={notice.id}
               className="flex flex-col gap-3 p-4 border border-neutral-800 rounded-lg w-[50%] cursor-pointer hover:bg-neutral-200 transition-all tablet:max-w-full tablet:w-full"
               onClick={() => {
-                setNoticeOpen(notice);
-                triggerRef.current?.click();
+                router.push("/common/tasks/" + notice.id);
               }}
             >
               <div key={notice.id} className="flex flex-col gap-1">
@@ -72,48 +57,6 @@ export default function NoticeList() {
       ) : (
         <p>{t("notice-list.no-notices")}</p>
       )}
-
-      <Dialog>
-        <DialogTrigger ref={triggerRef} />
-
-        <DialogContent className="max-w-[40vw] overflow-auto tablet:max-w-[100vw] tablet:overflow-auto">
-          <DialogHeader>
-            <DialogTitle>{noticeOpen?.name}</DialogTitle>
-            <DialogDescription>
-              {noticeOpen?.file_name} - {t("notice-list.uploaded-at")}{" "}
-              <strong>
-                {moment(noticeOpen?.created_at).format("DD/MM/YYYY HH:mm")}
-              </strong>
-            </DialogDescription>
-          </DialogHeader>
-
-          <p>{t("notice-list.subj-and-contents")}</p>
-
-          <div className="flex gap-4 flex-col w-full h-full max-h-[600px] overflow-auto">
-            <div className="flex flex-col gap-4 w-full">
-              {noticeOpen?.subjects?.map((subject: any) => (
-                <Subject key={subject.id} subject={subject} />
-              ))}
-            </div>
-          </div>
-
-          <div className="flex w-full py-4 gap-4 justify-end">
-            <Button
-              variant="secondary"
-              style={{
-                backgroundColor: "#0D4290",
-                color: "white",
-                borderRadius: "10px",
-              }}
-              onClick={() => {
-                router.push("/common/tasks/" + noticeOpen.id);
-              }}
-            >
-              {t("notice-list.view-tasks")}
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }

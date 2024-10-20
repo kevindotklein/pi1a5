@@ -36,6 +36,32 @@ import {
   useCollectionData,
 } from "react-firebase-hooks/firestore";
 import DropArea from "@/components/common/dropArea";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+
+import Subject from "@/components/common/subject";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+
+import * as z from "zod";
+import { Input } from "@/components/ui/input";
+import { useAction } from "@/hooks/useAction";
 
 export default function Tasks({ params }: { params: { slug: string } }) {
   const router = useRouter();
@@ -43,6 +69,10 @@ export default function Tasks({ params }: { params: { slug: string } }) {
   const { setLoading } = useLoading();
 
   const triggerRef = useRef(null) as any;
+  const contentModalTriggerRef = useRef(null) as any;
+  const infosModalTriggerRef = useRef(null) as any;
+
+  const action = useAction();
 
   const { userData, logout } = useAuth() as any;
   const taskRef = collection(firestore, "tasks");
@@ -71,6 +101,8 @@ export default function Tasks({ params }: { params: { slug: string } }) {
 
   const [activeCard, setActiveCard] = useState(null) as any;
   const [hightlighted, setHightlighted] = useState(null) as any;
+
+  const [noticeOpen, setNoticeOpen] = useState(false) as any;
 
   const showError = () => {
     toast({
@@ -168,6 +200,65 @@ export default function Tasks({ params }: { params: { slug: string } }) {
     );
   };
 
+  const formSchema = z.object({
+    date: z
+      .string()
+      .min(3, {
+        message: t("tasks.invalid-local"),
+      })
+      .optional()
+      .nullable(),
+    local: z
+      .string()
+      .min(3, {
+        message: t("tasks.invalid-local"),
+      })
+      .optional()
+      .nullable(),
+  });
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+  });
+
+  const { setValue } = form;
+
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    const { date, local } = values;
+
+    if (!date) {
+      return toast({
+        variant: "destructive",
+        title: t("tasks.invalid-local"),
+        description: t("tasks.add-date"),
+      });
+    }
+
+    await action(
+      async () => {
+        setLoading(t("tasks.set-loading"));
+
+        const docRef = doc(firestore, "notices", noticeOpen?.id as string);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          const notice = docSnap.data();
+
+          await setDoc(docRef, {
+            ...notice,
+            date,
+            local,
+          });
+        }
+
+        setLoading(false);
+      },
+      async () => {
+        setLoading(false);
+      }
+    );
+  };
+
   return (
     <div className="flex flex-col gap-5 text-neutral-50 w-full px-10 h-[calc(100vh-112px)] pb-4 tablet:px-3 select-none">
       {notice ? (
@@ -179,6 +270,46 @@ export default function Tasks({ params }: { params: { slug: string } }) {
               {t("notice-list.uploaded-at")}{" "}
               {moment(notice.created_at).format("DD/MM/YYYY HH:mm")}
             </span>
+          </div>
+
+          <div className="flex gap-2 w-full">
+            <Button
+              variant="outline"
+              style={{
+                backgroundColor: "#0D4290",
+                color: "white",
+                borderRadius: "10px",
+                width: "fit-content",
+              }}
+              onClick={() => {
+                setNoticeOpen(notice);
+                infosModalTriggerRef.current?.click();
+
+                setValue(
+                  "date",
+                  moment(notice.date).format("YYYY-MM-DD HH:mm")
+                );
+
+                setValue("local", notice.local);
+              }}
+            >
+              Informações da Prova
+            </Button>
+            <Button
+              variant="secondary"
+              style={{
+                backgroundColor: "#0D4290",
+                color: "white",
+                borderRadius: "10px",
+                width: "fit-content",
+              }}
+              onClick={() => {
+                setNoticeOpen(notice);
+                contentModalTriggerRef.current?.click();
+              }}
+            >
+              Ver Matérias
+            </Button>
           </div>
 
           <div className="flex gap-3 text-neutral-50 w-full items-center">
@@ -264,6 +395,100 @@ export default function Tasks({ params }: { params: { slug: string } }) {
       ) : (
         <span>{t("tasks.loading")}</span>
       )}
+
+      <Dialog>
+        <DialogTrigger ref={contentModalTriggerRef} />
+
+        <DialogContent className="max-w-[40vw] overflow-auto tablet:max-w-[100vw] tablet:overflow-auto">
+          <DialogHeader>
+            <DialogTitle>{noticeOpen?.name}</DialogTitle>
+            <DialogDescription>
+              {noticeOpen?.file_name} - {t("notice-list.uploaded-at")}{" "}
+              <strong>
+                {moment(noticeOpen?.created_at).format("DD/MM/YYYY HH:mm")}
+              </strong>
+            </DialogDescription>
+          </DialogHeader>
+
+          <p>{t("notice-list.subj-and-contents")}</p>
+
+          <div className="flex gap-4 flex-col w-full h-full max-h-[600px] overflow-auto">
+            <div className="flex flex-col gap-4 w-full">
+              {noticeOpen?.subjects?.map((subject: any) => (
+                <Subject key={subject.id} subject={subject} />
+              ))}
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog>
+        <DialogTrigger ref={infosModalTriggerRef} />
+
+        <DialogContent className="max-w-[40vw] overflow-auto tablet:max-w-[100vw] tablet:overflow-auto">
+          <DialogHeader>
+            <DialogTitle>{noticeOpen?.name}</DialogTitle>
+            <DialogDescription>Informações sobre a prova</DialogDescription>
+          </DialogHeader>
+
+          <Form {...form}>
+            <div className="h-full">
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="w-full h-full flex flex-col justify-between gap-4"
+              >
+                <div className="flex flex-col gap-5">
+                  <FormField
+                    control={form.control}
+                    name="date"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Data da Prova</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Data da Prova"
+                            type="datetime-local"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="local"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Local da Prova</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Data da Prova" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                <div className="flex items-center justify-end w-full">
+                  <Button
+                    // disabled={loading}
+                    type="submit"
+                    style={{
+                      backgroundColor: "#0D4290",
+                      color: "white",
+                      borderRadius: "10px",
+                    }}
+                  >
+                    Atualizar
+                  </Button>
+                </div>
+              </form>
+            </div>
+          </Form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
