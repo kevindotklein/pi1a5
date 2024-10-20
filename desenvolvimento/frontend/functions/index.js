@@ -135,6 +135,14 @@ export const getContentFromPdf = https.onRequest(async (request, response) => {
           );
         }
 
+        await firestore.collection("notifications").add({
+          title: "Novo Edital",
+          description: "Seu edital foi enviado para a sua área de estudo",
+          notice_id,
+          user_uid,
+          created_at: new Date().toISOString(),
+        });
+
         response.json(jsonObject);
       } else {
         response.json({
