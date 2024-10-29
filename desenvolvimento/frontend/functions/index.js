@@ -113,6 +113,27 @@ export const getContentFromPdf = https.onRequest(async (request, response) => {
             notice_id,
           });
         }
+
+        if (user_uid) {
+          const userDocRef = firestore.doc(`users/${user_uid}`);
+          await userDocRef.set(
+            {
+              has_notice: true,
+              notice_name: notice_name,
+            },
+            { merge: true }
+          );
+        }
+
+        await firestore.collection("notifications").add({
+          title: "Novo Edital",
+          description: "Seu edital foi enviado para a sua área de estudo",
+          notice_id,
+          user_uid,
+          created_at: new Date().toISOString(),
+        });
+
+        response.json(subjects);
       }
 
       if (!alreadyExists) {
@@ -179,6 +200,7 @@ export const getContentFromPdf = https.onRequest(async (request, response) => {
               notice_id,
             });
           }
+        
 
           if (user_uid) {
             const userDocRef = firestore.doc(`users/${user_uid}`);
