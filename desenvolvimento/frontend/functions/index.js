@@ -48,6 +48,7 @@ export const getContentFromPdf = https.onRequest(async (request, response) => {
         user_uid,
         file_name,
         notice_name,
+        file_hash
       } = request.body;
 
       log(`Notice url: ${notice_url}`, {
@@ -112,6 +113,7 @@ export const getContentFromPdf = https.onRequest(async (request, response) => {
           user_uid: user_uid,
           processed: true,
           created_at: new Date().toISOString(),
+          file_hash: file_hash
         });
 
         const notice_id = noticeRef.id;

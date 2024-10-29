@@ -130,29 +130,6 @@ export default function NoticeUpload({
       });
     }
 
-    const getHashFile = async (file: File) => {
-      const arrayBuffer = await file.arrayBuffer();
-      const hashBuffer = await crypto.subtle.digest("SHA-256", arrayBuffer);
-      return bufferToHex(hashBuffer);
-    };
-
-    const bufferToHex = (buffer: ArrayBuffer) => {
-      return [...new Uint8Array(buffer)]
-        .map((b) => b.toString(16).padStart(2, "0"))
-        .join("");
-    }
-
-    try {
-      const hash = await getHashFile(fileToUpload);
-      console.log(hash);
-    } catch (error) {
-      return toast({
-        variant: "destructive",
-        title: t("notice-upload.invalid-type"),
-        description: t("notice-upload.upload-file"),
-      });
-    }
-
     if (!name) {
       return toast({
         variant: "destructive",
@@ -231,6 +208,29 @@ export default function NoticeUpload({
         ? t("notice-upload.load-file-error")
         : t("notice-upload.loading-message-2")
     );
+    
+    const getHashFile = async (file: File) => {
+      const arrayBuffer = await file.arrayBuffer();
+      const hashBuffer = await crypto.subtle.digest("SHA-256", arrayBuffer);
+      return bufferToHex(hashBuffer);
+    };
+
+    const bufferToHex = (buffer: ArrayBuffer) => {
+      return [...new Uint8Array(buffer)]
+        .map((b) => b.toString(16).padStart(2, "0"))
+        .join("");
+    }
+
+    let hash = null;
+    try {
+      hash = await getHashFile(fileToUpload);
+    } catch (error) {
+      return toast({
+        variant: "destructive",
+        title: t("notice-upload.invalid-type"),
+        description: t("notice-upload.upload-file"),
+      });
+    }
 
     processNotice({
       url: downloadURL,
@@ -238,6 +238,7 @@ export default function NoticeUpload({
       user_uid: user?.uid || "",
       file_name: fileToUpload?.name,
       notice_name: name || "",
+      file_hash: hash
     });
 
     refresh();

@@ -19,17 +19,19 @@ export const useFunctions = () => {
     user_uid,
     file_name,
     notice_name,
+    file_hash
   }: {
     url: string;
     notice_content: string;
     user_uid: string;
     file_name: string;
     notice_name: string;
+    file_hash: string;
   }) => {
     try {
       const response = await axios.post(
         `${url}/getContentFromPdf`,
-        { url: noticeUrl, notice_content, user_uid, file_name, notice_name },
+        { url: noticeUrl, notice_content, user_uid, file_name, notice_name, file_hash },
         {
           headers: {
             "Content-Type": "application/json",
