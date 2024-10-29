@@ -1,7 +1,7 @@
 import { https } from "firebase-functions";
 import { readPDF } from "./helpers/pdfReader.js";
 import { runContentInterpreterModel } from "./models/openContentInterpreter.js";
-  import { config as configDotenv } from "dotenv";
+import { config as configDotenv } from "dotenv";
 import { log } from "firebase-functions/logger";
 
 import cors from "cors";
@@ -9,10 +9,10 @@ import { filterKnowledge } from "./helpers/filterKnowledge.js";
 import { filterJSON } from "./helpers/filterJSON.js";
 import { runTaskGenerationModel } from "./models/openTaskGenerator.js";
 const corsHandler = cors({ origin: true });
-import admin from "firebase-admin"; 
+import admin from "firebase-admin";
 
 export const getContentFromPdf = https.onRequest(async (request, response) => {
-  configDotenv({path: "../.env"});
+  configDotenv({ path: "../.env" });
 
   if (!admin.apps.length) {
     admin.initializeApp({
@@ -28,7 +28,7 @@ export const getContentFromPdf = https.onRequest(async (request, response) => {
         auth_provider_x509_cert_url: process.env.AUTH_PROVIDER_X509_CERT_URL,
         client_x509_cert_url: process.env.CLIENT_X509_CERT_URL,
       }),
-      databaseURL: "https://noz-ifsp-default-rtdb.firebaseio.com",  
+      databaseURL: "https://noz-ifsp-default-rtdb.firebaseio.com",
     });
   }
 
@@ -48,7 +48,7 @@ export const getContentFromPdf = https.onRequest(async (request, response) => {
         user_uid,
         file_name,
         notice_name,
-        file_hash
+        file_hash,
       } = request.body;
 
       log(`Notice url: ${notice_url}`, {
@@ -66,46 +66,24 @@ export const getContentFromPdf = https.onRequest(async (request, response) => {
         return;
       }
 
-      let buffer;
+      let alreadyExists = false;
 
-      if (!notice_content) {
-        log("No notice content was provided, fetching PDF");
+      const pastNotices = await firestore
+        .collection("notices")
+        .where("file_hash", "==", file_hash)
+        .get();
 
-        const urlResponse = await fetch(notice_url);
-        buffer = await urlResponse.arrayBuffer();
+      if (!pastNotices.empty) {
+        alreadyExists = true;
+        const existingNotices = pastNotices.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
 
-        log(`buffer was received: ${buffer ? "yes" : "no"}`);
-      }
+        log(`Found ${existingNotices.length} notices with the same file_hash`, {
+          structuredData: true,
+        });
 
-      const knowledge = notice_content ? notice_content : await readPDF(buffer);
-
-      if (knowledge) {
-        log("Found knowledge, running filter");
-
-        const filteredText = filterKnowledge(knowledge);
-
-        if (filteredText.length > 25000) {
-          log(
-            "The knowledge is too long, please try again with a shorter notice"
-          );
-          response.json({
-            error:
-              "Parece que o conteúdo do edital é muito longo, por favor, tente novamente com um edital mais curto, ou insira o conteúdo manualmente.",
-          });
-
-          return;
-        }
-
-        log("Filtered knowledge, running model");
-        const processedContent = await runContentInterpreterModel(filteredText);
-
-        if (processedContent.error) throw new Error(processedContent.error);
-
-        log("Building JSON object");
-
-        const jsonObject = filterJSON(processedContent);
-
-        // Add the notice to Firestore
         const noticeRef = await firestore.collection("notices").add({
           name: notice_name,
           file_name: file_name,
@@ -113,17 +91,93 @@ export const getContentFromPdf = https.onRequest(async (request, response) => {
           user_uid: user_uid,
           processed: true,
           created_at: new Date().toISOString(),
-          file_hash: file_hash
+          file_hash: file_hash,
         });
 
         const notice_id = noticeRef.id;
 
-        // Store related subjects in Firestore
-        for (const subject of jsonObject?.subjects || []) {
+        const subjectsSnap = await firestore
+          .collection("subjects")
+          .where("notice_id", "==", existingNotices[0]?.id)
+          .get();
+
+        const subjects = subjectsSnap.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        for (const subject of subjects || []) {
           await firestore.collection("subjects").add({
-            ...subject,
+            name: subject.name,
             notice_id,
           });
+        }
+      }
+
+      if (!alreadyExists) {
+        let buffer;
+
+        if (!notice_content) {
+          log("No notice content was provided, fetching PDF");
+
+          const urlResponse = await fetch(notice_url);
+          buffer = await urlResponse.arrayBuffer();
+
+          log(`buffer was received: ${buffer ? "yes" : "no"}`);
+        }
+
+        const knowledge = notice_content
+          ? notice_content
+          : await readPDF(buffer);
+
+        if (knowledge) {
+          log("Found knowledge, running filter");
+
+          const filteredText = filterKnowledge(knowledge);
+
+          if (filteredText.length > 25000) {
+            log(
+              "The knowledge is too long, please try again with a shorter notice"
+            );
+            response.json({
+              error:
+                "Parece que o conteúdo do edital é muito longo, por favor, tente novamente com um edital mais curto, ou insira o conteúdo manualmente.",
+            });
+
+            return;
+          }
+
+          log("Filtered knowledge, running model");
+          const processedContent = await runContentInterpreterModel(
+            filteredText
+          );
+
+          if (processedContent.error) throw new Error(processedContent.error);
+
+          log("Building JSON object");
+
+          const jsonObject = filterJSON(processedContent);
+
+          // Add the notice to Firestore
+          const noticeRef = await firestore.collection("notices").add({
+            name: notice_name,
+            file_name: file_name,
+            url: notice_url,
+            user_uid: user_uid,
+            processed: true,
+            created_at: new Date().toISOString(),
+            file_hash: file_hash,
+          });
+
+          const notice_id = noticeRef.id;
+
+          // Store related subjects in Firestore
+          for (const subject of jsonObject?.subjects || []) {
+            await firestore.collection("subjects").add({
+              ...subject,
+              notice_id,
+            });
+          }
         }
 
         if (user_uid) {
