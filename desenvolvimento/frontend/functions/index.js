@@ -80,7 +80,7 @@ export const getContentFromPdf = https.onRequest(async (request, response) => {
           ...doc.data(),
         }));
 
-        log(`Found ${existingNotices.length} notices with the same file_hash`, {
+        log(`Found ${existingNotices.length} notices with the same file_hash (e.g: ${existingNotices[0].file_name})`, {
           structuredData: true,
         });
 
@@ -106,9 +106,10 @@ export const getContentFromPdf = https.onRequest(async (request, response) => {
           ...doc.data(),
         }));
 
-        for (const subject of subjects || []) {
+        for (const subject of subjects) {
           await firestore.collection("subjects").add({
             name: subject.name,
+            contents: subject.contents,
             notice_id,
           });
         }
@@ -178,32 +179,33 @@ export const getContentFromPdf = https.onRequest(async (request, response) => {
               notice_id,
             });
           }
+
+          if (user_uid) {
+            const userDocRef = firestore.doc(`users/${user_uid}`);
+            await userDocRef.set(
+              {
+                has_notice: true,
+                notice_name: notice_name,
+              },
+              { merge: true }
+            );
+          }
+
+          await firestore.collection("notifications").add({
+            title: "Novo Edital",
+            description: "Seu edital foi enviado para a sua área de estudo",
+            notice_id,
+            user_uid,
+            created_at: new Date().toISOString(),
+          });
+
+          response.json(jsonObject);
+        } else {
+          response.json({
+            error: "Não foi encontrado nenhum conteúdo programático.",
+          });
         }
-
-        if (user_uid) {
-          const userDocRef = firestore.doc(`users/${user_uid}`);
-          await userDocRef.set(
-            {
-              has_notice: true,
-              notice_name: notice_name,
-            },
-            { merge: true }
-          );
-        }
-
-        await firestore.collection("notifications").add({
-          title: "Novo Edital",
-          description: "Seu edital foi enviado para a sua área de estudo",
-          notice_id,
-          user_uid,
-          created_at: new Date().toISOString(),
-        });
-
-        response.json(jsonObject);
-      } else {
-        response.json({
-          error: "Não foi encontrado nenhum conteúdo programático.",
-        });
+        alreadyExists = false;
       }
     } catch (error) {
       const text = `Houve um erro ao processar o conteúdo: ${error}`;
