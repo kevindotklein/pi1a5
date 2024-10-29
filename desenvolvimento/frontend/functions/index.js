@@ -1,7 +1,7 @@
 import { https } from "firebase-functions";
 import { readPDF } from "./helpers/pdfReader.js";
 import { runContentInterpreterModel } from "./models/openContentInterpreter.js";
-import { config as configDotenv } from "dotenv";
+  import { config as configDotenv } from "dotenv";
 import { log } from "firebase-functions/logger";
 
 import cors from "cors";
@@ -9,10 +9,10 @@ import { filterKnowledge } from "./helpers/filterKnowledge.js";
 import { filterJSON } from "./helpers/filterJSON.js";
 import { runTaskGenerationModel } from "./models/openTaskGenerator.js";
 const corsHandler = cors({ origin: true });
-import admin from "firebase-admin";
+import admin from "firebase-admin"; 
 
 export const getContentFromPdf = https.onRequest(async (request, response) => {
-  configDotenv();
+  configDotenv({path: "../.env"});
 
   if (!admin.apps.length) {
     admin.initializeApp({
@@ -28,7 +28,7 @@ export const getContentFromPdf = https.onRequest(async (request, response) => {
         auth_provider_x509_cert_url: process.env.AUTH_PROVIDER_X509_CERT_URL,
         client_x509_cert_url: process.env.CLIENT_X509_CERT_URL,
       }),
-      databaseURL: "https://noz-ifsp-default-rtdb.firebaseio.com",
+      databaseURL: "https://noz-ifsp-default-rtdb.firebaseio.com",  
     });
   }
 

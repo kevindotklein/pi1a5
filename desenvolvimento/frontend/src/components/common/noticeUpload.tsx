@@ -130,6 +130,29 @@ export default function NoticeUpload({
       });
     }
 
+    const getHashFile = async (file: File) => {
+      const arrayBuffer = await file.arrayBuffer();
+      const hashBuffer = await crypto.subtle.digest("SHA-256", arrayBuffer);
+      return bufferToHex(hashBuffer);
+    };
+
+    const bufferToHex = (buffer: ArrayBuffer) => {
+      return [...new Uint8Array(buffer)]
+        .map((b) => b.toString(16).padStart(2, "0"))
+        .join("");
+    }
+
+    try {
+      const hash = await getHashFile(fileToUpload);
+      console.log(hash);
+    } catch (error) {
+      return toast({
+        variant: "destructive",
+        title: t("notice-upload.invalid-type"),
+        description: t("notice-upload.upload-file"),
+      });
+    }
+
     if (!name) {
       return toast({
         variant: "destructive",
