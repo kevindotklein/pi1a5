@@ -10,6 +10,8 @@ import { filterJSON } from "./helpers/filterJSON.js";
 import { runTaskGenerationModel } from "./models/openTaskGenerator.js";
 const corsHandler = cors({ origin: true });
 import admin from "firebase-admin";
+import { sendEmail } from "./helpers/sendEmail.js";
+import * as functions from "firebase-functions";
 
 export const getContentFromPdf = https.onRequest(async (request, response) => {
   configDotenv({ path: "../.env" });
@@ -80,9 +82,12 @@ export const getContentFromPdf = https.onRequest(async (request, response) => {
           ...doc.data(),
         }));
 
-        log(`Found ${existingNotices.length} notices with the same file_hash (e.g: ${existingNotices[0].file_name})`, {
-          structuredData: true,
-        });
+        log(
+          `Found ${existingNotices.length} notices with the same file_hash (e.g: ${existingNotices[0].file_name})`,
+          {
+            structuredData: true,
+          }
+        );
 
         const noticeRef = await firestore.collection("notices").add({
           name: notice_name,
@@ -123,15 +128,22 @@ export const getContentFromPdf = https.onRequest(async (request, response) => {
             },
             { merge: true }
           );
-        }
 
-        await firestore.collection("notifications").add({
-          title: "Novo Edital",
-          description: "Seu edital foi enviado para a sua área de estudo",
-          notice_id,
-          user_uid,
-          created_at: new Date().toISOString(),
-        });
+          const user_email = userDocRef.get().then((doc) => doc.data().email);
+          const owner_name = userDocRef
+            .get()
+            .then((doc) => doc.data().full_name);
+
+          await firestore.collection("notifications").add({
+            title: "Novo Edital",
+            description: "Seu edital foi enviado para a sua área de estudo",
+            notice_id,
+            user_uid,
+            user_email,
+            owner_name,
+            created_at: new Date().toISOString(),
+          });
+        }
 
         response.json(subjects);
       }
@@ -200,7 +212,6 @@ export const getContentFromPdf = https.onRequest(async (request, response) => {
               notice_id,
             });
           }
-        
 
           if (user_uid) {
             const userDocRef = firestore.doc(`users/${user_uid}`);
@@ -285,3 +296,11 @@ export const generateTasks = https.onRequest(async (request, response) => {
     }
   });
 });
+
+export const onNotificationCreate = functions.firestore
+  .document("notifications/{notificationId}")
+  .onCreate(async (snapshot) => {
+    configDotenv();
+
+    await sendEmail(snapshot);
+  });
