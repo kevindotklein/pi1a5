@@ -92,6 +92,23 @@ export function AuthProvider({
       data = { ...data, notices };
     }
 
+    const notificationsRef = collection(firestore, "notifications");
+    const notificationsQuery = query(
+      notificationsRef,
+      where("user_uid", "==", user.uid)
+    );
+    const notificationsSnap = await getDocs(notificationsQuery);
+
+    const notifications = [] as any;
+
+    for (const notification of notificationsSnap.docs) {
+      const id = notification.id;
+
+      notifications.push({ id, ...notification.data() });
+    }
+
+    data = { ...data, notifications };
+
     setUserData(data);
 
     setLoading(false);
