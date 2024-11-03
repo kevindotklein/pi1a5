@@ -70,7 +70,10 @@ export default function Header() {
       </div>
 
       {openNotifications && (
-        <Notifications setOpenNotifications={setOpenNotifications} />
+        <Notifications
+          openNotifications={openNotifications}
+          setOpenNotifications={setOpenNotifications}
+        />
       )}
     </>
   );

@@ -13,6 +13,7 @@ import { useAuth } from "./user";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, firestore } from "@/firebase/config";
 import { useCollection } from "react-firebase-hooks/firestore";
+import { timeSince } from "@/helpers/time";
 
 interface Notification {
   id: string;
@@ -84,6 +85,7 @@ const NotificationProvider: React.FC<NotificationProviderProps> = ({
   useEffect(() => {
     const notificationData = notificationsSnap?.docs.map((doc: any) => ({
       id: doc.id,
+      time_since_creation: timeSince(doc.data().created_at),
       ...doc.data(),
     }));
 
