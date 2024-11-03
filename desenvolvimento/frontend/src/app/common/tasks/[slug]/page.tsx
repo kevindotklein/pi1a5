@@ -449,6 +449,7 @@ export default function Tasks({ params }: { params: { slug: string } }) {
                             placeholder="Data da Prova"
                             type="datetime-local"
                             {...field}
+                            value={field.value ?? ""}
                           />
                         </FormControl>
                         <FormMessage />
@@ -463,7 +464,12 @@ export default function Tasks({ params }: { params: { slug: string } }) {
                       <FormItem>
                         <FormLabel>Local da Prova</FormLabel>
                         <FormControl>
-                          <Input placeholder="Data da Prova" {...field} />
+                          <Input
+                            type="text"
+                            placeholder="Local da Prova"
+                            {...field}
+                            value={field.value ?? ""}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
