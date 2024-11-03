@@ -297,6 +297,71 @@ export const generateTasks = https.onRequest(async (request, response) => {
   });
 });
 
+export const scheduleNoticeReminder = functions.pubsub
+  .schedule("every 24 hours")
+  .onRun(async (context) => {
+    configDotenv({ path: "../.env" });
+
+    if (!admin.apps.length) {
+      admin.initializeApp({
+        credential: admin.credential.cert({
+          type: process.env.TYPE,
+          project_id: process.env.PROJECT_ID,
+          private_key_id: process.env.PRIVATE_KEY_ID,
+          private_key: process.env.PRIVATE_KEY.replace(/\\n/gm, "\n"),
+          client_email: process.env.CLIENT_EMAIL,
+          client_id: process.env.CLIENT_ID,
+          auth_uri: process.env.AUTH_URI,
+          token_uri: process.env.TOKEN_URI,
+          auth_provider_x509_cert_url: process.env.AUTH_PROVIDER_X509_CERT_URL,
+          client_x509_cert_url: process.env.CLIENT_X509_CERT_URL,
+        }),
+        databaseURL: "https://noz-ifsp-default-rtdb.firebaseio.com",
+      });
+    }
+
+    const firestore = admin.firestore();
+    const today = dayjs().startOf("day");
+    const targetDate = today.add(10, "days").toDate(); // 10 days from today
+
+    try {
+      log("Running daily notice reminder check");
+
+      const noticesSnapshot = await firestore
+        .collection("notices")
+        .where("date", ">=", targetDate)
+        .where("date", "<", dayjs(targetDate).endOf("day").toDate())
+        .get();
+
+      if (noticesSnapshot.empty) {
+        log("No notices found for 10-day reminder");
+        return null;
+      }
+
+      const batch = firestore.batch(); // use a batch for multiple writes
+      noticesSnapshot.forEach((noticeDoc) => {
+        const noticeData = noticeDoc.data();
+
+        const notificationRef = firestore.collection("notifications").doc();
+        batch.set(notificationRef, {
+          title: "Upcoming Notice Deadline",
+          description: `A reminder: the deadline for ${noticeData.name} is approaching in 10 days.`,
+          notice_id: noticeDoc.id,
+          user_uid: noticeData.user_uid,
+          created_at: new Date().toISOString(),
+        });
+      });
+
+      await batch.commit();
+      log("Daily notice reminders created successfully");
+
+      return null;
+    } catch (error) {
+      log(`Error creating daily reminders: ${error}`);
+      return null;
+    }
+  });
+
 export const onNotificationCreate = functions.firestore
   .document("notifications/{notificationId}")
   .onCreate(async (snapshot) => {
