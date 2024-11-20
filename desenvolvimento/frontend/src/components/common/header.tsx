@@ -45,16 +45,30 @@ export default function Header() {
           </div>
 
           <div className="flex gap-4 items-center">
-            <Image
-              src={user?.photoURL || "/favicon.ico"}
-              alt="user avatar"
-              width={30}
-              height={30}
-              className="rounded-full"
-            />
-            <span className="text-lg font-bold text-white">
-              {userData?.full_name || userData?.displayName || userData?.email}
-            </span>
+            <div className="flex gap-5 items-center">
+              <div className="flex items-center justify-center bg-blue-800 rounded-full p-2 px-5 w-fit cursor-pointer hover:bg-blue-900 transition-all">
+                <span className="text-sm font-bold text-white">
+                  {userData?.plan === "paid"
+                    ? "Plano Premium"
+                    : "Plano Gratuito"}
+                </span>
+              </div>
+
+              <div className="flex gap-2 items-center">
+                <Image
+                  src={user?.photoURL || "/favicon.ico"}
+                  alt="user avatar"
+                  width={30}
+                  height={30}
+                  className="rounded-full"
+                />
+                <span className="text-lg font-bold text-white">
+                  {userData?.full_name ||
+                    userData?.displayName ||
+                    userData?.email}
+                </span>
+              </div>
+            </div>
 
             <Button
               onClick={async () => {
