@@ -12,6 +12,7 @@ const corsHandler = cors({ origin: true });
 import admin from "firebase-admin";
 import { sendEmail } from "./helpers/sendEmail.js";
 import * as functions from "firebase-functions";
+import { runInfoExtractorModel } from "./models/openInfoExtractor.js";
 
 export const getContentFromPdf = https.onRequest(async (request, response) => {
   configDotenv({ path: "../.env" });
@@ -288,6 +289,48 @@ export const generateTasks = https.onRequest(async (request, response) => {
       response.json(jsonObject);
     } catch (error) {
       const text = `Houve um erro ao processar o conteúdo: ${error}`;
+
+      log(text);
+      response.status(400).json({
+        error: text,
+      });
+    }
+  });
+});
+
+export const extractInfos = https.onRequest(async (request, response) => {
+  configDotenv();
+
+  corsHandler(request, response, async () => {
+    try {
+      log("Running info extraction", {
+        structuredData: true,
+      });
+
+      log(`req body: ${JSON.stringify(request.body)}`);
+
+      const { text } = request.body;
+
+      log(`Text: ${text}`, {
+        structuredData: true,
+      });
+
+      log("Running model");
+      const processedContent = await runInfoExtractorModel({
+        text,
+      });
+
+      if (processedContent.error) throw new Error(processedContent.error);
+
+      log("Building JSON object");
+
+      const jsonObject = filterJSON(processedContent);
+
+      response.json({
+        infos: jsonObject,
+      });
+    } catch (error) {
+      const text = `Houve um erro ao extrair o conteúdo: ${error}`;
 
       log(text);
       response.status(400).json({
