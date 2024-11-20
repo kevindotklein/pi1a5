@@ -4,15 +4,27 @@ import useNotification from "@/hooks/useNotifications";
 import { Bell, GraduationCap } from "lucide-react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Button } from "../ui/button";
 import Notifications from "./notifications";
 import { useTranslation } from "react-i18next";
 
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+
 export default function Header() {
   const router = useRouter();
   const pathname = usePathname() as any;
+
+  const triggerRef = useRef<any>(null);
 
   const { logout, userData } = useAuth() as any;
 
@@ -46,7 +58,10 @@ export default function Header() {
 
           <div className="flex gap-4 items-center">
             <div className="flex gap-5 items-center">
-              <div className="flex items-center justify-center bg-blue-800 rounded-full p-2 px-5 w-fit cursor-pointer hover:bg-blue-900 transition-all">
+              <div
+                className="flex items-center justify-center bg-blue-800 rounded-full p-2 px-5 w-fit cursor-pointer hover:bg-blue-900 transition-all"
+                onClick={() => triggerRef.current.click()}
+              >
                 <span className="text-sm font-bold text-white">
                   {userData?.plan === "paid"
                     ? "Plano Premium"
@@ -89,6 +104,22 @@ export default function Header() {
           setOpenNotifications={setOpenNotifications}
         />
       )}
+
+      <Dialog>
+        <DialogTrigger ref={triggerRef} />
+
+        <DialogContent className="max-w-[40vw] overflow-auto tablet:max-w-[100vw] tablet:overflow-auto">
+          <DialogHeader>
+            <DialogTitle>{"Planos do Studyflow"}</DialogTitle>
+            <DialogDescription>
+              Seu plano -{" "}
+              {userData?.plan === "paid" ? "Plano Premium" : "Plano Gratuito"}
+            </DialogDescription>
+          </DialogHeader>
+
+          <p>Confira nossos planos:</p>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }
