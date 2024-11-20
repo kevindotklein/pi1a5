@@ -63,7 +63,7 @@ export default function Register() {
 
         setLoading(false);
 
-        router.push("/common/dashboard");
+        router.push("/common/dashboard?open_plans=true");
       },
       async () => {
         setLoading(false);

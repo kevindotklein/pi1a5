@@ -38,7 +38,12 @@ export default function PaymentForm() {
       className="w-full flex flex-col items-center justify-center"
     >
       {/* <CardElement /> */}
-      <Button type="submit" variant="default" size="lg">
+      <Button
+        type="submit"
+        variant="default"
+        size="lg"
+        className="w-full bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-600"
+      >
         {t("payments.check-in.message")}
       </Button>
     </form>
