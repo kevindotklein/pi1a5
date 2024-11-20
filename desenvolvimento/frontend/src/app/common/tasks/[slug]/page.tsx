@@ -4,7 +4,14 @@ import NoticeList from "@/components/common/noticeList";
 import NoticeUpload from "@/components/common/noticeUpload";
 import { useAuth } from "@/contexts/user";
 import { auth, firestore } from "@/firebase/config";
-import { Link2, Plus } from "lucide-react";
+import {
+  Check,
+  CheckSquare,
+  Link2,
+  Pencil,
+  Plus,
+  SquarePen,
+} from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
@@ -62,6 +69,9 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Input } from "@/components/ui/input";
 import { useAction } from "@/hooks/useAction";
+import { Textarea } from "@/components/ui/textarea";
+import { useFunctions } from "@/hooks/useFunctions";
+import { info } from "console";
 
 export default function Tasks({ params }: { params: { slug: string } }) {
   const router = useRouter();
@@ -73,6 +83,8 @@ export default function Tasks({ params }: { params: { slug: string } }) {
   const infosModalTriggerRef = useRef(null) as any;
 
   const action = useAction();
+
+  const { extractInfos } = useFunctions();
 
   const { userData, logout } = useAuth() as any;
   const taskRef = collection(firestore, "tasks");
@@ -103,6 +115,13 @@ export default function Tasks({ params }: { params: { slug: string } }) {
   const [hightlighted, setHightlighted] = useState(null) as any;
 
   const [noticeOpen, setNoticeOpen] = useState(false) as any;
+
+  const [modalView, setModalView] = useState("form") as any;
+
+  const [manualNoticeContent, setManualNoticeContent] = useState("");
+
+  const [noticeInfos, setNoticeInfos] = useState(null) as any;
+  const [editingField, setEditingField] = useState(null) as any;
 
   const showError = () => {
     toast({
@@ -149,6 +168,10 @@ export default function Tasks({ params }: { params: { slug: string } }) {
       const subjects = subjectSnap.docs.map((doc: any) => doc.data());
 
       await setNotice({ id, ...notice, subjects });
+
+      if (notice?.infos) {
+        setNoticeInfos(notice.infos);
+      }
 
       setLoading(false);
     } else {
@@ -200,16 +223,33 @@ export default function Tasks({ params }: { params: { slug: string } }) {
     );
   };
 
+  const date_validator = z
+    .string({
+      message: "Campo obrigatório",
+    })
+    .min(3, {
+      message: t("tasks.invalid-local"),
+    })
+    .optional()
+    .nullable();
+
   const formSchema = z.object({
-    date: z
-      .string()
+    subscription_start: date_validator,
+    subscription_deadline: date_validator,
+    date: date_validator,
+    local: z
+      .string({
+        message: "Campo obrigatório",
+      })
       .min(3, {
         message: t("tasks.invalid-local"),
       })
       .optional()
       .nullable(),
-    local: z
-      .string()
+    text: z
+      .string({
+        message: "Campo obrigatório",
+      })
       .min(3, {
         message: t("tasks.invalid-local"),
       })
@@ -224,7 +264,7 @@ export default function Tasks({ params }: { params: { slug: string } }) {
   const { setValue } = form;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    const { date, local } = values;
+    const { date, subscription_start, subscription_deadline, local } = values;
 
     if (!date) {
       return toast({
@@ -247,6 +287,8 @@ export default function Tasks({ params }: { params: { slug: string } }) {
           await setDoc(docRef, {
             ...notice,
             date,
+            subscription_start,
+            subscription_deadline,
             local,
           });
         }
@@ -257,6 +299,81 @@ export default function Tasks({ params }: { params: { slug: string } }) {
         setLoading(false);
       }
     );
+  };
+
+  const onContentSubmit = async () => {
+    if (!manualNoticeContent) {
+      return toast({
+        variant: "destructive",
+        title: "Erro!",
+        description: "Insira as informações",
+      });
+    }
+
+    await action(
+      async () => {
+        setLoading("Extraindo informações...");
+
+        const { infos, error } = await extractInfos({
+          text: manualNoticeContent,
+        });
+
+        if (error) {
+          setLoading(false);
+
+          toast({
+            variant: "destructive",
+            title: "Erro!",
+            description: error,
+          });
+
+          return;
+        }
+
+        toast({
+          title: "Sucesso!",
+          description:
+            "Extração de informações realizada com sucesso. As informações foram adicionadas à prova.",
+        });
+
+        const docRef = doc(firestore, "notices", noticeOpen?.id as string);
+
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          const notice = docSnap.data();
+          await setDoc(docRef, {
+            ...notice,
+            infos,
+          });
+        }
+
+        setNoticeInfos(infos);
+
+        setLoading(false);
+      },
+      async () => {
+        setLoading(false);
+      }
+    );
+  };
+
+  const confirmEdit = async () => {
+    if (!notice) return;
+
+    await action(async () => {
+      const docRef = doc(firestore, "notices", notice.id);
+
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        const notice = docSnap.data();
+        await setDoc(docRef, {
+          ...notice,
+          infos: noticeInfos,
+        });
+      }
+
+      setEditingField(null);
+    });
   };
 
   return (
@@ -290,13 +407,23 @@ export default function Tasks({ params }: { params: { slug: string } }) {
                   moment(notice.date).format("YYYY-MM-DD HH:mm")
                 );
 
+                setValue(
+                  "subscription_start",
+                  moment(notice.subscription_start).format("YYYY-MM-DD HH:mm")
+                );
+
+                setValue(
+                  "subscription_deadline",
+                  moment(notice.deadline).format("YYYY-MM-DD HH:mm")
+                );
+
                 setValue("local", notice.local);
               }}
             >
-              Informações da Prova
+              Adicionar informações da Prova
             </Button>
             <Button
-              variant="secondary"
+              variant="outline"
               style={{
                 backgroundColor: "#0D4290",
                 color: "white",
@@ -431,68 +558,248 @@ export default function Tasks({ params }: { params: { slug: string } }) {
             <DialogDescription>Informações sobre a prova</DialogDescription>
           </DialogHeader>
 
-          <Form {...form}>
-            <div className="h-full">
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="w-full h-full flex flex-col justify-between gap-4"
-              >
-                <div className="flex flex-col gap-5">
-                  <FormField
-                    control={form.control}
-                    name="date"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Data da Prova</FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder="Data da Prova"
-                            type="datetime-local"
-                            {...field}
-                            value={field.value ?? ""}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+          {modalView == "form" && !noticeInfos ? (
+            <Form {...form}>
+              <div className="h-full">
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="w-full h-full flex flex-col justify-between gap-4"
+                >
+                  <div className="flex flex-col gap-5">
+                    <div className="grid grid-cols-2 gap-4">
+                      <FormField
+                        control={form.control}
+                        name="subscription_start"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Início das inscrições</FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="Início das inscrições"
+                                type="datetime-local"
+                                {...field}
+                                value={field.value ?? ""}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="subscription_deadline"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Final das inscrições</FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="Final das inscrições"
+                                type="datetime-local"
+                                {...field}
+                                value={field.value ?? ""}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
 
-                  <FormField
-                    control={form.control}
-                    name="local"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Local da Prova</FormLabel>
-                        <FormControl>
-                          <Input
-                            type="text"
-                            placeholder="Local da Prova"
-                            {...field}
-                            value={field.value ?? ""}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
+                    <FormField
+                      control={form.control}
+                      name="date"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Data da Prova</FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="Data da Prova"
+                              type="datetime-local"
+                              {...field}
+                              value={field.value ?? ""}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-                <div className="flex items-center justify-end w-full">
-                  <Button
-                    // disabled={loading}
-                    type="submit"
-                    style={{
-                      backgroundColor: "#0D4290",
-                      color: "white",
-                      borderRadius: "10px",
-                    }}
-                  >
-                    Atualizar
-                  </Button>
+                    <FormField
+                      control={form.control}
+                      name="local"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Local da Prova</FormLabel>
+                          <FormControl>
+                            <Input
+                              type="text"
+                              placeholder="Local da Prova"
+                              {...field}
+                              value={field.value ?? ""}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+
+                  <span>
+                    Você pode inserir manualmente as informações e datas da
+                    prova, ou então, clicar no botão abaixo para importar as
+                    informações da prova.
+                  </span>
+
+                  <div className="flex items-center justify-between w-full">
+                    <Button
+                      // disabled={loading}
+                      type="button"
+                      style={{
+                        borderColor: "#0D4290",
+                        borderWidth: "1px",
+                        color: "#0D4290",
+                        borderRadius: "10px",
+                        backgroundColor: "white",
+                      }}
+                      onClick={() => {
+                        setModalView("import");
+                      }}
+                    >
+                      Importar
+                    </Button>
+                    <Button
+                      // disabled={loading}
+                      type="submit"
+                      style={{
+                        backgroundColor: "#0D4290",
+                        color: "white",
+                        borderRadius: "10px",
+                      }}
+                    >
+                      Atualizar
+                    </Button>
+                  </div>
+                </form>
+              </div>
+            </Form>
+          ) : (
+            <>
+              {!noticeInfos ? (
+                <Form {...form}>
+                  <div className="h-full">
+                    <form
+                      onSubmit={form.handleSubmit(onContentSubmit)}
+                      className="w-full h-full flex flex-col justify-between gap-4"
+                    >
+                      <span>
+                        Copie do edital ou do site do concurso informações sobre
+                        a prova, como prazos, locais e taxas, e deixe que a
+                        gente faça o resto.
+                      </span>
+                      <FormField
+                        control={form.control}
+                        name="text"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Texto:</FormLabel>
+                            <FormControl>
+                              <Textarea
+                                placeholder={"Insira aqui"}
+                                className="resize-none min-h-[200px]"
+                                value={manualNoticeContent}
+                                onChange={(e: any) =>
+                                  setManualNoticeContent(e.target.value)
+                                }
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <div className="flex items-center justify-between w-full">
+                        <Button
+                          // disabled={loading}
+                          type="button"
+                          style={{
+                            borderColor: "#0D4290",
+                            borderWidth: "1px",
+                            color: "#0D4290",
+                            borderRadius: "10px",
+                            backgroundColor: "white",
+                          }}
+                          onClick={() => {
+                            setModalView("form");
+                          }}
+                        >
+                          Voltar
+                        </Button>
+                        <Button
+                          // disabled={loading}
+                          type="submit"
+                          style={{
+                            backgroundColor: "#0D4290",
+                            color: "white",
+                            borderRadius: "10px",
+                          }}
+                        >
+                          Confirmar
+                        </Button>
+                      </div>
+                    </form>
+                  </div>
+                </Form>
+              ) : (
+                <div className="flex flex-col gap-4 w-full">
+                  <span>Confira as informações que coletamos abaixo:</span>
+                  <div className="flex flex-col gap-3">
+                    {Object.keys(noticeInfos).map((key: string) => (
+                      <div key={key} className="flex flex-col gap-1">
+                        <span className="font-bold">
+                          {noticeInfos[key]?.label}
+                        </span>
+                        {editingField !== key ? (
+                          <div className="flex items-center gap-2">
+                            <span>{noticeInfos[key]?.value}</span>
+                            <SquarePen
+                              size={14}
+                              color="black"
+                              className="cursor-pointer"
+                              onClick={() => setEditingField(key)}
+                            />
+                          </div>
+                        ) : (
+                          <div className="flex items-center gap-5">
+                            <Input
+                              name={key}
+                              value={noticeInfos[key]?.value}
+                              onChange={(e: any) =>
+                                setNoticeInfos({
+                                  ...noticeInfos,
+                                  [key]: {
+                                    ...noticeInfos[key],
+                                    value: e.target.value,
+                                  },
+                                })
+                              }
+                            />
+                            <CheckSquare
+                              size={20}
+                              color="black"
+                              className="cursor-pointer"
+                              onClick={() => {
+                                confirmEdit();
+                              }}
+                            />
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </form>
-            </div>
-          </Form>
+              )}
+            </>
+          )}
         </DialogContent>
       </Dialog>
     </div>
