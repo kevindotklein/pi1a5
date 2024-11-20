@@ -19,7 +19,7 @@ export const useFunctions = () => {
     user_uid,
     file_name,
     notice_name,
-    file_hash
+    file_hash,
   }: {
     url: string;
     notice_content: string;
@@ -31,7 +31,14 @@ export const useFunctions = () => {
     try {
       const response = await axios.post(
         `${url}/getContentFromPdf`,
-        { url: noticeUrl, notice_content, user_uid, file_name, notice_name, file_hash },
+        {
+          url: noticeUrl,
+          notice_content,
+          user_uid,
+          file_name,
+          notice_name,
+          file_hash,
+        },
         {
           headers: {
             "Content-Type": "application/json",
@@ -122,8 +129,42 @@ export const useFunctions = () => {
     }
   };
 
+  const extractInfos = async ({ text }: { text: any }) => {
+    try {
+      const response = await axios.post(
+        `${url}/extractInfos`,
+        { text },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.data.error) throw response.data.error;
+
+      if (!response.data || !response.data?.infos)
+        throw "Erro ao extrair informações";
+
+      return {
+        infos: response.data?.infos,
+      };
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "Erro ao extrair informações",
+        description: error?.message || error,
+      });
+
+      return {
+        error: error?.message || error,
+      };
+    }
+  };
+
   return {
     processNotice,
     generateTasks,
+    extractInfos,
   };
 };
