@@ -105,48 +105,53 @@ export default function Home() {
           <div className="flex gap-5 flex-wrap w-full">
             <BigNumber
               label="Tarefas concluídas"
-              value={dashboard?.finishedTasks.length}
+              value={dashboard?.finishedTasks.length || 0}
             />
             <BigNumber
               label="Tarefas pendentes"
-              value={dashboard?.pendingTasks.length}
+              value={dashboard?.pendingTasks.length || 0}
             />
-            <BigNumber label="Horas estudadas" value={dashboard?.totalHours} />
+            <BigNumber
+              label="Horas estudadas"
+              value={dashboard?.totalHours || 0}
+            />
             <BigNumber
               label="Matéria mais estudada"
               value={dashboard?.mostStudiedSubject}
             />
           </div>
 
-          <div className="flex flex-col gap-3 w-full mt-5">
-            <span className="text-md text-gray-700 font-bold">
-              Suas tarefas para hoje:
-            </span>
+          {dashboard?.todayPendingTasks.length && (
+            <div className="flex flex-col gap-3 w-full mt-5">
+              <span className="text-md text-gray-700 font-bold">
+                Suas tarefas para hoje:
+              </span>
 
-            <div className="flex gap-5 flex-wrap w-full">
-              {dashboard?.todayPendingTasks.map((task: any) => (
-                <div
-                  className="flex tablet:max-w-full tablet:w-full max-w-[300px] flex-col gap-4 p-3 border border-neutral-500 rounded-sm transition-all hover:bg-neutral-200"
-                  key={task.id}
-                >
-                  <div className="flex flex-col gap-1 break-words select-none">
-                    <h3 className="text-lg font-bold text-black leading-5 select-none">
-                      {task.title}
-                    </h3>
-                    <h4 className="text-sm font-bold text-neutral-500 select-none">
-                      {task.subject}
-                    </h4>
+              <div className="flex gap-5 flex-wrap w-full">
+                {dashboard?.todayPendingTasks.map((task: any) => (
+                  <div
+                    className="flex tablet:max-w-full tablet:w-full max-w-[300px] flex-col gap-4 p-3 border border-neutral-500 rounded-sm transition-all hover:bg-neutral-200"
+                    key={task.id}
+                  >
+                    <div className="flex flex-col gap-1 break-words select-none">
+                      <h3 className="text-lg font-bold text-black leading-5 select-none">
+                        {task.title}
+                      </h3>
+                      <h4 className="text-sm font-bold text-neutral-500 select-none">
+                        {task.subject}
+                      </h4>
+                    </div>
+
+                    <p className="text-sm text-neutral-500 select-none">
+                      {task.description.length > 100
+                        ? task.description.substring(0, 100) + "..."
+                        : task.description}
+                    </p>
                   </div>
-
-                  <p className="text-sm text-neutral-500 select-none">
-                    {task.description.length > 100
-                      ? task.description.substring(0, 100) + "..."
-                      : task.description}
-                  </p>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       )}
 
