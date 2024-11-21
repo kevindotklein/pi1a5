@@ -49,10 +49,9 @@ export default function Home() {
 
     const finishedTasks = tasks.filter((task) => task?.is_finished);
     const pendingTasks = tasks.filter((task) => !task?.is_finished);
-    const totalHours = finishedTasks?.length ? finishedTasks.reduce(
-      (total, task) => total + task?.hours,
-      0
-    ) : 0;
+    const totalHours = finishedTasks?.length
+      ? finishedTasks.reduce((total, task) => total + task?.hours, 0)
+      : 0;
 
     const today_weekday = new Date().getDay() - 1;
 
@@ -72,9 +71,11 @@ export default function Home() {
       subjects[subject] += task.hours;
     }
 
-    const mostStudiedSubject = Object.keys(subjects).reduce((a, b) => {
-      return subjects[a] > subjects[b] ? a : b;
-    });
+    const mostStudiedSubject = Object.keys(subjects).length
+      ? Object.keys(subjects).reduce((a, b) => {
+          return subjects[a] > subjects[b] ? a : b;
+        })
+      : null;
 
     setDashboard({
       finishedTasks,
