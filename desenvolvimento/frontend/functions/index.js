@@ -410,5 +410,69 @@ export const onNotificationCreate = functions.firestore
   .onCreate(async (snapshot) => {
     configDotenv();
 
-    await sendEmail(snapshot);
+    const notification = {
+      id: snapshot.id,
+      ...snapshot.data(),
+    };
+
+    const app_link = "https://studyflow-three.vercel.app";
+
+    const subject = "Seu edital foi processado com sucesso!";
+    const to = notification.user_email;
+    const text = "Seu edital foi processado com sucesso!";
+    const html =
+      "<h2>Olá, " +
+      notification.owner_name +
+      "!</h2><br />" +
+      "<p>Estamos felizes em informar que o seu edital foi processado com sucesso!</p>" +
+      '<p>Você pode acessar mais detalhes sobre o edital clicando <a href="' +
+      app_link +
+      '">aqui</a>.</p>' +
+      "<p>Obrigado por utilizar nosso serviço!</p>";
+
+    const email = {
+      from,
+      to,
+      subject,
+      text,
+      html,
+    };
+
+    await sendEmail(email);
+  });
+
+export const onUserCreate = functions.firestore
+  .document("users/{userId}")
+  .onCreate(async (snapshot) => {
+    configDotenv();
+
+    const user = {
+      id: snapshot.id,
+      ...snapshot.data(),
+    };
+
+    const app_link = "https://studyflow-three.vercel.app";
+
+    const subject = "Bem vindo ao StudyFlow!";
+    const to = user.email;
+    const text = "Bem vindo ao StudyFlow!";
+    const html =
+      "<h2>Olá, " +
+      user.full_name +
+      "!</h2><br />" +
+      "<p>Estamos felizes em ter você aqui!</p>" +
+      '<p>Você pode acessar a plataforma clicando <a href="' +
+      app_link +
+      '">aqui</a>.</p>' +
+      "<p>Obrigado por utilizar nosso serviço!</p>";
+
+    const email = {
+      from,
+      to,
+      subject,
+      text,
+      html,
+    };
+
+    await sendEmail(email);
   });
