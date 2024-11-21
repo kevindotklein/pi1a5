@@ -7,7 +7,7 @@ export default function BigNumber({
   label: string;
   value: any;
 }) {
-  if (!value) return null;
+  if (!value && value !== 0) return null;
 
   return (
     <div className="w-fit h-fit rounded-md bg-neutral-200 p-4 flex flex-col gap-2 justify-center items-center shadow-sm">
