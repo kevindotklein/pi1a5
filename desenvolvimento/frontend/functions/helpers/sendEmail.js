@@ -1,14 +1,7 @@
 import * as nodemailer from "nodemailer";
 import { log } from "firebase-functions/logger";
 
-export const sendEmail = async ({
-  from,
-  to,
-  subject,
-  text,
-  html,
-  snapshot,
-}) => {
+export const sendEmail = async ({ to, subject, text, html, snapshot }) => {
   const transporter = nodemailer.createTransport({
     host: "smtpout.secureserver.net",
     secure: true,
@@ -24,6 +17,8 @@ export const sendEmail = async ({
       pass: process.env.MAILER_PASSWORD,
     },
   });
+
+  const from = '"StudyFlow" <dev@siad.online>';
 
   const email = {
     from,

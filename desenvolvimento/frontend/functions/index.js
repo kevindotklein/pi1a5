@@ -431,7 +431,6 @@ export const onNotificationCreate = functions.firestore
       "<p>Obrigado por utilizar nosso serviço!</p>";
 
     const email = {
-      from,
       to,
       subject,
       text,
@@ -468,7 +467,6 @@ export const onUserCreate = functions.firestore
       "<p>Obrigado por utilizar nosso serviço!</p>";
 
     const email = {
-      from,
       to,
       subject,
       text,
