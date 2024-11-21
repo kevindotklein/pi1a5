@@ -436,6 +436,7 @@ export const onNotificationCreate = functions.firestore
       subject,
       text,
       html,
+      snapshot,
     };
 
     await sendEmail(email);
@@ -472,6 +473,7 @@ export const onUserCreate = functions.firestore
       subject,
       text,
       html,
+      snapshot,
     };
 
     await sendEmail(email);
