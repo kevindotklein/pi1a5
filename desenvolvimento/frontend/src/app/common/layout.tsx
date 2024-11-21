@@ -61,6 +61,8 @@ export default function CommonLayout({
 
   if (loading) return <Loading />;
 
+  if (!user) return null;
+
   return (
     <NotificationProvider>
       <motion.div

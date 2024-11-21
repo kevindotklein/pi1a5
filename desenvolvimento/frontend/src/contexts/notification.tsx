@@ -59,7 +59,7 @@ const NotificationProvider: React.FC<NotificationProviderProps> = ({
   const notificationRef = collection(firestore, "notifications");
   const notificationQuery = query(
     notificationRef,
-    where("user_uid", "==", user.uid as string)
+    where("user_uid", "==", user?.uid as string)
   );
 
   const [notificationsSnap] = useCollection(notificationQuery, {});

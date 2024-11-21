@@ -49,10 +49,10 @@ export default function Home() {
 
     const finishedTasks = tasks.filter((task) => task?.is_finished);
     const pendingTasks = tasks.filter((task) => !task?.is_finished);
-    const totalHours = finishedTasks.reduce(
+    const totalHours = finishedTasks?.length ? finishedTasks.reduce(
       (total, task) => total + task?.hours,
       0
-    );
+    ) : 0;
 
     const today_weekday = new Date().getDay() - 1;
 
