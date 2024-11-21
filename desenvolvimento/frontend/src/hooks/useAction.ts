@@ -10,8 +10,6 @@ export const useAction = () => {
     } catch (err: any) {
       console.error(err);
 
-      console.log(onError);
-
       if (onError) onError();
 
       const { title, message } = displayErrorHandler(err);

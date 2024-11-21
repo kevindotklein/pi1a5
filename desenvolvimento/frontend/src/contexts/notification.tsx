@@ -56,8 +56,6 @@ const NotificationProvider: React.FC<NotificationProviderProps> = ({
   const { userData } = useAuth();
   const [user, loading] = useAuthState(auth) as any;
 
-  console.log(user.uid);
-
   const notificationRef = collection(firestore, "notifications");
   const notificationQuery = query(
     notificationRef,
@@ -92,7 +90,6 @@ const NotificationProvider: React.FC<NotificationProviderProps> = ({
     if (notificationData) getNotifications(notificationData as any);
   }, [notificationsSnap]);
 
-  console.log(notifications);
   const getNotifications = async (notifications: any): Promise<void> => {
     setNotifications(notifications);
 
