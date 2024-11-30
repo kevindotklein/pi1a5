@@ -38,42 +38,60 @@ export const getContentFromPdf = https.onRequest(async (request, response) => {
   corsHandler(request, response, async () => {
     var firestore = admin.firestore();
 
-    try {
-      log("Running content interpreter model", {
-        structuredData: true,
+    log("Running content interpreter model", {
+      structuredData: true,
+    });
+
+    log(`req body: ${JSON.stringify(request.body)}`);
+
+    const {
+      url: notice_url,
+      notice_content,
+      user_uid,
+      file_name,
+      notice_name,
+      file_hash,
+      previous_notice_id,
+    } = request.body;
+
+    log(`Notice url: ${notice_url}`, {
+      structuredData: true,
+    });
+
+    log(`Notice content: ${notice_content}`, {
+      structuredData: true,
+    });
+
+    if (!notice_url) {
+      response.json({
+        error: "Nenhuma URL fornecida.",
       });
+      return;
+    }
 
-      log(`req body: ${JSON.stringify(request.body)}`);
+    let notice_id = previous_notice_id;
 
-      const {
+    if (!previous_notice_id) {
+      const noticeRef = await firestore.collection("notices").add({
+        name: notice_name,
+        file_name: file_name,
         url: notice_url,
-        notice_content,
-        user_uid,
-        file_name,
-        notice_name,
-        file_hash,
-      } = request.body;
-
-      log(`Notice url: ${notice_url}`, {
-        structuredData: true,
+        user_uid: user_uid,
+        processed: false,
+        created_at: new Date().toISOString(),
+        file_hash: file_hash,
       });
 
-      log(`Notice content: ${notice_content}`, {
-        structuredData: true,
-      });
+      notice_id = noticeRef.id;
+    }
 
-      if (!notice_url) {
-        response.json({
-          error: "Nenhuma URL fornecida.",
-        });
-        return;
-      }
-
+    try {
       let alreadyExists = false;
 
       const pastNotices = await firestore
         .collection("notices")
         .where("file_hash", "==", file_hash)
+        .where("processed", "==", true)
         .get();
 
       if (!pastNotices.empty) {
@@ -83,24 +101,14 @@ export const getContentFromPdf = https.onRequest(async (request, response) => {
           ...doc.data(),
         }));
 
+        log(existingNotices[0]);
+
         log(
           `Found ${existingNotices.length} notices with the same file_hash (e.g: ${existingNotices[0].file_name})`,
           {
             structuredData: true,
           }
         );
-
-        const noticeRef = await firestore.collection("notices").add({
-          name: notice_name,
-          file_name: file_name,
-          url: notice_url,
-          user_uid: user_uid,
-          processed: true,
-          created_at: new Date().toISOString(),
-          file_hash: file_hash,
-        });
-
-        const notice_id = noticeRef.id;
 
         const subjectsSnap = await firestore
           .collection("subjects")
@@ -112,6 +120,8 @@ export const getContentFromPdf = https.onRequest(async (request, response) => {
           ...doc.data(),
         }));
 
+        log(subjects);
+
         for (const subject of subjects) {
           await firestore.collection("subjects").add({
             name: subject.name,
@@ -119,6 +129,12 @@ export const getContentFromPdf = https.onRequest(async (request, response) => {
             notice_id,
           });
         }
+
+        await firestore.collection("notices").doc(notice_id).update({
+          processed: true,
+          processed_at: new Date().toISOString(),
+          error: null,
+        });
 
         if (user_uid) {
           const userDocRef = firestore.doc(`users/${user_uid}`);
@@ -130,10 +146,10 @@ export const getContentFromPdf = https.onRequest(async (request, response) => {
             { merge: true }
           );
 
-          const user_email = userDocRef.get().then((doc) => doc.data().email);
-          const owner_name = userDocRef
-            .get()
-            .then((doc) => doc.data().full_name);
+          const userDoc = await userDocRef.get();
+
+          const user_email = userDoc.data().email;
+          const owner_name = userDoc.data().full_name;
 
           await firestore.collection("notifications").add({
             title: "Novo Edital",
@@ -174,9 +190,15 @@ export const getContentFromPdf = https.onRequest(async (request, response) => {
             log(
               "The knowledge is too long, please try again with a shorter notice"
             );
+            const error =
+              "Parece que o conteúdo do edital é muito longo, por favor, tente novamente com um edital mais curto, ou insira o conteúdo manualmente.";
+
             response.json({
-              error:
-                "Parece que o conteúdo do edital é muito longo, por favor, tente novamente com um edital mais curto, ou insira o conteúdo manualmente.",
+              error,
+            });
+
+            await firestore.collection("notices").doc(notice_id).update({
+              error,
             });
 
             return;
@@ -193,18 +215,20 @@ export const getContentFromPdf = https.onRequest(async (request, response) => {
 
           const jsonObject = filterJSON(processedContent);
 
-          // Add the notice to Firestore
-          const noticeRef = await firestore.collection("notices").add({
-            name: notice_name,
-            file_name: file_name,
-            url: notice_url,
-            user_uid: user_uid,
-            processed: true,
-            created_at: new Date().toISOString(),
-            file_hash: file_hash,
-          });
+          if (!jsonObject?.subjects.length) {
+            const error =
+              "Não foi encontrado nenhum conteúdo programático no texto enviado.";
 
-          const notice_id = noticeRef.id;
+            response.json({
+              error,
+            });
+
+            await firestore.collection("notices").doc(notice_id).update({
+              error,
+            });
+
+            return;
+          }
 
           // Store related subjects in Firestore
           for (const subject of jsonObject?.subjects || []) {
@@ -213,6 +237,12 @@ export const getContentFromPdf = https.onRequest(async (request, response) => {
               notice_id,
             });
           }
+
+          await firestore.collection("notices").doc(notice_id).update({
+            processed: true,
+            processed_at: new Date().toISOString(),
+            error: null,
+          });
 
           if (user_uid) {
             const userDocRef = firestore.doc(`users/${user_uid}`);
@@ -235,8 +265,14 @@ export const getContentFromPdf = https.onRequest(async (request, response) => {
 
           response.json(jsonObject);
         } else {
+          const error = "Não foi encontrado nenhum conteúdo programático.";
+
           response.json({
-            error: "Não foi encontrado nenhum conteúdo programático.",
+            error,
+          });
+
+          await firestore.collection("notices").doc(notice_id).update({
+            error,
           });
         }
         alreadyExists = false;
@@ -244,9 +280,14 @@ export const getContentFromPdf = https.onRequest(async (request, response) => {
     } catch (error) {
       const text = `Houve um erro ao processar o conteúdo: ${error}`;
 
+      await firestore.collection("notices").doc(notice_id).update({
+        error: text,
+      });
+
       log(text);
       response.status(400).json({
         error: text,
+        notice_id,
       });
     }
   });
