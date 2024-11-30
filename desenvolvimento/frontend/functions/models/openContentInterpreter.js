@@ -17,6 +17,10 @@ const runContentInterpreterModel = async (knowledge) => {
     const prompt = `
       Quais são as matérias e os conteudos desse texto? Responda em JSON (materias como subjects, e conteudo das materias como contents) Exemplo: { "subjects": [{"name": "Português", "contents": ["Gramática", "Interpretação de texto"]}, {"name": "Matemática", "contents": ["Álgebra", "Geometria"]}] }
 
+      Não crie nenhuma matéria ou conteúdo que não esteja no texto.
+      Caso o texto abaixo não tenha matérias e conteúdos, responda com um JSON de com uma array subjects vazia.
+
+      Texto:
       ${knowledge}
     `;
 

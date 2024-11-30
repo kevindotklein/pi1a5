@@ -25,15 +25,17 @@ const runTaskGenerationModel = async ({ hours, notice_content, subjects }) => {
             "subject" : "Português",
             "content" : "Gramática",
             "title" : "Gramática",
-            "description" : "Estude a gramática do português",
+            "description" : "Estude a gramática do português...",
             "hours" : 2,
           },
           ...
         ]
       }
 
+      O campo description deve conter um guia simples do que o usuário deve estudar.
       As horas das tarefas devem ser em número inteiros, e somadas em um total de ${hours} horas.
       Gere tarefas para as seguintes matérias e conteúdos, baseado na estrutura do JSON fornecido:
+      
       ${subjectsToSend}
     `;
 
