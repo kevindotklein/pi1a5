@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, GraduationCap } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -15,39 +15,45 @@ export default function Home() {
   const { t, i18n } = useTranslation();
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-4 transition-all">
-      <h1 className="text-black font-bold">studyflow</h1>
-      <h3 className="text-blue-800">{t("home.slogan")}</h3>
+    <main className="flex min-h-screen flex-col items-center justify-center gap-4 transition-all bg-blue-100">
+      <div className="flex flex-col items-center justify-center gap-4 rounded-md bg-blue-800 border-white border-2 p-10 tablet:w-[400px]">
+        <div className="flex gap-3 items-center">
+          <GraduationCap size={40} color="white" />
 
-      <div className="flex flex-col gap-1 items-center justify-center mx-5">
-        <h3 className="text-black">{t("home.starting-message")}</h3>
+          <h1 className="text-white font-bold text-4xl">studyflow</h1>
+        </div>
+        <h3 className="text-white font-semibold">{t("home.slogan")}</h3>
+
+        <div className="flex flex-col gap-1 items-center justify-center mx-5">
+          <h3 className="text-white">{t("home.starting-message")}</h3>
+        </div>
+
+        <Link href="/auth/login">
+          <Button
+            variant="outline"
+            style={{
+              backgroundColor: "#0D4290",
+              color: "white",
+              borderRadius: "10px",
+            }}
+          >
+            {t("home.login-button")}
+          </Button>
+        </Link>
+
+        <h3 className="text-white text-sm mt-5">
+          {t("home.footer-message-1")}{" "}
+          <a
+            href="https://github.com/PedroDias-Dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline text-blue-700"
+          >
+            <strong>noz</strong>
+          </a>{" "}
+          {t("home.footer-message-2")}
+        </h3>
       </div>
-
-      <Link href="/auth/login">
-        <Button
-          variant="outline"
-          style={{
-            backgroundColor: "#0D4290",
-            color: "white",
-            borderRadius: "10px",
-          }}
-        >
-          {t("home.login-button")}
-        </Button>
-      </Link>
-
-      <h3 className="text-black text-sm mt-5">
-        {t("home.footer-message-1")}{" "}
-        <a
-          href="https://github.com/PedroDias-Dev"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="underline text-blue-700"
-        >
-          <strong>noz</strong>
-        </a>{" "}
-        {t("home.footer-message-2")}
-      </h3>
     </main>
   );
 }
