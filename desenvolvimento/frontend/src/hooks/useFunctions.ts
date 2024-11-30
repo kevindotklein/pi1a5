@@ -14,6 +14,7 @@ export const useFunctions = () => {
       : "http://127.0.0.1:5001/noz-ifsp/us-central1";
 
   const processNotice = async ({
+    previous_notice_id,
     url: noticeUrl,
     notice_content,
     user_uid,
@@ -21,6 +22,7 @@ export const useFunctions = () => {
     notice_name,
     file_hash,
   }: {
+    previous_notice_id?: any;
     url: string;
     notice_content: string;
     user_uid: string;
@@ -32,6 +34,7 @@ export const useFunctions = () => {
       const response = await axios.post(
         `${url}/getContentFromPdf`,
         {
+          previous_notice_id,
           url: noticeUrl,
           notice_content,
           user_uid,
