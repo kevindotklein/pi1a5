@@ -208,7 +208,7 @@ export default function NoticeUpload({
         ? t("notice-upload.load-file-error")
         : t("notice-upload.loading-message-2")
     );
-    
+
     const getHashFile = async (file: File) => {
       const arrayBuffer = await file.arrayBuffer();
       const hashBuffer = await crypto.subtle.digest("SHA-256", arrayBuffer);
@@ -219,7 +219,7 @@ export default function NoticeUpload({
       return [...new Uint8Array(buffer)]
         .map((b) => b.toString(16).padStart(2, "0"))
         .join("");
-    }
+    };
 
     let hash = null;
     try {
@@ -238,7 +238,7 @@ export default function NoticeUpload({
       user_uid: user?.uid || "",
       file_name: fileToUpload?.name,
       notice_name: name || "",
-      file_hash: hash
+      file_hash: hash,
     });
 
     refresh();
