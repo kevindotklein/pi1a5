@@ -26,16 +26,16 @@ const Notification = ({ notification }: { notification: any }) => {
         }}
       >
         {/* Notification Dot */}
-        <div className="absolute top-[0.5rem] left-[-0.1rem] bg-blue-500 rounded-full h-2 w-2"></div>
+        <div className="absolute top-[0.5rem] left-[-0.1rem] bg-blue-600 rounded-full h-2 w-2"></div>
 
         {/* Infos Container */}
         <div className="flex flex-col gap-1 w-full pt-1 cursor-pointer">
           {/* Title */}
           <div className="flex justify-between items-start w-full">
-            <h3 className="text-lg text-blue-300">{notification.title}</h3>
+            <h3 className="text-lg text-blue-600">{notification.title}</h3>
             <div
               className={`text-xs px-2 py-1 rounded-full ${
-                hasRead ? "bg-gray-200 text-gray-700" : "bg-blue-200 text-white"
+                hasRead ? "bg-gray-200 text-gray-700" : "bg-blue-600 text-white"
               }`}
             >
               <span>{hasRead ? notification.time_since_creation : "NOVA"}</span>
