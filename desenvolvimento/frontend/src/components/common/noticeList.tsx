@@ -57,7 +57,7 @@ export default function NoticeList() {
             {notices.map((notice: any) => (
               <div
                 key={notice.id}
-                className={`flex flex-col gap-3 p-4 border border-neutral-800 rounded-lg w-[50%] cursor-pointer hover:bg-neutral-200 transition-all tablet:max-w-full tablet:w-full ${
+                className={`flex flex-col gap-3 p-4 border bg-white border-neutral-800 rounded-lg w-[50%] cursor-pointer hover:bg-neutral-200 transition-all tablet:max-w-full tablet:w-full ${
                   !notice.processed && notice.error === null
                     ? `opacity-50 cursor-not-allowed pointer-events-none animate-pulse`
                     : ``

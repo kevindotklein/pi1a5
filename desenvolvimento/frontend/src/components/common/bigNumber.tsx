@@ -10,7 +10,7 @@ export default function BigNumber({
   if (!value && value !== 0) return null;
 
   return (
-    <div className="w-fit h-fit rounded-md bg-neutral-200 p-4 flex flex-col gap-2 justify-center items-center shadow-sm">
+    <div className="w-fit h-fit rounded-md bg-white p-4 flex flex-col gap-2 justify-center items-center shadow-sm">
       <span className="text-sm text-neutral-500">{label}</span>
       <h1 className="text-2xl font-bold text-neutral-800">{value}</h1>
     </div>
