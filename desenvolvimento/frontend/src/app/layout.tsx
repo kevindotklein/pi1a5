@@ -26,7 +26,7 @@ export default async function RootLayout({
         <title key="title">{metadata.title as any}</title>
         <meta name="description" content={metadata.description as any} />
       </head>
-      <body className={`${mulish.className} bg-neutral-100`}>
+      <body className={`${mulish.className} bg-blue-100`}>
         <LoadingProvider>
           <AuthProvider>
             <Transition>
