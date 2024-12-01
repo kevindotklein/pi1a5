@@ -1,4 +1,4 @@
-import { Check } from "lucide-react";
+import { Check, PencilIcon, Plus } from "lucide-react";
 import TaskCheckbox from "./taskCheckbox";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -13,6 +13,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "../ui/button";
+import { useAction } from "@/hooks/useAction";
+import { firestore } from "@/firebase/config";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { useToast } from "../ui/use-toast";
 
 interface Props {
   id: any;
@@ -24,6 +28,7 @@ interface Props {
   hightlighted: number | null;
   setHightlighted: (index: number | null) => void;
   setActiveCard: (index: number | null) => void;
+  commentary: any;
   index: number;
   prio: number;
 }
@@ -38,11 +43,39 @@ export default function Task({
   hightlighted,
   setHightlighted,
   setActiveCard,
+  commentary,
   index,
   prio,
 }: Props) {
   const ref = useRef() as any;
   const { t, i18n } = useTranslation();
+  const action = useAction();
+  const { toast } = useToast();
+
+  const [commentaryOpen, setCommentaryOpen] = useState(commentary);
+  const [newCommentary, setCommentary] = useState(commentary || "");
+
+  const saveCommentary = async () => {
+    if (!newCommentary) return;
+
+    await action(async () => {
+      const docRef = doc(firestore, "tasks", id);
+
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        const notice = docSnap.data();
+        await setDoc(docRef, {
+          ...notice,
+          commentary: newCommentary,
+        });
+
+        toast({
+          title: "Sucesso!",
+          description: "Comentário salvo com sucesso.",
+        });
+      }
+    });
+  };
 
   return (
     <>
@@ -97,13 +130,74 @@ export default function Task({
             <div className="flex flex-col gap-5 w-full py-5">
               <p className="text-md text-neutral-700">{description}</p>
 
-              <div className="flex gap-2 items-center">
-                <TaskCheckbox id={id} is_finished={is_finished} />
-                <p className="text-sm text-neutral-600">
-                  {t("common-task.done")}
-                </p>
+              <div className="flex w-full justify-between gap-2 items-center">
+                <div className="flex gap-2 items-center">
+                  <TaskCheckbox id={id} is_finished={is_finished} />
+                  <p className="text-sm text-neutral-600">
+                    {t("common-task.done")}
+                  </p>
+                </div>
+
+                {!commentaryOpen && (
+                  <div
+                    className="flex gap-2 items-center"
+                    onClick={() => setCommentaryOpen(true)}
+                  >
+                    <span className="text-sm text-neutral-700 cursor-pointer">
+                      Escrever observação
+                    </span>
+                    <PencilIcon size={15} color="#1a1a1a" />
+                  </div>
+                )}
               </div>
             </div>
+
+            {commentaryOpen ? (
+              <div className="flex flex-col gap-2 w-full py-5">
+                <span className="text-sm text-neutral-700">
+                  Suas observações:
+                </span>
+                <textarea
+                  className="w-full border border-neutral-500 rounded-md p-3 text-sm text-neutral-700"
+                  placeholder="Adicione um comentário"
+                  value={newCommentary}
+                  onChange={(e) => setCommentary(e.target.value)}
+                  spellCheck="false"
+                />
+
+                {commentary !== newCommentary && (
+                  <div className="flex justify-between">
+                    <Button
+                      onClick={() => {
+                        if (!newCommentary) return setCommentaryOpen(false);
+
+                        setCommentary(commentary);
+                      }}
+                      style={{
+                        backgroundColor: "white",
+                        color: "#0D4290",
+                        borderRadius: "10px",
+                        width: "fit-content",
+                      }}
+                    >
+                      Cancelar
+                    </Button>
+                    <Button
+                      onClick={saveCommentary}
+                      disabled={!commentary}
+                      style={{
+                        backgroundColor: "#0D4290",
+                        color: "white",
+                        borderRadius: "10px",
+                        width: "fit-content",
+                      }}
+                    >
+                      Salvar
+                    </Button>
+                  </div>
+                )}
+              </div>
+            ) : null}
 
             <DialogClose asChild>
               <Button variant="secondary">
