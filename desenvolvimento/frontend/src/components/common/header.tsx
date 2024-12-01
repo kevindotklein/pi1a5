@@ -156,23 +156,21 @@ export default function Header() {
             </div>
 
             {/* Paid Plan */}
-            <div className="bg-white rounded-lg shadow-md p-6 w-full md:w-1/3">
-              <h2 className="text-2xl font-bold text-gray-800 mb-4">
-                Plano Pago
-              </h2>
-              <p className="text-gray-600 mb-4">
-                Acesso ilimitado a todas as funcionalidades e recursos avançados
-                da plataforma:
+            <div className="bg-blue-600 rounded-lg shadow-md p-6 w-full md:w-1/3">
+              <h2 className="text-2xl font-bold text-white mb-4">Plano Pago</h2>
+              <p className="text-white mb-4">
+                Acesso <strong>ilimitado</strong> a todas as funcionalidades e
+                recursos avançados da plataforma:
               </p>
-              <ul className="list-disc pl-5 mb-4 text-gray-600">
+              <ul className="list-disc pl-5 mb-4 text-white font-bold">
                 <li>Upload de múltiplos editais</li>
                 <li>Geração ilimitada de tarefas</li>
               </ul>
-              <p className="text-gray-600 mb-4">
+              <p className="text-white mb-4">
                 <strong>Preços:</strong>
                 <br />
-                <strong>R$24,99</strong> / mês ou <strong>R$249,90</strong> /
-                ano
+                <strong className="text-2xl">R$ 24,99</strong> / mês ou{" "}
+                <strong className="text-2xl">R$ 249,90</strong> / ano
                 <br />
                 <span>Economize com o plano anual!</span>
               </p>
