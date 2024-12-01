@@ -53,7 +53,8 @@ export default function Home() {
       ? finishedTasks.reduce((total, task) => total + task?.hours, 0)
       : 0;
 
-    const today_weekday = new Date().getDay() - 1;
+    let today_weekday = new Date().getDay() - 1;
+    if (today_weekday === -1) today_weekday = 6;
 
     const todayPendingTasks = pendingTasks.filter(
       (task) => task.day === today_weekday
@@ -121,7 +122,7 @@ export default function Home() {
             />
           </div>
 
-          {dashboard?.todayPendingTasks.length && (
+          {dashboard?.todayPendingTasks.length ? (
             <div className="flex flex-col gap-3 w-full mt-5">
               <span className="text-md text-gray-700 font-bold">
                 Suas tarefas para hoje:
@@ -130,7 +131,7 @@ export default function Home() {
               <div className="flex gap-5 flex-wrap w-full">
                 {dashboard?.todayPendingTasks.map((task: any) => (
                   <div
-                    className="flex tablet:max-w-full tablet:w-full max-w-[300px] flex-col gap-4 p-3 border border-neutral-500 rounded-sm transition-all hover:bg-neutral-200"
+                    className="flex tablet:max-w-full tablet:w-full bg-white max-w-[300px] flex-col gap-4 p-3 border border-neutral-500 rounded-sm transition-all hover:bg-neutral-200"
                     key={task.id}
                   >
                     <div className="flex flex-col gap-1 break-words select-none">
@@ -151,7 +152,7 @@ export default function Home() {
                 ))}
               </div>
             </div>
-          )}
+          ) : null}
         </div>
       )}
 
