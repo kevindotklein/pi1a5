@@ -102,7 +102,7 @@ export default function Home() {
         <h3 className="text-white text-sm mt-5">
           {t("home.footer-message-1")}{" "}
           <a
-            href="https://github.com/PedroDias-Dev"
+            href="https://github.com/kevindotklein/pi1a5"
             target="_blank"
             rel="noopener noreferrer"
             className="underline text-blue-100"
