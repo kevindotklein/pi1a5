@@ -35,6 +35,9 @@ const runInfoExtractorModel = async ({ text }) => {
         }
       }
 
+      Não extrair informações que não estiverem no contexto de uma prova de um concurso.
+      Caso não houver informações importantes, retorne um json vazio.
+
       Texto:
       ${text}
     `;
