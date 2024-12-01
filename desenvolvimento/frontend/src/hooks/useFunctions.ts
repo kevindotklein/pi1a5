@@ -89,9 +89,11 @@ export const useFunctions = () => {
   const generateTasks = async ({
     hours,
     notice_content,
+    reviewTasks,
   }: {
     hours: number;
     notice_content: any;
+    reviewTasks: any;
   }) => {
     try {
       const subjects = notice_content?.subjects.map((subject: any) => {
@@ -103,7 +105,7 @@ export const useFunctions = () => {
 
       const response = await axios.post(
         `${url}/generateTasks`,
-        { hours, notice_content, subjects },
+        { hours, notice_content, subjects, reviewTasks },
         {
           headers: {
             "Content-Type": "application/json",

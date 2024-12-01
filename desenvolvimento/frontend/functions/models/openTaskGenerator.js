@@ -2,7 +2,12 @@ import { log } from "firebase-functions/logger";
 import { config as configDotenv } from "dotenv";
 import OpenAI from "openai";
 
-const runTaskGenerationModel = async ({ hours, notice_content, subjects }) => {
+const runTaskGenerationModel = async ({
+  hours,
+  notice_content,
+  subjects,
+  reviewTasks,
+}) => {
   configDotenv();
 
   const openai = new OpenAI({
@@ -37,6 +42,16 @@ const runTaskGenerationModel = async ({ hours, notice_content, subjects }) => {
       Gere tarefas para as seguintes matérias e conteúdos, baseado na estrutura do JSON fornecido:
       
       ${subjectsToSend}
+
+      ${
+        reviewTasks
+          ? `
+      Além disso, crie tarefas de revisão para os seguintes conteúdos: 
+      
+      ${reviewTasks}
+      `
+          : ""
+      }
     `;
 
     const params = {

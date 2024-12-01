@@ -196,9 +196,19 @@ export default function TaskGeneration({
       );
     }
 
+    const reviewTaskQuery = query(
+      taskRef,
+      where("notice_id", "==", notice?.id as string),
+      where("needs_review", "==", true)
+    );
+    const reviewTaskDocs = await getDocs(reviewTaskQuery);
+
+    const reviewTasks = reviewTaskDocs.docs.map((doc) => doc.data().content);
+
     const { tasks, error } = await generateTasks({
       hours: total_hours,
       notice_content: notice,
+      reviewTasks,
     });
 
     if (error) {

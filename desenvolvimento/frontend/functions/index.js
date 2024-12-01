@@ -304,7 +304,7 @@ export const generateTasks = https.onRequest(async (request, response) => {
 
       log(`req body: ${JSON.stringify(request.body)}`);
 
-      const { hours, notice_content, subjects } = request.body;
+      const { hours, notice_content, subjects, reviewTasks } = request.body;
 
       log(`Hours: ${hours}`, {
         structuredData: true,
@@ -319,6 +319,7 @@ export const generateTasks = https.onRequest(async (request, response) => {
         hours,
         notice_content,
         subjects,
+        reviewTasks,
       });
 
       if (processedContent.error) throw new Error(processedContent.error);
