@@ -12,7 +12,7 @@
   },
 
   "home": {
-    "slogan": "Seu jeito de estudar",
+    "slogan": "Seu jeito de estudar para concursos",
     "starting-message": "Comece aqui:",
     "login-button": "Acessar",
     "footer-message-1": "Feito por",
@@ -66,7 +66,7 @@
 
   "dashboard": {
     "payments": "Testar Integração de Pagamentos",
-    "competitive-exams": "Seus Concursos"
+    "competitive-exams": "Suas provas"
   },
 
   "auth-user-layout": {
