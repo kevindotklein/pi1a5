@@ -17,6 +17,7 @@ import { useAction } from "@/hooks/useAction";
 import { firestore } from "@/firebase/config";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useToast } from "../ui/use-toast";
+import TaskReviewCheckbox from "./taskReviewCheckbox";
 
 interface Props {
   id: any;
@@ -25,6 +26,7 @@ interface Props {
   subject: string;
   description: string;
   is_finished: boolean;
+  needs_review: boolean;
   hightlighted: number | null;
   setHightlighted: (index: number | null) => void;
   setActiveCard: (index: number | null) => void;
@@ -40,6 +42,7 @@ export default function Task({
   subject,
   description,
   is_finished,
+  needs_review,
   hightlighted,
   setHightlighted,
   setActiveCard,
@@ -147,6 +150,13 @@ export default function Task({
                   </p>
                 </div>
 
+                <div className="flex gap-2 items-center">
+                  <TaskReviewCheckbox id={id} needs_review={needs_review} />
+                  <p className="text-sm text-neutral-600">Preciso revisar</p>
+                </div>
+              </div>
+
+              <div className="flex w-full justify-end gap-2 items-center">
                 {!commentaryOpen && (
                   <div
                     className="flex gap-2 items-center"

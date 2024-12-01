@@ -514,6 +514,7 @@ export default function Tasks({ params }: { params: { slug: string } }) {
                               subject={task.subject as string}
                               description={task.description as string}
                               is_finished={task.is_finished as boolean}
+                              needs_review={task.needs_review as boolean}
                               commentary={task.commentary}
                               prio={task.prio}
                             />
