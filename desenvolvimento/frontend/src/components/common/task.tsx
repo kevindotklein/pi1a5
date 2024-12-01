@@ -94,7 +94,7 @@ export default function Task({
           hightlighted == index
             ? "bg-blue-100"
             : is_finished
-            ? "bg-green-100"
+            ? "bg-green-100 opacity-50"
             : "bg-neutral-100"
         } border border-neutral-500 rounded-sm cursor-grab transition-all hover:bg-neutral-200`}
       >
@@ -117,6 +117,15 @@ export default function Task({
             ? description.substring(0, 100) + "..."
             : description}
         </p>
+
+        {is_finished && (
+          <div className="flex items-center gap-2">
+            <Check className="w-4 h-4 text-green-500" />
+            <p className="text-sm text-neutral-500 select-none">
+              Tarefa concluída
+            </p>
+          </div>
+        )}
       </div>
 
       <Dialog>
