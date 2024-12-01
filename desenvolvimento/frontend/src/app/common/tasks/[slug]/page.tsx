@@ -330,6 +330,21 @@ export default function Tasks({ params }: { params: { slug: string } }) {
           return;
         }
 
+        const hasNoInfo = Object.keys(infos).length === 0;
+
+        if (hasNoInfo) {
+          setLoading(false);
+
+          toast({
+            variant: "destructive",
+            title: "Erro!",
+            description:
+              "Não identificamos nenhuma informação relevante para sua prova. Por favor, verifique seu texto e tente novamente.",
+          });
+
+          return;
+        }
+
         toast({
           title: "Sucesso!",
           description:
@@ -425,8 +440,8 @@ export default function Tasks({ params }: { params: { slug: string } }) {
             <Button
               variant="outline"
               style={{
-                backgroundColor: "#0D4290",
-                color: "white",
+                backgroundColor: "white",
+                color: "#0D4290",
                 borderRadius: "10px",
                 width: "fit-content",
               }}
@@ -499,6 +514,7 @@ export default function Tasks({ params }: { params: { slug: string } }) {
                               subject={task.subject as string}
                               description={task.description as string}
                               is_finished={task.is_finished as boolean}
+                              commentary={task.commentary}
                               prio={task.prio}
                             />
                             {index ==
