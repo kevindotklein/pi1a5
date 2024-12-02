@@ -1,11 +1,11 @@
 "use client";
 
 import { confirmPasswordReset, getAuth, verifyPasswordResetCode } from "firebase/auth";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export default function ResetPassword({ searchParams }: any) {
+export default function ResetPassword() {
 
-  const [oobCode, setOobCode] = useState<string | null>(null);
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
@@ -13,11 +13,12 @@ export default function ResetPassword({ searchParams }: any) {
   const [isCodeValid, setIsCodeValid] = useState<boolean>(false);
   const [invalidMessage, setInvalidMessage] = useState<string>("");
 
+  const searchParams = useSearchParams();
+  const oobCode = searchParams?.get("oobCode") || null;
+
   useEffect(() => {
-    console.log(searchParams);
-    const queryOobCode = searchParams?.oobCode || null;
-    setOobCode(queryOobCode);
-  }, [searchParams]);
+    console.log("oobCode:", oobCode);
+  }, [oobCode]);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
