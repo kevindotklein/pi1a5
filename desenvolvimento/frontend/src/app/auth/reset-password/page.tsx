@@ -1,7 +1,6 @@
 "use client";
 
 import { confirmPasswordReset, getAuth, verifyPasswordResetCode } from "firebase/auth";
-import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function ResetPassword({ searchParams }: any) {
@@ -15,6 +14,7 @@ export default function ResetPassword({ searchParams }: any) {
   const [invalidMessage, setInvalidMessage] = useState<string>("");
 
   useEffect(() => {
+    console.log(searchParams);
     const queryOobCode = searchParams?.oobCode || null;
     setOobCode(queryOobCode);
   }, [searchParams]);
@@ -44,7 +44,7 @@ export default function ResetPassword({ searchParams }: any) {
           setSuccess(false);
           return;
         })
-    } else{
+    }else {
       setInvalidMessage("O código de redefinição está ausente, por favor tente redefinir sua senha novamente.");
       setError("");
       setSuccess(false);
