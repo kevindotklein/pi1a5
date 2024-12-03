@@ -76,12 +76,12 @@ export default function Login() {
 
     sendPasswordResetEmail(getAuth(), resetEmail)
       .then(() => {
-        setToastMessage("E-mail de redefinição de senha enviado!");
+        setToastMessage(t("login.password-reset"));
 
       })
       .catch(() => {
         setToastType("ERROR");
-        setToastMessage("Erro ao enviar o e-mail. Verifique se o e-mail está correto.")
+        setToastMessage(t("login.password-reset-error"))
       });
     
     setIsModalOpen(false);
@@ -151,7 +151,7 @@ export default function Login() {
               </div>
 
               <div className="flex flex-row">
-                  <p onClick={(e) => { e.preventDefault(); openModal(); }} className="text-white text-sm cursor-pointer underline">Reset password</p>
+                  <p onClick={(e) => { e.preventDefault(); openModal(); }} className="text-white text-sm cursor-pointer underline">{t("login.password-reset-button")}</p>
               </div>
 
               <Social />
@@ -180,10 +180,10 @@ export default function Login() {
           <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
             
             <div className="flex justify-between">
-            <h3 className="text-xl font-bold mb-4">Recuperar Senha</h3>
+            <h3 className="text-xl font-bold mb-4">{t("login.recover-password")}</h3>
             <X className="cursor-pointer hover:text-red-600 duration-0" onClick={closeModal} />
             </div>
-            <p className="mb-4">Insira seu e-mail para recuperar a senha</p>
+            <p className="mb-4">{t("login.password-reset-email")}</p>
 
             <form onSubmit={sendEmailPasswordReset}>
               <div className="mb-4">
@@ -204,7 +204,7 @@ export default function Login() {
                   type="submit"
                   className="px-4 py-2 bg-blue-700 text-white rounded hover:bg-blue-800 w-full"
                 >
-                  Enviar
+                  {t("login.send")}
                 </button>
               </div>
             </form>

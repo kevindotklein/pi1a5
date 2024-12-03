@@ -44,10 +44,10 @@ export default function PrivacyStep({ userData, setStep, submit }: any) {
 
   const formSchema = z.object({
     password: z.string({
-      message: "Insira uma senha válida",
+      message: t("register.valid-password"),
     }),
     repeat_password: z.string({
-      message: "Repita a senha para confirmar",
+      message: t("register.repeat-password"),
     }),
     terms: z.boolean().default(false).optional(),
   });
@@ -63,13 +63,13 @@ export default function PrivacyStep({ userData, setStep, submit }: any) {
     if (!terms) {
       return toast({
         variant: "destructive",
-        title: "Você precisa aceitar os termos de uso da plataforma!",
+        title: t("register.accept-terms"),
       });
     }
 
     if (password !== repeat_password) {
       return form.setError("repeat_password", {
-        message: "As senhas não coincidem",
+        message: t("register.password-not-match"),
       });
     }
 
@@ -105,9 +105,9 @@ export default function PrivacyStep({ userData, setStep, submit }: any) {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="!text-white">Senha</FormLabel>
+                  <FormLabel className="!text-white">{t("register.password")}</FormLabel>
                   <FormControl>
-                    <PasswordInput placeholder="Digite aqui" {...field} />
+                    <PasswordInput placeholder={t("register.type-here")} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -119,12 +119,12 @@ export default function PrivacyStep({ userData, setStep, submit }: any) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="!text-white">
-                    Confirme sua senha
+                    {t("register.confirm-password")}
                   </FormLabel>
                   <FormControl>
                     <PasswordInput
                       type="password"
-                      placeholder="Digite aqui"
+                      placeholder={t("register.type-here")}
                       {...field}
                     />
                   </FormControl>
@@ -146,10 +146,10 @@ export default function PrivacyStep({ userData, setStep, submit }: any) {
                   </FormControl>
                   <div className="space-y-1 leading-none">
                     <span className="text-sm text-white">
-                      Aceito os termos e condições da plataforma
+                      {t("register.plataform-terms")}
                     </span>
                     <p className="text-sm text-neutral-300 text-muted-foreground cursor-pointer">
-                      Ver termos
+                      {t("register.see-terms")}
                     </p>
                   </div>
                 </FormItem>
@@ -164,11 +164,11 @@ export default function PrivacyStep({ userData, setStep, submit }: any) {
               onClick={() => setStep(1)}
               className="text-white"
             >
-              Voltar
+              {t("register.back-button")}
             </Button>
 
             <Button variant="default" size="lg" className="tablet:w-full">
-              Continuar
+              {t("register.continue-button")}
             </Button>
           </div>
         </form>

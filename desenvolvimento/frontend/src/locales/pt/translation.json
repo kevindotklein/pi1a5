@@ -8,15 +8,57 @@
     "password": "Senha",
     "password-input": "Insira sua senha",
     "login-question": "Já tem uma conta?",
-    "submit-button": "Registrar"
+    "submit-button": "Registrar",
+    "valid-name": "Insira um nome válido",
+    "valid-email": "Insira um e-mail válido",
+    "valid-cpf": "Insira um CPF válido",
+    "attention": "Atenção",
+    "user-exists": "Já existe um usuário cadastrado com este documento.",
+    "email-exists": "Já existe um usuário cadastrado com este e-mail.",
+    "continue-button": "Continuar",
+    "valid-password": "Insira uma senha válida",
+    "repeat-password": "Repita a senha para confirmar",
+    "accept-terms": "Você precisa aceitar os termos de uso da plataforma!",
+    "password-not-match": "As senhas não coincidem",
+    "type-here": "Digite aqui",
+    "confirm-password": "Confirme sua senha",
+    "plataform-terms": "Aceito os termos e condições da plataforma",
+    "see-terms": "Ver termos",
+    "back-button": "Voltar",
+    "valid-answer": "Insira uma resposta válida",
+    "test-type": "Para qual tipo de prova você está se preparando?",
+    "select-option": "Selecione uma opção",
+    "entrance-exam": "Vestibular",
+    "civil-service": "Concurso",
+    "high-school": "Prova do Ensino Médio",
+    "other": "Outro",
+    "education-level": "Qual o seu nível de escolaridade?",
+    "elementary-education": "Ensino Fundamental",
+    "high-school-level": "Ensino Médio",
+    "college": "Ensino Superior",
+    "discover-plataform": "Por onde você conheceu a plataforma?",
+    "friends": "Amigos",
+    "your-information": "Seus dados",
+    "type-information": "Preencha seus dados para continuar",
+    "you-here": "Por que você está aqui?",
+    "your-studies": "Nos conte um pouco mais sobre seus estudos",
+    "password-privacy": "Senha e Privacidade",
+    "password-terms": "Crie uma senha e aceite os termos"
   },
 
   "home": {
     "slogan": "Seu jeito de estudar para concursos",
     "starting-message": "Comece aqui:",
-    "login-button": "Acessar",
+    "login-button": "Entrar",
     "footer-message-1": "Feito por",
-    "footer-message-2": "para IFSP - 2024"
+    "footer-message-2": "para IFSP - 2024",
+    "need-help": "Precisa de ajuda para organizar seus estudos?",
+    "leave-with-us": "Deixa com a gente!",
+    "create-account": "Criar uma conta",
+    "create-your-account": "Crie sua conta",
+    "upload-notice": "Faça o upload de um edital, ou escreva o conteúdo da sua prova.",
+    "control-time": "Controle o tempo que você irá estudar na semana.",
+    "manage-tasks": "Deixe que a gente gere suas tarefas de estudo!"
   },
 
   "login": {
@@ -26,7 +68,13 @@
     "password": "Senha",
     "password-input": "Insira sua senha",
     "register-question": "Não tem uma conta?",
-    "submit-button": "Login"
+    "submit-button": "Login",
+    "password-reset": "E-mail de redefinição de senha enviado!",
+    "password-reset-error": "Erro ao enviar o e-mail. Verifique se o e-mail está correto.",
+    "password-reset-button": "Redefinir senha",
+    "password-reset-email": "Insira seu e-mail para recuperar a senha",
+    "recover-password": "Recuperar senha",
+    "send": "Enviar"
   },
 
   "notice-upload": {
@@ -66,7 +114,14 @@
 
   "dashboard": {
     "payments": "Testar Integração de Pagamentos",
-    "competitive-exams": "Suas provas"
+    "competitive-exams": "Suas provas",
+    "welcome-back": "Bem vindo de volta",
+    "week-stats": "Confira suas estatísticas dessa semana:",
+    "completed-tasks": "Tarefas concluídas",
+    "to-do-tasks": "Tarefas pendentes",
+    "hours-studied": "Horas estudadas",
+    "most-studied": "Matéria mais estudada",
+    "today-tasks": "Suas tarefas para hoje:"
   },
 
   "auth-user-layout": {
@@ -94,7 +149,29 @@
     "not-found": "Edital não encontrado.",
     "set-loading": "Buscando seu edital...",
     "your-tasks": "Suas Tarefas",
-    "loading": "Carregando..."
+    "loading": "Carregando...",
+    "error": "Erro!",
+    "mandatory-field": "Campo obrigatório",
+    "enter-information": "Insira as informações",
+    "extraction": "Extraindo informações...",
+    "not-identify-information": "Não identificamos nenhuma informação relevante para sua prova. Por favor, verifique seu texto e tente novamente.",
+    "success": "Sucesso!",
+    "succesfull-extraction": "Extração de informações realizada com sucesso. As informações foram adicionadas à prova.",
+    "add-test-information": "Adicionar informações da Prova",
+    "see-subjects-button": "Ver Matérias",
+    "test-information": "Informações sobre a prova",
+    "registration-start": "Início das inscrições",
+    "registration-end": "Final das inscrições",
+    "test-date": "Data da Prova",
+    "test-location": "Local da Prova",
+    "manually-enter-information": "Você pode inserir manualmente as informações e datas da prova, ou então, clicar no botão abaixo para importar as informações da prova.",
+    "update": "Atualizar",
+    "copy-notice-information": "Copie do edital ou do site do concurso informações sobre a prova, como prazos, locais e taxas, e deixe que a gente faça o resto.",
+    "text": "Texto:",
+    "insert": "Insira aqui",
+    "back-button": "Voltar",
+    "confirm-button": "Confirmar",
+    "collected-information": "Confira as informações que coletamos abaixo:"
   },
 
   "task-generation": {
@@ -125,6 +202,20 @@
     "how-many-hours": "Quantas horas você deseja estudar essa semana?",
     "select-days": "Selecione os dias da semana que você deseja estudar:",
     "generate-button": "Gerar"
+  },
+
+  "reset": {
+    "not-match": "As senhas não coincidem.",
+    "password-long" : "A senha deve ter pelo menos 6 caracteres.",
+    "password-code" : "O código de redefinição de senha é inválido ou expirou.",
+    "reset-code-missing": "O código de redefinição está ausente, por favor tente redefinir sua senha novamente.",
+    "reset-error": "Erro ao redefinir a senha.",
+    "reset-password": "Redefinir Senha",
+    "new-password": "Nova Senha",
+    "confirm-password": "Confirme sua Senha",
+    "confirm-new-password": "Confirme sua nova senha",
+    "reset-success": "Senha redefinida com sucesso!",
+    "reset-button": "Redefinir Senha"
   },
 
   "common-loading": {

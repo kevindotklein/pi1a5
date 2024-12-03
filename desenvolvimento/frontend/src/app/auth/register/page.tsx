@@ -73,8 +73,8 @@ export default function Register() {
   const steps = [
     {
       icon: <PersonStanding size={40} color="white" />,
-      title: "Seus dados",
-      description: "Preencha seus dados para continuar",
+      title: t("register.your-information"),
+      description: t("register.type-information"),
       component: (
         <BaseStep
           setUserData={setUserData}
@@ -85,8 +85,8 @@ export default function Register() {
     },
     {
       icon: <BookUser size={40} color="white" />,
-      title: "Por que você está aqui?",
-      description: "Nos conte um pouco mais sobre seus estudos",
+      title: t("register.you-here"),
+      description: t("register.your-studies"),
       component: (
         <SurveyStep
           setUserData={setUserData}
@@ -97,8 +97,8 @@ export default function Register() {
     },
     {
       icon: <Shield size={40} color="white" />,
-      title: "Senha e Privacidade",
-      description: "Crie uma senha e aceite os termos",
+      title: t("register.password-privacy"),
+      description: t("register.password-terms"),
       component: (
         <PrivacyStep
           setUserData={setUserData}

@@ -27,10 +27,10 @@ export default function Home() {
           <div className="flex gap-5 items-start flex-col">
             <div className="flex gap-1 items-start flex-col">
               <span className="text-white font-medium">
-                Precisa de ajuda para organizar seus estudos?
+                {t("home.need-help")}
               </span>
               <h3 className="text-white font-black text-4xl">
-                Deixa com a gente!
+                {t("home.leave-with-us")}
               </h3>
             </div>
 
@@ -49,7 +49,7 @@ export default function Home() {
                       borderRadius: "10px",
                     }}
                   >
-                    Criar uma conta
+                    {t("home.create-account")}
                   </Button>
                 </Link>
 
@@ -62,7 +62,7 @@ export default function Home() {
                       borderRadius: "10px",
                     }}
                   >
-                    Login
+                    {t("home.login-button")}
                   </Button>
                 </Link>
               </div>
@@ -72,28 +72,27 @@ export default function Home() {
           <div className="flex gap-5 items-start flex-col border-l-white border-l-2 pl-10">
             <div className="flex gap-2 items-center">
               <h2 className="text-white font-extrabold text-4xl">1.</h2>
-              <span className="text-white font-medium">Crie sua conta</span>
+              <span className="text-white font-medium">{t("home.create-your-account")}</span>
             </div>
 
             <div className="flex gap-2 items-center">
               <h2 className="text-white font-extrabold text-4xl">2.</h2>
               <span className="text-white font-medium">
-                Faça o <strong>upload</strong> de um edital, ou escreva o
-                conteúdo da sua prova.
+                {t("home.upload-notice")}
               </span>
             </div>
 
             <div className="flex gap-2 items-center">
               <h2 className="text-white font-extrabold text-4xl">3.</h2>
               <span className="text-white font-medium">
-                Controle o tempo que você irá estudar na semana.
+                {t("home.control-time")}
               </span>
             </div>
 
             <div className="flex gap-2 items-center">
               <h2 className="text-white font-extrabold text-4xl">4.</h2>
               <span className="text-white font-bold text-xl">
-                Deixe que a gente gere suas tarefas de estudo!
+                {t("home.manage-tasks")}
               </span>
             </div>
           </div>

@@ -44,19 +44,19 @@ export default function BaseStep({ setUserData, userData, setStep }: any) {
   const formSchema = z.object({
     full_name: z
       .string({
-        message: "Insira um nome válido",
+        message: t("register.valid-name"),
       })
       .min(3),
     email: z
       .string({
-        message: "Insira um e-mail válido",
+        message: t("register.valid-email"),
       })
       .email({
-        message: "Insira um e-mail válido",
+        message: t("register.valid-email"),
       }),
     document: z
       .string({
-        message: "Insira um CPF válido",
+        message: t("register.vaild-cpf"),
       })
       .min(11),
   });
@@ -89,8 +89,8 @@ export default function BaseStep({ setUserData, userData, setStep }: any) {
 
         if (sameDocumentUsersSnap.docs.length > 0) {
           toast({
-            title: "Atenção",
-            description: "Já existe um usuário cadastrado com este documento.",
+            title: t("register.attention"),
+            description: t("register.user-exists"),
             variant: "destructive",
           });
 
@@ -105,8 +105,8 @@ export default function BaseStep({ setUserData, userData, setStep }: any) {
 
         if (sameEmailUsersSnap.docs.length > 0) {
           toast({
-            title: "Atenção",
-            description: "Já existe um usuário cadastrado com este e-mail.",
+            title: t("register.attention"),
+            description: t("register.email-exists"),
             variant: "destructive",
           });
 
@@ -194,7 +194,7 @@ export default function BaseStep({ setUserData, userData, setStep }: any) {
             </Button>
 
             <Button variant="default" size="lg" className="tablet:w-full">
-              Continuar
+              {t("register.continue-button")}
             </Button>
           </div>
         </form>

@@ -95,29 +95,29 @@ export default function Home() {
           <div className="flex gap-3 text-neutral-50 w-full items-center">
             <div className="flex flex-col gap-1 text-neutral-50 w-full">
               <h1 className="text-2xl font-bold text-black">
-                Bem vindo de volta, {userData?.full_name}!
+                {t("dashboard.welcome-back")}, {userData?.full_name}!
               </h1>
               <span className="text-sm text-gray-400">
-                Confira suas estatísticas dessa semana:
+                {t("dashboard.week-stats")}
               </span>
             </div>
           </div>
 
           <div className="flex gap-5 flex-wrap w-full">
             <BigNumber
-              label="Tarefas concluídas"
+              label={t("dashboard.completed-tasks")}
               value={dashboard?.finishedTasks.length || 0}
             />
             <BigNumber
-              label="Tarefas pendentes"
+              label={t("dashboard.to-do-tasks")}
               value={dashboard?.pendingTasks.length || 0}
             />
             <BigNumber
-              label="Horas estudadas"
+              label={t("dashboard.hours-studied")}
               value={dashboard?.totalHours || 0}
             />
             <BigNumber
-              label="Matéria mais estudada"
+              label={t("dashboard.most-studied")}
               value={dashboard?.mostStudiedSubject}
             />
           </div>
@@ -125,7 +125,7 @@ export default function Home() {
           {dashboard?.todayPendingTasks.length ? (
             <div className="flex flex-col gap-3 w-full mt-5">
               <span className="text-md text-gray-700 font-bold">
-                Suas tarefas para hoje:
+                {t("dashboard.today-tasks")}
               </span>
 
               <div className="flex gap-5 flex-wrap w-full">

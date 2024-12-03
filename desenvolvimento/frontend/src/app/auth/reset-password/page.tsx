@@ -3,6 +3,7 @@
 import { confirmPasswordReset, getAuth, verifyPasswordResetCode } from "firebase/auth";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function ResetPassword() {
 
@@ -12,6 +13,8 @@ export default function ResetPassword() {
   const [success, setSuccess] = useState<boolean>(false);
   const [isCodeValid, setIsCodeValid] = useState<boolean>(false);
   const [invalidMessage, setInvalidMessage] = useState<string>("");
+
+  const { t, i18n } = useTranslation();
 
   const searchParams = useSearchParams();
   const oobCode = searchParams?.get("oobCode") || null;
@@ -24,12 +27,12 @@ export default function ResetPassword() {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      setError("As senhas não coincidem.");
+      setError(t("reset.not-match"));
       setSuccess(false);
       return;
     }
     if (password.length < 6) {
-      setError("A senha deve ter pelo menos 6 caracteres.");
+      setError(t("reset.password-long"));
       setSuccess(false);
       return;
     }
@@ -40,13 +43,13 @@ export default function ResetPassword() {
           setIsCodeValid(true);
         })
         .catch(() => {
-          setInvalidMessage("O código de redefinição de senha é inválido ou expirou.");
+          setInvalidMessage(t("reset.password-code"));
           setError("");
           setSuccess(false);
           return;
         })
     }else {
-      setInvalidMessage("O código de redefinição está ausente, por favor tente redefinir sua senha novamente.");
+      setInvalidMessage(t("reset.reset-code-missing"));
       setError("");
       setSuccess(false);
       return;
@@ -58,7 +61,7 @@ export default function ResetPassword() {
         setSuccess(true);
       })
       .catch(() => {
-        setError("Erro ao redefinir a senha.")
+        setError(t("reset.reset-error"))
         setSuccess(false);
         return;
       })
@@ -80,14 +83,14 @@ export default function ResetPassword() {
           className="flex w-full flex-col gap-4 text-white"
         >
           <h2 className="text-secondary-200 text-neutral-300">
-            Redefinir Senha
+            {t("reset.reset-password")}
           </h2>
           <div>
             <label
               className="block text-sm font-medium mb-1"
               htmlFor="password"
             >
-              Nova Senha
+              {t("reset.new-password")}
             </label>
             <input
               type="password"
@@ -104,7 +107,7 @@ export default function ResetPassword() {
               className="block text-sm font-medium mb-1"
               htmlFor="confirmPassword"
             >
-              Confirme sua Senha
+              {t("reset.confirm-password")}
             </label>
             <input
               type="password"
@@ -112,21 +115,21 @@ export default function ResetPassword() {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               className="w-full rounded-md border border-gray-300 bg-white p-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Confirme sua nova senha"
+              placeholder={t("reset.confirm-new-password")}
               required
             />
           </div>
           {error && <p className="text-sm text-red-500">{error}</p>}
           {success && (
             <p className="text-sm text-green-500">
-              Senha redefinida com sucesso!
+              {t("reset.reset-success")}
             </p>
           )}
           <button
             type="submit"
             className="w-full rounded-md  p-2 text-white font-semibold focus:outline-none bg-slate-950 hover:bg-slate-900"
           >
-            Redefinir Senha
+            {t("reset.reset-button")}
           </button>
         </form>
       </div>

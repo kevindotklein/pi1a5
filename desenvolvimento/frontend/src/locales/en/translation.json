@@ -8,7 +8,42 @@
     "password": "Password",
     "password-input": "Insert your password",
     "login-question": "Already have an account?",
-    "submit-button": "Register"
+    "submit-button": "Register",
+    "valid-name": "Enter a valid name",
+    "valid-email": "Enter a valid email",
+    "valid-cpf": "Enter a valid CPF",
+    "attention": "Attention",
+    "user-exists": "There is already a user registered with this document.",
+    "email-exists": "There is already a registered user with this email.",
+    "continue-button": "Continue",
+    "valid-password": "Enter a valid password",
+    "repeat-password": "Repeat password to confirm",
+    "accept-terms": "You need to accept the platform's terms of use!",
+    "passwords-not-match": "Passwords do not match",
+    "type-here": "Type here",
+    "confirm-password": "Confirm your password",
+    "plataform-terms": "I accept the platform's terms and conditions",
+    "see-terms": "See terms",
+    "back-button": "Back",
+    "valid-answer": "Enter a valid answer",
+    "test-type": "What type of test are you preparing for?",
+    "select-option": "Select an option",
+    "entrance-exam": "Entrance exam",
+    "civil-service": "Civil service exam",
+    "high-school": "High School Exam",
+    "other": "Other",
+    "education-level": "What is your education level?",
+    "elementary-education": "Elementary Education",
+    "high-school-level": "High School",
+    "college": "College",
+    "discover-plataform": "Where did you discover the platform?",
+    "friends": "Friends",
+    "your-information": "Your Information",
+    "type-information": "Fill in your details to continue",
+    "you-here": "Why are you here?",
+    "your-studies": "Tell us a little more about your studies",
+    "password-privacy": "Password and Privacy",
+    "password-terms": "Create a password and accept the terms"
   },
 
   "home": {
@@ -16,7 +51,14 @@
     "starting-message": "Get started here:",
     "login-button": "Login",
     "footer-message-1": "Made by",
-    "footer-message-2": "for IFSP - 2024"
+    "footer-message-2": "for IFSP - 2024",
+    "need-help": "Do you need help organizing your studies?",
+    "leave-with-us": "Leave it to us!",
+    "create-account": "Create an account",
+    "create-your-account": "Create your account",
+    "upload-notice": "Upload a notice, or write the content of your test.",
+    "control-time": "Control the time you will study during the week.",
+    "manage-tasks": "Let us manage your study tasks!"
   },
 
   "login": {
@@ -26,7 +68,13 @@
     "password": "Password",
     "password-input": "Insert your password",
     "register-question": "Don't have an account?",
-    "submit-button": "Login"
+    "submit-button": "Login",
+    "password-reset": "Password reset email sent!",
+    "password-reset-error": "Error sending the email. Check that the email is correct.",
+    "password-reset-button": "Reset password",
+    "password-reset-email": "Enter your email to recover your password",
+    "recover-password": "Recover password",
+    "send": "Send"
   },
 
   "notice-upload": {
@@ -66,7 +114,14 @@
 
   "dashboard": {
     "payments": "Test Payment Integration",
-    "competitive-exams": "Your notices"
+    "competitive-exams": "Your notices",
+    "welcome-back": "Welcome back",
+    "week-stats": "Check out your stats from this week:",
+    "completed-tasks": "Completed tasks",
+    "to-do-tasks": "To-do tasks",
+    "hours-studied": "Hours studied",
+    "most-studied": "Most studied subject",
+    "today-tasks": "Your tasks for today:"
   },
 
   "auth-user-layout": {
@@ -94,7 +149,29 @@
     "not-found": "Document not found.",
     "set-loading": "Searching for your document...",
     "your-tasks": "Your Tasks",
-    "loading": "loading..."
+    "loading": "loading...",
+    "error": "Error!",
+    "mandatory-field": "Mandatory field",
+    "enter-information": "Enter the information",
+    "extraction": "Extracting information...",
+    "not-identify-information": "We did not identify any information relevant to your evidence. Please check your text and try again.",
+    "success": "Success!",
+    "succesfull-extraction": "Extraction of information carried out successfully. The information has been added to the test.",
+    "add-test-information": "Add Test information",
+    "see-subjects-button": "See Subjects",
+    "test-information": "Information about the test",
+    "registration-start": "Start of registration",
+    "registration-end": "End of registration",
+    "test-date": "Test Date",
+    "test-location": "Test Location",
+    "manually-enter-information": "You can manually enter the information and dates of the proof, or click the button below to import the test information.",
+    "update": "Update",
+    "copy-notice-information": "Copy information from the notice or competition website about the proof, such as deadlines, locations and fees, and let the we do the rest.",
+    "text": "Text:",
+    "insert": "Insert here",
+    "back-button": "Back",
+    "confirm-button": "Confirm",
+    "collected-information": "Check out the information we collected below:"
   },
 
   "task-generation": {
@@ -127,6 +204,20 @@
     "generate-button": "Generate"
   },
 
+  "reset": {
+    "not-match": "Passwords do not match.",
+    "password-long" : "The password must be at least 6 characters long.",
+    "password-code" : "The password reset code is invalid or has expired.",
+    "reset-code-missing": "The reset code is missing, please try to reset your password again.",
+    "reset-error": "Error resetting password.",
+    "reset-password": "Reset Password",
+    "new-password": "New Password",
+    "confirm-password": "Confirm your password",
+    "confirm-new-password": "Confirm your new password",
+    "reset-success": "Password reset successfully!",
+    "reset-button": "Reset Password"
+  },
+
   "common-loading": {
     "loading": "loading..."
   },
@@ -150,4 +241,5 @@
       "message": "Test the payment integration with Stripe to create a monthly subscription of"
     }
   }
+
 }

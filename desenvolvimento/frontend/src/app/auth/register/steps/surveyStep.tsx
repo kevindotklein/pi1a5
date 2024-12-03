@@ -48,13 +48,13 @@ export default function SurveyStep({ setUserData, userData, setStep }: any) {
 
   const formSchema = z.object({
     type_of_exam: z.string({
-      message: "Insira uma resposta válida",
+      message: t("register.valid-answer"),
     }),
     where_you_heard: z.string({
-      message: "Insira uma resposta válida",
+      message: t("register.valid-answer"),
     }),
     education_level: z.string({
-      message: "Insira uma resposta válida",
+      message: t("register.valid-answer"),
     }),
   });
 
@@ -97,7 +97,7 @@ export default function SurveyStep({ setUserData, userData, setStep }: any) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="!text-white">
-                    Para qual tipo de prova você está se preparando?
+                    {t("register.test-type")}
                   </FormLabel>
                   <FormControl>
                     <Select
@@ -106,17 +106,17 @@ export default function SurveyStep({ setUserData, userData, setStep }: any) {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Selecione uma opção" />
+                          <SelectValue placeholder={t("register.select-option")} />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
                         <SelectItem value="enem">ENEM</SelectItem>
-                        <SelectItem value="vestibular">Vestibular</SelectItem>
-                        <SelectItem value="concurso">Concurso</SelectItem>
+                        <SelectItem value="vestibular">{t("register.entrance-exam")}</SelectItem>
+                        <SelectItem value="concurso">{t("register.civil-service")}</SelectItem>
                         <SelectItem value="prova-do-ensino-medio">
-                          Prova do Ensino Médio
+                          {t("register.high-school")}
                         </SelectItem>
-                        <SelectItem value="outro">Outro</SelectItem>
+                        <SelectItem value="outro">{t("register.other")}</SelectItem>
                       </SelectContent>
                     </Select>
                   </FormControl>
@@ -130,7 +130,7 @@ export default function SurveyStep({ setUserData, userData, setStep }: any) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="!text-white">
-                    Qual o seu nível de escolaridade?
+                    {t("register.education-level")}
                   </FormLabel>
                   <FormControl>
                     <Select
@@ -139,20 +139,20 @@ export default function SurveyStep({ setUserData, userData, setStep }: any) {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Selecione uma opção" />
+                          <SelectValue placeholder={t("register.select-option")} />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
                         <SelectItem value="ensino-fundamental">
-                          Ensino Fundamental
+                          {t("register.elementary-education")}
                         </SelectItem>
                         <SelectItem value="ensino-medio">
-                          Ensino Médio
+                          {t("register.high-school-level")}
                         </SelectItem>
                         <SelectItem value="ensino-superior">
-                          Ensino Superior
+                          {t("register.college")}
                         </SelectItem>
-                        <SelectItem value="outro">Outro</SelectItem>
+                        <SelectItem value="outro">{t("register.other")}</SelectItem>
                       </SelectContent>
                     </Select>
                   </FormControl>
@@ -166,7 +166,7 @@ export default function SurveyStep({ setUserData, userData, setStep }: any) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="!text-white">
-                    Por onde você conheceu a plataforma?
+                    {t("register.discover-plataform")}
                   </FormLabel>
                   <FormControl>
                     <Select
@@ -175,15 +175,15 @@ export default function SurveyStep({ setUserData, userData, setStep }: any) {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Selecione uma opção" />
+                          <SelectValue placeholder={t("register.select-option")} />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
                         <SelectItem value="facebook">Facebook</SelectItem>
                         <SelectItem value="instagram">Instagram</SelectItem>
                         <SelectItem value="google">Google</SelectItem>
-                        <SelectItem value="amigos">Amigos</SelectItem>
-                        <SelectItem value="outro">Outro</SelectItem>
+                        <SelectItem value="amigos">{t("register.friends")}</SelectItem>
+                        <SelectItem value="outro">{t("register.other")}</SelectItem>
                       </SelectContent>
                     </Select>
                   </FormControl>
@@ -200,11 +200,11 @@ export default function SurveyStep({ setUserData, userData, setStep }: any) {
               onClick={() => setStep(0)}
               className="text-white"
             >
-              Voltar
+              {t("register.back-button")}
             </Button>
 
             <Button variant="default" size="lg" className="tablet:w-full">
-              Continuar
+              {t("register.continue-button")}
             </Button>
           </div>
         </form>

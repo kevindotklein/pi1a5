@@ -126,7 +126,7 @@ export default function Tasks({ params }: { params: { slug: string } }) {
   const showError = () => {
     toast({
       variant: "destructive",
-      title: "Erro!",
+      title: t("tasks.error"),
       description: t("tasks.not-found"),
     });
   };
@@ -225,7 +225,7 @@ export default function Tasks({ params }: { params: { slug: string } }) {
 
   const date_validator = z
     .string({
-      message: "Campo obrigatório",
+      message: t("tasks.mandatory-field"),
     })
     .min(3, {
       message: t("tasks.invalid-local"),
@@ -239,7 +239,7 @@ export default function Tasks({ params }: { params: { slug: string } }) {
     date: date_validator,
     local: z
       .string({
-        message: "Campo obrigatório",
+        message: t("tasks.mandatory-field"),
       })
       .min(3, {
         message: t("tasks.invalid-local"),
@@ -248,7 +248,7 @@ export default function Tasks({ params }: { params: { slug: string } }) {
       .nullable(),
     text: z
       .string({
-        message: "Campo obrigatório",
+        message: t("tasks.mandatory-field"),
       })
       .min(3, {
         message: t("tasks.invalid-local"),
@@ -305,14 +305,14 @@ export default function Tasks({ params }: { params: { slug: string } }) {
     if (!manualNoticeContent) {
       return toast({
         variant: "destructive",
-        title: "Erro!",
-        description: "Insira as informações",
+        title: t("tasks.error"),
+        description: t("taks.enter-information"),
       });
     }
 
     await action(
       async () => {
-        setLoading("Extraindo informações...");
+        setLoading(t("tasks.extraction"));
 
         const { infos, error } = await extractInfos({
           text: manualNoticeContent,
@@ -323,7 +323,7 @@ export default function Tasks({ params }: { params: { slug: string } }) {
 
           toast({
             variant: "destructive",
-            title: "Erro!",
+            title: t("tasks.error"),
             description: error,
           });
 
@@ -337,18 +337,18 @@ export default function Tasks({ params }: { params: { slug: string } }) {
 
           toast({
             variant: "destructive",
-            title: "Erro!",
+            title: t("tasks.error"),
             description:
-              "Não identificamos nenhuma informação relevante para sua prova. Por favor, verifique seu texto e tente novamente.",
+              t("tasks.not-identify-information"),
           });
 
           return;
         }
 
         toast({
-          title: "Sucesso!",
+          title: t("tasks.success"),
           description:
-            "Extração de informações realizada com sucesso. As informações foram adicionadas à prova.",
+            t("tasks.succesfull-extraction"),
         });
 
         const docRef = doc(firestore, "notices", noticeOpen?.id as string);
@@ -435,7 +435,7 @@ export default function Tasks({ params }: { params: { slug: string } }) {
                 setValue("local", notice.local);
               }}
             >
-              Adicionar informações da Prova
+              {t("tasks.add-test-information")}
             </Button>
             <Button
               variant="outline"
@@ -450,7 +450,7 @@ export default function Tasks({ params }: { params: { slug: string } }) {
                 contentModalTriggerRef.current?.click();
               }}
             >
-              Ver Matérias
+              {t("tasks.see-subjects-button")}
             </Button>
           </div>
 
@@ -572,7 +572,7 @@ export default function Tasks({ params }: { params: { slug: string } }) {
         <DialogContent className="max-w-[40vw] overflow-auto tablet:max-w-[100vw] tablet:overflow-auto">
           <DialogHeader>
             <DialogTitle>{noticeOpen?.name}</DialogTitle>
-            <DialogDescription>Informações sobre a prova</DialogDescription>
+            <DialogDescription>{t("tasks.test-information")}</DialogDescription>
           </DialogHeader>
 
           {modalView == "form" && !noticeInfos ? (
@@ -589,10 +589,10 @@ export default function Tasks({ params }: { params: { slug: string } }) {
                         name="subscription_start"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Início das inscrições</FormLabel>
+                            <FormLabel>{t("tasks.registration-start")}</FormLabel>
                             <FormControl>
                               <Input
-                                placeholder="Início das inscrições"
+                                placeholder={t("tasks.registration-start")}
                                 type="datetime-local"
                                 {...field}
                                 value={field.value ?? ""}
@@ -607,10 +607,10 @@ export default function Tasks({ params }: { params: { slug: string } }) {
                         name="subscription_deadline"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Final das inscrições</FormLabel>
+                            <FormLabel>{t("tasks.registration-end")}</FormLabel>
                             <FormControl>
                               <Input
-                                placeholder="Final das inscrições"
+                                placeholder={t("tasks.registration-end")}
                                 type="datetime-local"
                                 {...field}
                                 value={field.value ?? ""}
@@ -627,10 +627,10 @@ export default function Tasks({ params }: { params: { slug: string } }) {
                       name="date"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Data da Prova</FormLabel>
+                          <FormLabel>{t("tasks.test-date")}</FormLabel>
                           <FormControl>
                             <Input
-                              placeholder="Data da Prova"
+                              placeholder={t("tasks.test-date")}
                               type="datetime-local"
                               {...field}
                               value={field.value ?? ""}
@@ -646,11 +646,11 @@ export default function Tasks({ params }: { params: { slug: string } }) {
                       name="local"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Local da Prova</FormLabel>
+                          <FormLabel>{t("tasks.test-location")}</FormLabel>
                           <FormControl>
                             <Input
                               type="text"
-                              placeholder="Local da Prova"
+                              placeholder={t("tasks.test-location")}
                               {...field}
                               value={field.value ?? ""}
                             />
@@ -662,9 +662,7 @@ export default function Tasks({ params }: { params: { slug: string } }) {
                   </div>
 
                   <span>
-                    Você pode inserir manualmente as informações e datas da
-                    prova, ou então, clicar no botão abaixo para importar as
-                    informações da prova.
+                    {t("tasks.manually-enter-information")}
                   </span>
 
                   <div className="flex items-center justify-between w-full">
@@ -693,7 +691,7 @@ export default function Tasks({ params }: { params: { slug: string } }) {
                         borderRadius: "10px",
                       }}
                     >
-                      Atualizar
+                      {t("tasks.update")}
                     </Button>
                   </div>
                 </form>
@@ -709,19 +707,17 @@ export default function Tasks({ params }: { params: { slug: string } }) {
                       className="w-full h-full flex flex-col justify-between gap-4"
                     >
                       <span>
-                        Copie do edital ou do site do concurso informações sobre
-                        a prova, como prazos, locais e taxas, e deixe que a
-                        gente faça o resto.
+                        {t("tasks.copy-notice-information")}
                       </span>
                       <FormField
                         control={form.control}
                         name="text"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Texto:</FormLabel>
+                            <FormLabel>{t("tasks.text")}</FormLabel>
                             <FormControl>
                               <Textarea
-                                placeholder={"Insira aqui"}
+                                placeholder={t("tasks.insert")}
                                 className="resize-none min-h-[200px]"
                                 value={manualNoticeContent}
                                 onChange={(e: any) =>
@@ -749,7 +745,7 @@ export default function Tasks({ params }: { params: { slug: string } }) {
                             setModalView("form");
                           }}
                         >
-                          Voltar
+                          {t("tasks.back-button")}
                         </Button>
                         <Button
                           // disabled={loading}
@@ -760,7 +756,7 @@ export default function Tasks({ params }: { params: { slug: string } }) {
                             borderRadius: "10px",
                           }}
                         >
-                          Confirmar
+                          {t("tasks.confirm-button")}
                         </Button>
                       </div>
                     </form>
@@ -768,7 +764,7 @@ export default function Tasks({ params }: { params: { slug: string } }) {
                 </Form>
               ) : (
                 <div className="flex flex-col gap-4 w-full">
-                  <span>Confira as informações que coletamos abaixo:</span>
+                  <span>{t("tasks.collected-information")}</span>
                   <div className="flex flex-col gap-3">
                     {Object.keys(noticeInfos).map((key: string) => (
                       <div key={key} className="flex flex-col gap-1">
