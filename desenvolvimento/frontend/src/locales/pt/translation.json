@@ -61,6 +61,23 @@
     "manage-tasks": "Deixe que a gente gere suas tarefas de estudo!"
   },
 
+  "profile": {
+    "update-name-fail": "Falha ao atualizar o nome:",
+    "error": "Erro!",
+    "education-level": "Nível de Escolaridade:",
+    "plan": "Plano:",
+    "edit-profile": "Editar Perfil",
+    "name": "Nome:",
+    "select-image": "Arraste uma imagem ou clique para selecionar",
+    "cancel-button": "Cancelar",
+    "save-button": "Salvar",
+    "update-image-fail": "Falha ao atualizar a imagem:",
+    "elementary-education": "Ensino Fundamental",
+    "high-school": "Ensino Médio",
+    "college": "Ensino Superior",
+    "free": "Gratuito"
+  },
+
   "login": {
     "subtitle": "Entre na sua conta",
     "email": "E-mail",

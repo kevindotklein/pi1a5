@@ -61,6 +61,23 @@
     "manage-tasks": "Let us manage your study tasks!"
   },
 
+  "profile": {
+    "update-name-fail": "Failed to update name:",
+    "error": "Error!",
+    "education-level": "Education Level:",
+    "plan": "Plan:",
+    "edit-profile": "Edit Profile",
+    "name": "Name:",
+    "select-image": "Drag an image or click to select",
+    "cancel-button": "Cancel",
+    "save-button": "Save",
+    "update-image-fail": "Failed to update image:",
+    "elementary-education": "Elementary Education",
+    "high-school": "High School",
+    "college": "College",
+    "free": "Free"
+  },
+
   "login": {
     "subtitle": "Login to your account",
     "email": "E-mail",

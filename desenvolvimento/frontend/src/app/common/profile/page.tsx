@@ -18,18 +18,18 @@ export default function Profile() {
   const displayEducationLevel = (education: string) => {
     switch(education) {
       case "ensino-fundamental":
-        return "Ensino Fundamental";
+        return t("profile.elementary-education");
       case "ensino-medio":
-        return "Ensino Médio";
+        return t("profile.high-school");
       case "ensino-superior":
-        return "Ensino Superior";
+        return t("profile.college");
     }
   }
 
   const displayPlan = (plan: string) => {
     switch(plan) {
       case "free":
-        return "Gratuito";
+        return t("profile.free");
       case "paid":
         return "Premium";
     }
@@ -65,8 +65,8 @@ export default function Profile() {
     } catch (error: any) {
       toast({
         variant: "destructive",
-        title: "Erro",
-        description: `Falha ao atualizar o nome: ${error.message}`,
+        title: t("profile.error"),
+        description: t("profile.update-name-fail") + error.message,
       });
     }
 
@@ -100,8 +100,8 @@ export default function Profile() {
         } catch (error: any) {
           toast({
             variant: "destructive",
-            title: "Erro",
-            description: `Falha ao atualizar a imagem: ${error.message}`,
+            title: t("profile.error"),
+            description: t("profile.update-image-fail") + error.message,
           });
         }
       }
@@ -129,9 +129,9 @@ export default function Profile() {
           </header>
           <span className="text-slate-500 text-sm">CPF:</span>
           <p className="text-black mb-2">{userData?.document}</p>
-          <span className="text-slate-500 text-sm">Nível de Escolaridade:</span>
+          <span className="text-slate-500 text-sm">{t("profile.education-level")}</span>
           <p className="text-black mb-2">{displayEducationLevel(userData?.education_level)}</p>
-          <span className="text-slate-500 text-sm">Plano:</span>
+          <span className="text-slate-500 text-sm">{t("profile.plan")}</span>
           <p className="text-black">{displayPlan(userData?.plan)}</p>
         </div>
       </div>
@@ -139,10 +139,10 @@ export default function Profile() {
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-6 rounded-lg w-[550px] shadow-lg">
-            <h2 className="text-lg font-bold mb-4">Editar Perfil</h2>
+            <h2 className="text-lg font-bold mb-4">{t("profile.edit-profile")}</h2>
             <form>
               <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2">Nome:</label>
+                <label className="block text-gray-700 text-sm font-bold mb-2">{t("profile.name")}</label>
                 <input
                   type="text"
                   value={full_name}
@@ -163,7 +163,7 @@ export default function Profile() {
                   />
                 ) : (
                   <label className="cursor-pointer">
-                    Arraste uma imagem ou clique para selecionar
+                    {t("profile.select-image")}
                     <input type="file" className="hidden" onChange={handleImageUpload} />
                   </label>
                 )}
@@ -174,13 +174,13 @@ export default function Profile() {
                   onClick={toggleModal}
                   className="bg-slate-600 text-white p-2 rounded-3xl mr-2 px-4"
                 >
-                  Cancelar
+                  {t("profile.cancel-button")}
                 </button>
                 <button
                   className="bg-blue-600 text-white p-2 rounded-3xl px-4"
                   onClick={handleSubmit}
                 >
-                  Salvar
+                  {t("profile.save-button")}
                 </button>
               </div>
             </form>
