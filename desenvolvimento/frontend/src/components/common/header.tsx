@@ -88,13 +88,13 @@ export default function Header() {
 
               <div className="flex gap-2 items-center">
                 <Image
-                  src={user?.photoURL || "/favicon.ico"}
+                  src={userData?.url || "/favicon.ico"}
                   alt="user avatar"
-                  width={30}
-                  height={30}
+                  width={45}
+                  height={45}
                   className="rounded-full"
                 />
-                <span className="text-lg font-bold text-white">
+                <span className="text-lg font-bold text-white cursor-pointer" onClick={(e: any) => router.push("/common/profile")}>
                   {userData?.full_name ||
                     userData?.displayName ||
                     userData?.email}

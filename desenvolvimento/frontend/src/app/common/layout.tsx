@@ -28,6 +28,7 @@ export default function CommonLayout({
     "/common/dashboard": "Dashboard",
     "/common/tasks": "Tarefas",
     "/common/payments": "Pagamentos",
+    "common/profile": "Perfil",
   } as any;
 
   const getCurrentRouteName = (pathname: string) => {
@@ -83,7 +84,7 @@ export default function CommonLayout({
               />
             ) : null}
 
-            <h3 className="text-md font-medium text-black cursor-pointer">
+            <h3 className="text-md font-medium text-black cursor-pointer" onClick={(e: any) => router.push("/common/dashboard")}>
               Home /
             </h3>
             <h3 className="text-md font-bold text-blue-700">

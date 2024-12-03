@@ -18,7 +18,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, firestore } from "@/firebase/config";
+import { auth, firestore, storage } from "@/firebase/config";
 import { useToast } from "@/components/ui/use-toast";
 import { useAction } from "@/hooks/useAction";
 import { collection, doc, setDoc } from "firebase/firestore";
@@ -29,6 +29,7 @@ import BaseStep from "./steps/baseStep";
 import { BookUser, PersonStanding, Shield } from "lucide-react";
 import SurveyStep from "./steps/surveyStep";
 import PrivacyStep from "./steps/privacyStep";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
 export default function Register() {
   const { toast } = useToast();
@@ -42,6 +43,13 @@ export default function Register() {
 
   const router = useRouter();
 
+  const svgToFile = (svgContent: string, filename: string) => {
+    const blob = new Blob([svgContent], { type: 'image/svg+xml' });
+    const file = new File([blob], filename, { type: 'image/svg+xml' });
+  
+    return file;
+  }
+
   const onSubmit = async (data: any) => {
     const { email, password } = data;
 
@@ -54,11 +62,41 @@ export default function Register() {
 
         delete data.password;
 
-        await setDoc(doc(firestore, "users", userId as string), {
-          ...data,
-          has_notice: false,
-          plan: "free",
-        });
+        const fileName = (Math.random() + 1).toString(36).substring(7);
+
+        const storageRef = ref(storage, `users/${fileName}`);
+        
+        fetch('/assets/cap.svg')
+          .then(response => response.text())
+          .then(svgContent => {
+            const file = svgToFile(svgContent, 'sample.svg');
+            const uploadUser = uploadBytesResumable(storageRef, file);
+            uploadUser.on(
+              "state_changed",
+              (snapshot: any) => {
+                const progress = Math.round(
+                  (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                );
+              },
+              (error: any) => {
+                toast({
+                  variant: "destructive",
+                  title: t("notice-upload.error"),
+                  description: error.message,
+                });
+              },
+              async () => {
+                const url = await getDownloadURL(uploadUser.snapshot.ref);
+                await setDoc(doc(firestore, "users", userId as string), {
+                  ...data,
+                  has_notice: false,
+                  plan: "free",
+                  url
+                });
+              }
+            )
+          })
+          .catch(error => console.error('Erro ao carregar o SVG:', error));
 
         setLoading(false);
 
